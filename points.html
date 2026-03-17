@@ -22,12 +22,10 @@ h2 {
 
 table {
     width: 100%;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 20px auto;
     border-collapse: collapse;
     background: white;
-    border-radius: 10px;
-    overflow: hidden;
 }
 
 th {
@@ -37,11 +35,12 @@ th {
 }
 
 td {
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+    padding: 12px;
+    border: 1px solid #ddd;
+    font-size: 14px;
 }
 
-tr:hover {
+tr:nth-child(even) {
     background: #f2f2f2;
 }
 
@@ -62,93 +61,115 @@ tr:hover {
 <h2>نظام الترقيات والنقاط</h2>
 
 <table>
+
 <tr>
+<th>نظام النقاط</th>
 <th>الرتبة</th>
 <th>الرتبة التالية</th>
-<th>طريقة الحصول على النقاط</th>
 <th>النقاط المطلوبة</th>
+<th>طريقة الحصول على النقاط</th>
 </tr>
 
 <tr>
-<td>『 PUT 』</td>
-<td>『 P 』</td>
-<td>إجتياز التدريب</td>
+<td>لكل فحص / نقطتان</td>
+<td>『 PUT 』→ مسعف تحت التدريب</td>
+<td>『 P 』→ مسعف</td>
+<td>-</td>
+<td>إجتياز مرحلة التدريب</td>
+</tr>
+
+<tr>
+<td>التطعيم / نقطتان</td>
+<td>『 P 』→ مسعف</td>
+<td>『 NU 』→ ممرض</td>
 <td>15</td>
+<td>5 كشف طبي، 3 ساعات مباشرة</td>
 </tr>
 
 <tr>
-<td>『 P 』</td>
-<td>『 NU 』</td>
-<td>لكل فحص نقطتان</td>
+<td>تبرع بالدم / نقطتان</td>
+<td>『 NU 』→ ممرض</td>
+<td>『 EN 』→ ممرض متمرس</td>
 <td>25</td>
+<td>10 كشف طبي، 6 ساعات مباشرة</td>
 </tr>
 
 <tr>
-<td>『 NU 』</td>
-<td>『 EN 』</td>
-<td>التطعيم نقطتان</td>
+<td>أعمال خاصة بالهلال الأحمر / غير محدد</td>
+<td>『 EN 』→ ممرض متمرس</td>
+<td>『 DR 』→ دكتور</td>
 <td>35</td>
+<td>15 كشف طبي، 12 ساعة مباشرة</td>
 </tr>
 
 <tr>
-<td>『 EN 』</td>
-<td>『 DR 』</td>
-<td>تبرع بالدم نقطتان</td>
+<td>أعمال خاصة بالتدريبات الصحية / 6 نقاط</td>
+<td>『 DR 』→ دكتور</td>
+<td>『 ED 』→ دكتور متمرس</td>
 <td>45</td>
+<td>20 كشف طبي، 16 ساعة مباشرة</td>
 </tr>
 
 <tr>
-<td>『 DR 』</td>
-<td>『 ED 』</td>
-<td>أعمال الهلال الأحمر</td>
+<td>أعمال خاصة</td>
+<td>『 ED 』→ دكتور متمرس</td>
+<td>『 DRP 』→ دكتور نفسي</td>
 <td>55</td>
+<td>25 كشف طبي، 18 ساعة مباشرة</td>
 </tr>
 
 <tr>
-<td>『 ED 』</td>
-<td>『 DRP 』</td>
-<td>التدريبات الصحية (6 نقاط)</td>
+<td>العمليات الجراحية / 4 نقاط</td>
+<td>『 DRP 』→ دكتور نفسي</td>
+<td>→ كلية الجراحة</td>
 <td>65</td>
+<td>30 كشف طبي، 20 ساعة مباشرة</td>
 </tr>
 
 <tr>
-<td>『 DRP 』</td>
-<td>『 AS 』</td>
-<td>عمليات جراحية</td>
-<td>اجتياز الكلية</td>
+<td>حجز عند الدكاترة / 5 نقاط</td>
+<td>→ كلية الجراحة</td>
+<td>『 AS 』→ جراح مساعد</td>
+<td>اجتياز</td>
+<td>إجتياز كلية الجراحة</td>
 </tr>
 
 <tr>
-<td>『 AS 』</td>
-<td>『 SN 』</td>
-<td>حجز المرضى</td>
+<td>-</td>
+<td>『 AS 』→ جراح مساعد</td>
+<td>『 SN 』→ جراح</td>
 <td>75</td>
+<td>35 كشف طبي، 22 ساعة مباشرة</td>
 </tr>
 
 <tr>
-<td>『 SN 』</td>
-<td>『 SP 』</td>
-<td>حسب النشاط</td>
+<td>حسب أعماله في الوزارة</td>
+<td>『 SN 』→ جراح</td>
+<td>『 SP 』→ أخصائي</td>
 <td>85</td>
-</tr>
-
-<tr>
-<td>『 SP 』</td>
-<td>『 AR 』</td>
-<td>ترقية إدارية</td>
 <td>-</td>
 </tr>
 
 <tr>
-<td>『 AR 』</td>
-<td>『 PF 』</td>
+<td>ترقية من القيادة</td>
+<td>『 SP 』→ أخصائي</td>
+<td>『 AR 』→ استشاري</td>
 <td>-</td>
 <td>-</td>
 </tr>
 
 <tr>
-<td>『 PF 』</td>
-<td>『 AP 』</td>
+<td>-</td>
+<td>『 AR 』→ استشاري</td>
+<td>『 PF 』→ بروفيسور</td>
+<td>-</td>
+<td>-</td>
+</tr>
+
+<tr>
+<td>-</td>
+<td>『 PF 』→ بروفيسور</td>
+<td>『 AP 』→ مساعد بروفيسور</td>
 <td>-</td>
 <td>-</td>
 </tr>
