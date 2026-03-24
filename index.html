@@ -7,86 +7,87 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            /* اللون العنابي الموحد من الشعار */
             --anaabi-color: #2d0a15; 
             --anaabi-light: #4a1022;
             --text-dark: #311b22;
+            --accent-pink: #d81b60;
         }
 
         body { 
             margin: 0; font-family: 'Segoe UI', sans-serif; 
-            /* خلفية عنابية موحدة متدرجة بشكل بسيط وفخم */
             background: linear-gradient(180deg, var(--anaabi-color) 0%, var(--anaabi-light) 100%);
             background-attachment: fixed;
             min-height: 100vh; color: #fff;
             overflow-x: hidden;
         }
 
-        /* --- الهيدر العنابي --- */
-        .header-section {
-            padding: 70px 20px 50px;
-            text-align: center;
-        }
-        .header-section h1 { 
-            font-size: 2.6rem; 
-            margin: 0; 
-            font-weight: 800; 
-            color: #ffffff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        .header-section p { 
-            color: rgba(255,255,255,0.7); 
-            margin: 10px 0 0; 
-            font-size: 1.1rem; 
-            font-weight: 500;
-        }
+        .header-section { padding: 60px 20px 40px; text-align: center; }
+        .header-section h1 { font-size: 2.4rem; margin: 0; font-weight: 800; }
+        .header-section p { color: rgba(255,255,255,0.7); margin: 10px 0 0; font-size: 1.1rem; }
 
         .container { max-width: 450px; margin: 0 auto; padding: 0 20px 50px; }
 
-        /* --- الكروت البيضاء (كما طلبت) --- */
+        /* ستايل الكروت الأساسية */
         .emp-card {
-            background-color: #ffffff; /* خيارات باللون الأبيض */
-            border-radius: 24px;
-            padding: 22px;
+            background-color: #ffffff;
+            border-radius: 22px;
+            padding: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 18px;
-            border: none;
+            margin-bottom: 15px;
             text-decoration: none; 
             cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            
-            /* إعدادات الظهور التدريجي */
+            transition: 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             opacity: 0;
-            transform: translateY(25px);
+            transform: translateY(20px);
         }
         
-        .emp-card.reveal {
-            opacity: 1;
-            transform: translateY(0);
+        .emp-card.reveal { opacity: 1; transform: translateY(0); }
+        .emp-card:hover { background-color: #f8f9fa; transform: translateY(-3px); }
+
+        /* ستايل القائمة المنسدلة */
+        .dropdown-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            padding: 0 10px;
         }
 
-        .emp-card:hover { 
-            transform: translateY(-5px); 
-            background-color: #f8f9fa;
+        .dropdown-content.open { max-height: 300px; padding: 10px; }
+
+        .sub-option {
+            background: #fff;
+            color: var(--text-dark);
+            padding: 15px;
+            margin: 8px 0;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            display: block;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: 0.2s;
         }
-        
+        .sub-option:active { transform: scale(0.96); background-color: #fce4ec; }
+
         .card-text { color: var(--text-dark); text-align: right; flex-grow: 1; margin-right: 15px; }
-        .card-text h3 { margin: 0; font-size: 1.35rem; font-weight: 700; }
-        .card-text p { margin: 4px 0 0; font-size: 0.9rem; color: #6d4c56; }
+        .card-text h3 { margin: 0; font-size: 1.25rem; font-weight: 700; }
+        .card-text p { margin: 3px 0 0; font-size: 0.85rem; color: #6d4c56; }
         
-        /* الأيقونات العنابية داخل الكروت البيضاء */
         .card-icon {
-            background-color: #fce4ec; 
-            color: #880e4f; /* لون عنابي غامق للأيقونة ليبرز على الأبيض */
-            width: 60px; height: 60px;
-            border-radius: 18px;
+            background-color: #fce4ec; color: #880e4f;
+            width: 55px; height: 55px; border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
+            font-size: 22px; flex-shrink: 0;
         }
+
+        .chevron { transition: 0.3s; color: #880e4f; font-size: 1.2rem; }
+        .rotate { transform: rotate(180deg); }
 
     </style>
 </head>
@@ -99,39 +100,63 @@
 
     <div class="container">
         
-        <a href="#" class="emp-card">
+        <div class="emp-card reveal">
             <div class="card-icon"><i class="fa-solid fa-book-medical"></i></div>
             <div class="card-text">
                 <h3>قوانين وزارة الصحة</h3>
-                <p>اللوائح والأنظمة الداخلية للموظفين</p>
+                <p>اللوائح والأنظمة الداخلية</p>
             </div>
-        </a>
+        </div>
 
-        <a href="#" class="emp-card">
-            <div class="card-icon"><i class="fa-regular fa-calendar-alt"></i></div>
+        <a href="#" class="emp-card reveal">
+            <div class="card-icon"><i class="fa-solid fa-file-invoice"></i></div>
             <div class="card-text">
-                <h3>جدول وزارة الصحة</h3>
-                <p>مواعيد العمل والجداول الزمنية</p>
+                <h3>مستند موظفين وزارة الصحة</h3>
+                <p>النماذج والمستندات الرسمية</p>
             </div>
         </a>
 
-        <a href="#" class="emp-card">
+        <a href="#" class="emp-card reveal">
+            <div class="card-icon"><i class="fa-solid fa-table"></i></div>
+            <div class="card-text">
+                <h3>جدول بيانات وزارة الصحة</h3>
+                <p>مواعيد العمل والإحصائيات</p>
+            </div>
+        </a>
+
+        <div class="emp-card reveal" onclick="toggleDropdown()">
             <div class="card-icon"><i class="fa-solid fa-medal"></i></div>
             <div class="card-text">
                 <h3>نظام الترقيات والنقاط</h3>
-                <p>معايير الترقية وحساب النقاط الإدارية</p>
+                <p>اضغط لاستعراض الخيارات</p>
             </div>
-        </a>
+            <i class="fa-solid fa-chevron-down chevron" id="chevron-icon"></i>
+        </div>
+
+        <div class="dropdown-content" id="promo-dropdown">
+            <a href="#" class="sub-option">تقديم طلب ترقية</a>
+            <a href="#" class="sub-option">نظام الترقيات</a>
+            <a href="#" class="sub-option">نظام النقاط</a>
+        </div>
+
     </div>
 
     <script>
-        // تأثير الظهور التدريجي الموزع بالوقت
+        // دالة لفتح وإغلاق القائمة المنسدلة
+        function toggleDropdown() {
+            const dropdown = document.getElementById('promo-dropdown');
+            const chevron = document.getElementById('chevron-icon');
+            dropdown.classList.toggle('open');
+            chevron.classList.toggle('rotate');
+        }
+
+        // تأثير الظهور التدريجي
         window.onload = () => {
             const cards = document.querySelectorAll('.emp-card');
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.classList.add('reveal');
-                }, (index + 1) * 200); 
+                }, (index + 1) * 150); 
             });
         };
     </script>
