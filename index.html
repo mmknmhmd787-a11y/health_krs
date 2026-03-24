@@ -7,82 +7,75 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-red: #d81b60;
-            --dark-bg: #000000;
+            --primary-red: #e91e63; /* وردي مشرق للأيقونات والعناوين */
+            --dark-bg: #000000; /* خلفية سوداء */
+            --card-dark: #0f172a; /* كحلي داكن للكروت */
+            --text-gray: #94a3b8; /* رمادي خفيف للشرح الفرعي */
         }
 
         body { 
             margin: 0; font-family: 'Segoe UI', sans-serif; 
-            background-color: #ffffff; min-height: 100vh; color: #1f2937;
+            background-color: var(--dark-bg); min-height: 100vh; color: #fff;
+            overflow-x: hidden;
         }
 
         /* --- الهيدر الأسود الملكي --- */
         .header-black {
             background-color: var(--dark-bg);
-            color: #fff;
-            padding: 80px 20px 60px;
+            padding: 70px 20px 50px;
             text-align: center;
         }
-        .header-black h1 { 
-            font-size: 2.6rem; 
-            margin: 0; 
-            font-weight: 800;
-        }
+        .header-black h1 { font-size: 2.6rem; margin: 0; font-weight: 800; }
         .header-black p { 
-            color: #d81b60; 
-            margin: 10px 0 0; 
-            font-size: 1.1rem;
-            font-weight: 500;
+            color: var(--primary-red); 
+            margin: 10px 0 0; font-size: 1.1rem; font-weight: 500;
         }
 
-        .container { 
-            max-width: 450px; 
-            margin: 0 auto; 
-            padding: 40px 20px 50px; 
-        }
+        .container { max-width: 450px; margin: 0 auto; padding: 0 20px 50px; }
 
         .section-title {
             text-align: center;
-            color: #311b22;
+            color: #fff;
             font-size: 1.8rem;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             font-weight: bold;
-            position: relative;
-        }
-        
-        /* خط تجميلي بسيط تحت العنوان باللون الوردي */
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 40px;
-            height: 3px;
-            background: var(--primary-red);
-            margin: 10px auto;
-            border-radius: 10px;
         }
 
-        /* --- أزرار الأنظمة --- */
-        .emp-button {
-            background: linear-gradient(135deg, #e91e63, #880e4f);
-            color: white;
-            padding: 24px;
-            border-radius: 22px;
+        /* --- تصميم الكروت الجديد (ستايل الصورة) --- */
+        .emp-card {
+            background-color: var(--card-dark);
+            border-radius: 28px;
+            padding: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             margin-bottom: 18px;
-            text-align: center;
-            font-size: 1.3rem;
-            font-weight: 600;
-            text-decoration: none;
-            display: block;
-            box-shadow: 0 8px 20px rgba(233, 30, 99, 0.15);
+            border: 1px solid rgba(255,255,255,0.05); /* إطار شفاف خفيف */
+            text-decoration: none; /* لإزالة خط الرابط */
+            cursor: pointer;
             transition: 0.3s ease;
-            border: none;
-            width: 100%;
-            box-sizing: border-box;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
         
-        .emp-button:active { 
-            transform: scale(0.96); 
-            box-shadow: 0 4px 10px rgba(233, 30, 99, 0.1);
+        .emp-card:hover { 
+            background-color: #1a2333; 
+            transform: translateY(-3px); /* رفعة خفيفة عند التمرير */
+        }
+        
+        .emp-card:active { transform: scale(0.97); }
+
+        .card-text { color: #fff; text-align: right; }
+        .card-text h3 { margin: 0; font-size: 1.4rem; font-weight: 700; }
+        .card-text p { margin: 5px 0 0; font-size: 0.95rem; color: var(--text-gray); }
+        
+        /* أيقونات موحدة باللون الوردي */
+        .card-icon {
+            background-color: rgba(233, 30, 99, 0.1); /* لون وردي شفاف للخلفية */
+            color: var(--primary-red);
+            width: 65px; height: 65px;
+            border-radius: 20px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 26px;
         }
 
     </style>
@@ -97,9 +90,30 @@
     <div class="container">
         <h2 class="section-title">أنظمة الموظفين</h2>
 
-        <a href="#" class="emp-button">قوانين وزارة الصحة</a>
-        <a href="#" class="emp-button">جدول وزارة الصحة</a>
-        <a href="#" class="emp-button">نظام الترقيات والنقاط</a>
+        <a href="#" class="emp-card">
+            <div class="card-icon"><i class="fa-solid fa-book-medical"></i></div>
+            <div class="card-text">
+                <h3>قوانين وزارة الصحة</h3>
+                <p>اللوائح والأنظمة الداخلية للموظفين</p>
+            </div>
+        </a>
+
+        <a href="#" class="emp-card">
+            <div class="card-icon"><i class="fa-regular fa-calendar-alt"></i></div>
+            <div class="card-text">
+                <h3>جدول وزارة الصحة</h3>
+                <p>مواعيد العمل والجداول الزمنية</p>
+            </div>
+        </a>
+
+        <a href="#" class="emp-card">
+            <div class="card-icon"><i class="fa-solid fa-medal"></i></div>
+            <div class="card-text">
+                <h3>نظام الترقيات والنقاط</h3>
+                <p>معايير الترقية وحساب النقاط الإدارية</p>
+            </div>
+        </a>
+
     </div>
 
 </body>
