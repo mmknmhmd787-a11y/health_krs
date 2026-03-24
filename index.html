@@ -21,11 +21,21 @@
             overflow-x: hidden;
         }
 
-        .header-section { padding: 60px 20px 40px; text-align: center; }
+        .header-section { padding: 60px 20px 30px; text-align: center; }
         .header-section h1 { font-size: 2.4rem; margin: 0; font-weight: 800; }
         .header-section p { color: rgba(255,255,255,0.7); margin: 10px 0 0; font-size: 1.1rem; }
 
         .container { max-width: 450px; margin: 0 auto; padding: 0 20px 50px; }
+
+        .group-title {
+            font-size: 1.4rem;
+            margin: 30px 0 15px;
+            padding-right: 10px;
+            border-right: 4px solid #fff;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeIn 0.5s forwards 0.2s;
+        }
 
         /* ستايل الكروت الأساسية */
         .emp-card {
@@ -89,6 +99,8 @@
         .chevron { transition: 0.3s; color: #880e4f; font-size: 1.2rem; }
         .rotate { transform: rotate(180deg); }
 
+        @keyframes fadeIn { to { opacity: 1; } }
+
     </style>
 </head>
 <body>
@@ -100,7 +112,9 @@
 
     <div class="container">
         
-        <div class="emp-card reveal">
+        <div class="group-title">الأنظمة الأساسية</div>
+
+        <div class="emp-card">
             <div class="card-icon"><i class="fa-solid fa-book-medical"></i></div>
             <div class="card-text">
                 <h3>قوانين وزارة الصحة</h3>
@@ -108,7 +122,7 @@
             </div>
         </div>
 
-        <a href="#" class="emp-card reveal">
+        <a href="#" class="emp-card">
             <div class="card-icon"><i class="fa-solid fa-file-invoice"></i></div>
             <div class="card-text">
                 <h3>مستند موظفين وزارة الصحة</h3>
@@ -116,7 +130,7 @@
             </div>
         </a>
 
-        <a href="#" class="emp-card reveal">
+        <a href="#" class="emp-card">
             <div class="card-icon"><i class="fa-solid fa-table"></i></div>
             <div class="card-text">
                 <h3>جدول بيانات وزارة الصحة</h3>
@@ -124,7 +138,7 @@
             </div>
         </a>
 
-        <div class="emp-card reveal" onclick="toggleDropdown()">
+        <div class="emp-card" onclick="toggleDropdown()">
             <div class="card-icon"><i class="fa-solid fa-medal"></i></div>
             <div class="card-text">
                 <h3>نظام الترقيات والنقاط</h3>
@@ -139,10 +153,35 @@
             <a href="#" class="sub-option">نظام النقاط</a>
         </div>
 
+        <div class="group-title">القطاعات الخاصة</div>
+
+        <a href="#" class="emp-card">
+            <div class="card-icon"><i class="fa-solid fa-users-gear"></i></div>
+            <div class="card-text">
+                <h3>تقديم الموارد البشرية</h3>
+                <p>طلبات الانضمام لقسم HR</p>
+            </div>
+        </a>
+
+        <a href="#" class="emp-card">
+            <div class="card-icon"><i class="fa-solid fa-truck-medical"></i></div>
+            <div class="card-text">
+                <h3>تقديم الهلال الاحمر</h3>
+                <p>طلبات الانضمام للمسعفين</p>
+            </div>
+        </a>
+
+        <a href="#" class="emp-card">
+            <div class="card-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+            <div class="card-text">
+                <h3>تقديم المدربين</h3>
+                <p>طلبات الانضمام لقسم التدريب</p>
+            </div>
+        </a>
+
     </div>
 
     <script>
-        // دالة لفتح وإغلاق القائمة المنسدلة
         function toggleDropdown() {
             const dropdown = document.getElementById('promo-dropdown');
             const chevron = document.getElementById('chevron-icon');
@@ -150,13 +189,12 @@
             chevron.classList.toggle('rotate');
         }
 
-        // تأثير الظهور التدريجي
         window.onload = () => {
             const cards = document.querySelectorAll('.emp-card');
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.classList.add('reveal');
-                }, (index + 1) * 150); 
+                }, (index + 1) * 120); 
             });
         };
     </script>
