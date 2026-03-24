@@ -7,53 +7,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-pink: #e91e63; /* لون الأيقونات */
-            --navy-dark: #0f172a;    /* الكحلي الغامق (خلفية الكروت) */
-            --navy-light: #1e293b;   /* كحلي أفتح قليلاً للتدرج */
+            /* --- توحيد الألوان بناءً على الصورة المرسلة --- */
+            --primary-blue: #3b82f6; /* الأزرق الكهربائي المشرق */
+            --dark-navy: #0f172a;    /* الكحلي الغامق جداً */
+            --deep-black: #050509;   /* خلفية سوداء شبه تامة */
+            --text-gray: #94a3b8;   /* رمادي خفيف للشرح الفرعي */
         }
 
         body { 
             margin: 0; font-family: 'Segoe UI', sans-serif; 
-            /* --- خلفية متدرجة بالكحلي فقط بدون أسود --- */
-            background: linear-gradient(180deg, var(--navy-dark) 0%, var(--navy-light) 100%);
-            background-attachment: fixed;
+            background-color: var(--deep-black); 
             min-height: 100vh; color: #fff;
             overflow-x: hidden;
+            
+            /* --- إضافة تأثير الشبكة التقنية في الخلفية مثل الصورة --- */
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 30px 30px; /* حجم الشبكة */
         }
 
-        /* --- الهيدر بالكحلي الغامق جداً --- */
+        /* --- الهيدر العصري --- */
         .header-section {
-            background-color: #0a0f1d;
+            background-color: var(--deep-black);
             padding: 70px 20px 50px;
             text-align: center;
-            border-bottom: 2px solid rgba(233, 30, 99, 0.2);
+            border-bottom: 1px solid rgba(59, 130, 246, 0.1);
         }
         .header-section h1 { font-size: 2.6rem; margin: 0; font-weight: 800; color: #fff; }
         .header-section p { 
-            color: var(--primary-pink); 
+            color: var(--primary-blue); 
             margin: 10px 0 0; font-size: 1.1rem; font-weight: 500;
         }
 
         .container { max-width: 450px; margin: 0 auto; padding: 40px 20px 50px; }
 
-        /* --- الكروت الموحدة بالكحلي --- */
+        /* --- الكروت الموحدة بالأزرق الداكن --- */
         .emp-card {
-            background-color: rgba(255, 255, 255, 0.05); /* شفافية بسيطة فوق الكحلي */
-            backdrop-filter: blur(10px);
-            border-radius: 28px;
+            background-color: var(--dark-navy);
+            border-radius: 20px; /* زوايا أقل انحناءً لستايل مودرن */
             padding: 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.03); /* إطار شفاف جداً */
             text-decoration: none; 
             cursor: pointer;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s ease-out;
             
             /* إعدادات الظهور التدريجي */
             opacity: 0;
-            transform: translateY(30px);
+            transform: translateY(20px);
         }
         
         /* كلاس الظهور */
@@ -62,22 +67,23 @@
             transform: translateY(0);
         }
 
+        /* تأثير التمرير باللون الأزرق */
         .emp-card:hover { 
-            background-color: rgba(233, 30, 99, 0.1); 
-            transform: translateY(-5px); 
-            border-color: var(--primary-pink);
+            background-color: #1a253d; 
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2); /* تأثير توهج أزرق */
         }
         
         .card-text { color: #fff; text-align: right; flex-grow: 1; margin-right: 15px; }
-        .card-text h3 { margin: 0; font-size: 1.35rem; font-weight: 700; }
-        .card-text p { margin: 4px 0 0; font-size: 0.9rem; color: #94a3b8; }
+        .card-text h3 { margin: 0; font-size: 1.35rem; font-weight: 700; color: #fff; }
+        .card-text p { margin: 4px 0 0; font-size: 0.9rem; color: var(--text-gray); }
         
-        /* الأيقونات الوردية الموحدة */
+        /* الأيقونات الزرقاء الموحدة (مثل الصورة) */
         .card-icon {
-            background-color: rgba(233, 30, 99, 0.15); 
-            color: var(--primary-pink);
+            background-color: rgba(59, 130, 246, 0.1); /* خلفية زرقاء شفافة */
+            color: var(--primary-blue);
             width: 60px; height: 60px;
-            border-radius: 20px;
+            border-radius: 15px;
             display: flex; align-items: center; justify-content: center;
             font-size: 24px;
             flex-shrink: 0;
@@ -126,7 +132,7 @@
             cards.forEach((card, index) => {
                 setTimeout(() => {
                     card.classList.add('reveal');
-                }, (index + 1) * 250); // يظهر كرت كل ربع ثانية
+                }, (index + 1) * 200); // يظهر كرت كل خمس ثانية (أسرع قليلاً)
             });
         };
     </script>
