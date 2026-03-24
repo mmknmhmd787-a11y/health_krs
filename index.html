@@ -7,27 +7,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-red: #e91e63; /* وردي مشرق للأيقونات والعناوين */
-            --dark-bg: #000000; /* خلفية سوداء */
-            --card-dark: #0f172a; /* كحلي داكن للكروت */
-            --text-gray: #94a3b8; /* رمادي خفيف للشرح الفرعي */
+            --primary-pink: #e91e63; /* لون الأيقونات */
+            --dark-card: #0f172a; /* لون الكروت الكحلي الداكن */
+            --gradient-start: #0f172a; /* بداية التدرج (الكحلي الداكن) */
+            --gradient-end: #311b22; /* نهاية التدرج (الوردي الغامق) */
         }
 
         body { 
             margin: 0; font-family: 'Segoe UI', sans-serif; 
-            background-color: var(--dark-bg); min-height: 100vh; color: #fff;
+            /* --- التدرج اللوني للخلفية المقتبس من الكروت --- */
+            background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            min-height: 100vh; color: #fff;
             overflow-x: hidden;
         }
 
         /* --- الهيدر الأسود الملكي --- */
         .header-black {
-            background-color: var(--dark-bg);
+            background-color: #000000;
             padding: 70px 20px 50px;
             text-align: center;
         }
         .header-black h1 { font-size: 2.6rem; margin: 0; font-weight: 800; }
         .header-black p { 
-            color: var(--primary-red); 
+            color: var(--primary-pink); 
             margin: 10px 0 0; font-size: 1.1rem; font-weight: 500;
         }
 
@@ -41,42 +43,60 @@
             font-weight: bold;
         }
 
-        /* --- تصميم الكروت الجديد (ستايل الصورة) --- */
+        /* --- الكروت الموحدة التصميم والألوان --- */
         .emp-card {
-            background-color: var(--card-dark);
+            background-color: var(--dark-card);
             border-radius: 28px;
             padding: 22px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 18px;
-            border: 1px solid rgba(255,255,255,0.05); /* إطار شفاف خفيف */
-            text-decoration: none; /* لإزالة خط الرابط */
+            border: 1px solid rgba(255,255,255,0.03); /* إطار شفاف جداً */
+            text-decoration: none; 
             cursor: pointer;
             transition: 0.3s ease;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            
+            /* --- إضافة تأثير الظهور التدريجي --- */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInCard 0.5s ease-out forwards;
         }
         
         .emp-card:hover { 
             background-color: #1a2333; 
-            transform: translateY(-3px); /* رفعة خفيفة عند التمرير */
+            transform: translateY(-3px); 
         }
         
         .emp-card:active { transform: scale(0.97); }
 
         .card-text { color: #fff; text-align: right; }
         .card-text h3 { margin: 0; font-size: 1.4rem; font-weight: 700; }
-        .card-text p { margin: 5px 0 0; font-size: 0.95rem; color: var(--text-gray); }
+        .card-text p { margin: 5px 0 0; font-size: 0.95rem; color: #94a3b8; }
         
-        /* أيقونات موحدة باللون الوردي */
+        /* الأيقونات الوردية */
         .card-icon {
-            background-color: rgba(233, 30, 99, 0.1); /* لون وردي شفاف للخلفية */
-            color: var(--primary-red);
+            background-color: rgba(233, 30, 99, 0.1); 
+            color: var(--primary-pink);
             width: 65px; height: 65px;
             border-radius: 20px;
             display: flex; align-items: center; justify-content: center;
             font-size: 26px;
         }
+
+        /* --- تعريف تأثير الظهور التدريجي (Keyframes) --- */
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* --- تطبيق الترتيب في الظهور (Delay) --- */
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
 
     </style>
 </head>
@@ -90,7 +110,7 @@
     <div class="container">
         <h2 class="section-title">أنظمة الموظفين</h2>
 
-        <a href="#" class="emp-card">
+        <a href="#" class="emp-card delay-1">
             <div class="card-icon"><i class="fa-solid fa-book-medical"></i></div>
             <div class="card-text">
                 <h3>قوانين وزارة الصحة</h3>
@@ -98,7 +118,7 @@
             </div>
         </a>
 
-        <a href="#" class="emp-card">
+        <a href="#" class="emp-card delay-2">
             <div class="card-icon"><i class="fa-regular fa-calendar-alt"></i></div>
             <div class="card-text">
                 <h3>جدول وزارة الصحة</h3>
@@ -106,7 +126,7 @@
             </div>
         </a>
 
-        <a href="#" class="emp-card">
+        <a href="#" class="emp-card delay-3">
             <div class="card-icon"><i class="fa-solid fa-medal"></i></div>
             <div class="card-text">
                 <h3>نظام الترقيات والنقاط</h3>
