@@ -55,6 +55,7 @@
         .emp-card.reveal { opacity: 1; transform: translateY(0); }
         .emp-card:hover { background-color: #f8f9fa; transform: translateY(-3px); }
 
+        /* ستايل القائمة المنسدلة */
         .dropdown-content {
             max-height: 0;
             overflow: hidden;
@@ -65,7 +66,7 @@
             padding: 0 10px;
         }
 
-        .dropdown-content.open { max-height: 300px; padding: 10px; }
+        .dropdown-content.open { max-height: 400px; padding: 10px; }
 
         .sub-option {
             background: #fff;
@@ -80,6 +81,7 @@
             font-size: 1rem;
             transition: 0.2s;
         }
+        .sub-option:active { transform: scale(0.96); background-color: #fce4ec; }
 
         .card-text { color: var(--text-dark); text-align: right; flex-grow: 1; margin-right: 15px; }
         .card-text h3 { margin: 0; font-size: 1.25rem; font-weight: 700; }
@@ -92,7 +94,7 @@
             font-size: 22px; flex-shrink: 0;
         }
 
-        .chevron { transition: 0.3s; color: #880e4f; font-size: 1.2rem; }
+        .chevron { transition: 0.3s; color: #880e4f; font-size: 1.1rem; }
         .rotate { transform: rotate(180deg); }
 
         @keyframes fadeIn { to { opacity: 1; } }
@@ -118,13 +120,20 @@
             </div>
         </a>
 
-        <a href="#" class="emp-card">
+        <div class="emp-card" onclick="toggleDropdown('doc-dropdown', 'doc-chevron')">
             <div class="card-icon"><i class="fa-solid fa-file-invoice"></i></div>
             <div class="card-text">
                 <h3>مستند موظفين وزارة الصحة</h3>
-                <p>النماذج والمستندات الرسمية</p>
+                <p>اضغط لاستعراض المستندات</p>
             </div>
-        </a>
+            <i class="fa-solid fa-chevron-down chevron" id="doc-chevron"></i>
+        </div>
+
+        <div class="dropdown-content" id="doc-dropdown">
+            <a href="#" class="sub-option">نموذج مباشرة عمل</a>
+            <a href="#" class="sub-option">طلب إجازة رسمية</a>
+            <a href="#" class="sub-option">رفع تقرير إداري</a>
+        </div>
 
         <a href="#" class="emp-card">
             <div class="card-icon"><i class="fa-solid fa-table"></i></div>
@@ -134,13 +143,13 @@
             </div>
         </a>
 
-        <div class="emp-card" onclick="toggleDropdown()">
+        <div class="emp-card" onclick="toggleDropdown('promo-dropdown', 'promo-chevron')">
             <div class="card-icon"><i class="fa-solid fa-medal"></i></div>
             <div class="card-text">
                 <h3>نظام الترقيات والنقاط</h3>
                 <p>اضغط لاستعراض الخيارات</p>
             </div>
-            <i class="fa-solid fa-chevron-down chevron" id="chevron-icon"></i>
+            <i class="fa-solid fa-chevron-down chevron" id="promo-chevron"></i>
         </div>
 
         <div class="dropdown-content" id="promo-dropdown">
@@ -178,9 +187,10 @@
     </div>
 
     <script>
-        function toggleDropdown() {
-            const dropdown = document.getElementById('promo-dropdown');
-            const chevron = document.getElementById('chevron-icon');
+        // دالة موحدة للتحكم في جميع القوائم المنسدلة
+        function toggleDropdown(dropdownId, chevronId) {
+            const dropdown = document.getElementById(dropdownId);
+            const chevron = document.getElementById(chevronId);
             dropdown.classList.toggle('open');
             chevron.classList.toggle('rotate');
         }
