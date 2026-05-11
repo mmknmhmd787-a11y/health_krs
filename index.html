@@ -40,7 +40,6 @@
             border: 1px solid #1a201a;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: 0.3s;
         }
 
         .hidden { display: none !important; }
@@ -61,9 +60,10 @@
             font-size: 0.9rem;
             margin-bottom: 15px;
             background: rgba(56, 189, 248, 0.1);
-            padding: 10px;
+            padding: 12px;
             border-radius: 10px;
             display: none;
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
 
         .input-group { text-align: right; margin-bottom: 20px; }
@@ -95,7 +95,7 @@
             cursor: pointer; transition: 0.3s;
         }
         .opt-button:hover { background: rgba(74, 222, 128, 0.1); border-color: var(--primary-green); }
-        .opt-button i { color: var(--primary-green); width: 20px; }
+        .opt-button i { color: var(--primary-green); width: 20px; text-align: center; }
 
         .user-info {
             background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; 
@@ -106,25 +106,25 @@
             border-radius: 5px; font-size: 0.75rem; float: left;
         }
 
-        /* نافذة القوانين المنبثقة */
+        /* نافذة القوانين */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center;
-            z-index: 1000; padding: 20px; box-sizing: border-box;
+            z-index: 1000; padding: 10px; box-sizing: border-box;
         }
         .modal-content {
-            background: var(--card-bg); width: 100%; max-width: 600px; max-height: 80vh;
+            background: var(--card-bg); width: 100%; max-width: 650px; height: 90vh;
             border-radius: 20px; border: 1px solid var(--primary-green);
-            padding: 30px; overflow-y: auto; position: relative; text-align: right;
+            padding: 25px; overflow-y: auto; position: relative; text-align: right;
         }
         .close-btn {
             position: sticky; top: 0; float: left; color: var(--error-red);
             font-size: 1.5rem; cursor: pointer; background: #222; border-radius: 50%; width: 35px; height: 35px;
-            display: flex; justify-content: center; align-items: center; border: 1px solid #333;
+            display: flex; justify-content: center; align-items: center; border: 1px solid #333; z-index: 10;
         }
-        .law-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
-        .law-item b { color: var(--primary-green); }
-        .penalty { color: #ffae42; font-size: 0.85rem; font-style: italic; display: block; margin-top: 5px; }
+        .law-item { margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #1a201a; line-height: 1.6; }
+        .law-item b { color: var(--primary-green); font-size: 1.1rem; }
+        .penalty { color: #ffae42; font-size: 0.85rem; display: block; margin-top: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -165,7 +165,7 @@
 
             <div class="options-grid">
                 <div class="opt-button" onclick="showLaws()">
-                    <i class="fa-solid fa-gavel"></i>
+                    <i class="fa-solid fa-file-shield"></i>
                     <span>قوانين وزارة الصحة</span>
                 </div>
                 <a href="#" class="opt-button">
@@ -185,29 +185,41 @@
     <div id="lawsModal" class="modal">
         <div class="modal-content">
             <div class="close-btn" onclick="hideLaws()">&times;</div>
-            <h2 style="margin-top:0">قوانين وزارة الصحة</h2>
-            <div id="lawsList">
-                </div>
+            <h2 style="margin-top:0; border-bottom: 1px solid var(--primary-green); padding-bottom: 10px;">قوانين وزارة الصحة | KR</h2>
+            <div id="lawsList"></div>
         </div>
     </div>
 
     <script>
         const SECRET_KEY = "Krs123456&0";
         
-        // مصفوفة القوانين التي أرسلتها
+        // قائمة القوانين كاملة (25 قانون)
         const laws = [
-            { text: "الإحترام المتبادل بين منسوبي وزارة الصحة و المواطنين و منسوبي الوزارات.", penalty: "تصل إلى الفصل" },
-            { text: "يمنع منعاً باتاً تصوير أو تسريب أو التحدث عن شيء يخص وزارة الصحة.", penalty: "الفصل من الخدمة و المحاسبة الرقابية" },
-            { text: "يمنع لأي صحي تحت التدريب أستلام حجز أو مباشرة أي عمل.", penalty: "إنذار وتصل إلي الفصل" },
-            { text: "يمنع منشن قيادة الوزارة و المسؤولين ويسمح فقط للشكاوى والاستفسارات.", penalty: "إنذار وتصل إلى ملاحظة" },
-            { text: "يمنع طلب الترقية أو الترقيات الإستثنائية أو المناصب في الوزارة.", penalty: "ملاحظة" },
-            { text: "يمنع مباشرة أي عمل في حال كنت غير محصن.", penalty: "ملاحظة" },
-            { text: "يمنع التلاعب في سجلاتك أو الكشوفات أو دفاتر الحضور.", penalty: "ملاحظة وتصل إلي الفصل" },
-            { text: "يمنع قيادة مركبات الهلال الأحمر إلا للأعضاء المصرح لهم.", penalty: "ملاحظة" },
-            { text: "يمنع طلب استقالة إلا بعد ترقيتك لمرتين من تاريخ تعيينك كصحي معتمد.", penalty: "رفض الإستقالة" },
-            { text: "يمنع إستلام أكثر من موعد في نفس الوقت.", penalty: "ملاحظة" },
-            { text: "يمنع إزعاج إدارة الموارد البشرية لأمور مثل حسب النقاط وغيرها.", penalty: "ملاحظة" },
-            { text: "يمنع السؤال عن تقديم القطاعات والكليات مثل دورة الهلال الأحمر.", penalty: "بلاك لست مدة معينة من القطاع" }
+            { t: "الإحترام المتبادل بين منسوبي وزارة الصحة و المواطنين والوزارات الأخرى.", p: "ملاحظة وتصل إلى الفصل" },
+            { t: "يمنع منعاً باتاً تصوير أو تسريب أو التحدث عن أي شيء يخص الوزارة بالخارج.", p: "الفصل من الخدمة و المحاسبة الرقابية" },
+            { t: "يمنع لأي صحي تحت التدريب أستلام حجز أو مباشرة أي عمل.", p: "إنذار وتصل إلي الفصل" },
+            { t: "يمنع منشن قيادة الوزارة والمسؤولين لغير الشكاوى والاستفسارات الرسمية.", p: "إنذار وتصل إلى ملاحظة" },
+            { t: "يمنع طلب الترقية أو الترقيات الإستثنائية أو المناصب.", p: "ملاحظة" },
+            { t: "يمنع مباشرة أي عمل في حال كنت غير محصن.", p: "ملاحظة" },
+            { t: "يمنع التلاعب في السجلات أو الكشوفات أو دفاتر الحضور.", p: "ملاحظة وتصل إلي الفصل" },
+            { t: "يمنع قيادة مركبات الهلال الأحمر إلا للأعضاء المصرح لهم بالرتبة.", p: "ملاحظة" },
+            { t: "يمنع طلب إستقالة إلا بعد ترقيتك مرتين كصحي معتمد.", p: "رفض الإستقالة" },
+            { t: "يمنع إستلام أكثر من موعد (حالة) في نفس الوقت.", p: "ملاحظة" },
+            { t: "يمنع إزعاج إدارة الموارد البشرية لأمور حسب النقاط وغيرها.", p: "ملاحظة" },
+            { t: "يمنع السؤال عن تقديم القطاعات والكليات (دورة الهلال الأحمر وغيرها).", p: "بلاك لست مؤقت من القطاع" },
+            { t: "يمنع السؤال عن نتائج تقديم القطاعات.", p: "بلاك لست مؤقت من القطاع" },
+            { t: "يجب طلب إجازة وظيفية عند التغيب عن التفاعل.", p: "محاسبة حسب نظام عقوبات التفاعل" },
+            { t: "العقوبات عند عدم التفاعل (أسبوع: ملاحظة 1، أسبوعين: ملاحظة 2، شهر: تنتيل رتبة).", p: "تصل إلى الفصل عند بلوغ شهر ونصف" },
+            { t: "يمنع طلب حجز موعد من شخص آخر.", p: "إنذار" },
+            { t: "بعد إنعاش الميت يجب التحمد له بالسلامة (تقمص الشخصية).", p: "ملاحظة" },
+            { t: "يجب تشغيل أضواء الطوارئ (السفاتي) عند مباشرة أي حالة.", p: "ملاحظة تصل إلى التنتيل" },
+            { t: "يمنع الإنعاش في (مقر العصابات، محلات الأسلحة، مناطق إطلاق النار النشطة).", p: "ملاحظة تصل إلى تنتيل الرتب" },
+            { t: "يجب التواجد في كل حالة يتم إعلانها في قناة البلاغات عند تواجدك بالمدينة.", p: "ملاحظة" },
+            { t: "يجب دخول راديو وزارة الصحة والإلتزام بتوجيهات العمليات.", p: "ملاحظة" },
+            { t: "عند المباشرة بالإسعاف يجب توفر (قائد، دكتور، 1-2 ممرضين) أو إذن العمليات.", p: "ملاحظة" },
+            { t: "يمنع القيام بعمل تخصص غيرك ويجب الإلتزام بتخصصك فقط.", p: "إنذار شفهي ثم ملاحظة وتنتيل" },
+            { t: "يجب الإلتزام بمستند نظام التخصصات الصحي المعتمد.", p: "ملاحظة تصل إلى تنتيل الرتبة" },
+            { t: "يمنع أخذ مبالغ مالية من المواطنين لأي عمل باستثناء العمليات المقررة.", p: "ملاحظة" }
         ];
 
         const loginForm = document.getElementById('loginForm');
@@ -226,24 +238,23 @@
                 userField.value = lastUser;
             }
 
-            // تعبئة قائمة القوانين
             const lawsList = document.getElementById('lawsList');
             laws.forEach((law, index) => {
                 lawsList.innerHTML += `
                     <div class="law-item">
-                        <b>${index + 1} - </b> ${law.text}
-                        <span class="penalty">- العقوبة: ${law.penalty}</span>
+                        <b>${index + 1} - </b> ${law.t}
+                        <span class="penalty"><i class="fa-solid fa-triangle-exclamation"></i> العقوبة: ${law.p}</span>
                     </div>
                 `;
             });
+            lawsList.innerHTML += `<p style="text-align:center; color:var(--text-muted);">__ قابلة للتعديل من قيادة الوزارة __</p>`;
         };
 
         loginForm.onsubmit = (e) => {
             e.preventDefault(); 
-            const userVal = userField.value;
             if (passField.value === SECRET_KEY) {
-                localStorage.setItem('lastKRUser', userVal);
-                document.getElementById('displayUser').innerText = userVal;
+                localStorage.setItem('lastKRUser', userField.value);
+                document.getElementById('displayUser').innerText = userField.value;
                 loginPage.classList.add('hidden');
                 dashboardPage.classList.remove('hidden');
             } else {
