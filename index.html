@@ -40,6 +40,7 @@
             border: 1px solid #1a201a;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s;
         }
 
         .hidden { display: none !important; }
@@ -55,7 +56,6 @@
         h2 { color: var(--primary-green); font-size: 1.5rem; margin-bottom: 10px; }
         .subtitle { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px; line-height: 1.5; }
 
-        /* رسالة الترحيب الخاصة بالمستخدم العائد */
         #welcomeBack {
             color: var(--accent-blue);
             font-size: 0.9rem;
@@ -63,7 +63,7 @@
             background: rgba(56, 189, 248, 0.1);
             padding: 10px;
             border-radius: 10px;
-            display: none; /* مخفية افتراضياً */
+            display: none;
         }
 
         .input-group { text-align: right; margin-bottom: 20px; }
@@ -85,7 +85,6 @@
             background: linear-gradient(135deg, #22c55e, #166534);
             color: #000; font-weight: bold; cursor: pointer; font-size: 1rem;
             display: flex; justify-content: center; align-items: center; gap: 10px;
-            transition: 0.3s;
         }
 
         .options-grid { display: grid; gap: 12px; margin-top: 25px; }
@@ -93,7 +92,9 @@
             background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 15px; border-radius: 12px; color: #e5e7eb; text-decoration: none;
             display: flex; align-items: center; gap: 15px; font-size: 0.9rem;
+            cursor: pointer; transition: 0.3s;
         }
+        .opt-button:hover { background: rgba(74, 222, 128, 0.1); border-color: var(--primary-green); }
         .opt-button i { color: var(--primary-green); width: 20px; }
 
         .user-info {
@@ -104,6 +105,26 @@
             background: var(--primary-green); color: black; padding: 2px 8px; 
             border-radius: 5px; font-size: 0.75rem; float: left;
         }
+
+        /* نافذة القوانين المنبثقة */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center;
+            z-index: 1000; padding: 20px; box-sizing: border-box;
+        }
+        .modal-content {
+            background: var(--card-bg); width: 100%; max-width: 600px; max-height: 80vh;
+            border-radius: 20px; border: 1px solid var(--primary-green);
+            padding: 30px; overflow-y: auto; position: relative; text-align: right;
+        }
+        .close-btn {
+            position: sticky; top: 0; float: left; color: var(--error-red);
+            font-size: 1.5rem; cursor: pointer; background: #222; border-radius: 50%; width: 35px; height: 35px;
+            display: flex; justify-content: center; align-items: center; border: 1px solid #333;
+        }
+        .law-item { margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #222; }
+        .law-item b { color: var(--primary-green); }
+        .penalty { color: #ffae42; font-size: 0.85rem; font-style: italic; display: block; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -143,17 +164,52 @@
             </div>
 
             <div class="options-grid">
-                <a href="#" class="opt-button"><i class="fa-solid fa-gavel"></i> <span>قوانين وزارة الصحة</span></a>
-                <a href="#" class="opt-button"><i class="fa-solid fa-users-gear"></i> <span>مستند موظفين وزارة الصحة</span></a>
-                <a href="#" class="opt-button"><i class="fa-solid fa-table-list"></i> <span>جدول بيانات وزارة الصحة</span></a>
+                <div class="opt-button" onclick="showLaws()">
+                    <i class="fa-solid fa-gavel"></i>
+                    <span>قوانين وزارة الصحة</span>
+                </div>
+                <a href="#" class="opt-button">
+                    <i class="fa-solid fa-users-gear"></i>
+                    <span>مستند موظفين وزارة الصحة</span>
+                </a>
+                <a href="#" class="opt-button">
+                    <i class="fa-solid fa-table-list"></i>
+                    <span>جدول بيانات وزارة الصحة</span>
+                </a>
             </div>
 
             <button onclick="location.reload()" class="btn" style="margin-top: 25px; background: #222; color: #fff; border: 1px solid #333;">تسجيل الخروج</button>
         </div>
     </div>
 
+    <div id="lawsModal" class="modal">
+        <div class="modal-content">
+            <div class="close-btn" onclick="hideLaws()">&times;</div>
+            <h2 style="margin-top:0">قوانين وزارة الصحة</h2>
+            <div id="lawsList">
+                </div>
+        </div>
+    </div>
+
     <script>
-        const SECRET_KEY = "Krs123456&0"; 
+        const SECRET_KEY = "Krs123456&0";
+        
+        // مصفوفة القوانين التي أرسلتها
+        const laws = [
+            { text: "الإحترام المتبادل بين منسوبي وزارة الصحة و المواطنين و منسوبي الوزارات.", penalty: "تصل إلى الفصل" },
+            { text: "يمنع منعاً باتاً تصوير أو تسريب أو التحدث عن شيء يخص وزارة الصحة.", penalty: "الفصل من الخدمة و المحاسبة الرقابية" },
+            { text: "يمنع لأي صحي تحت التدريب أستلام حجز أو مباشرة أي عمل.", penalty: "إنذار وتصل إلي الفصل" },
+            { text: "يمنع منشن قيادة الوزارة و المسؤولين ويسمح فقط للشكاوى والاستفسارات.", penalty: "إنذار وتصل إلى ملاحظة" },
+            { text: "يمنع طلب الترقية أو الترقيات الإستثنائية أو المناصب في الوزارة.", penalty: "ملاحظة" },
+            { text: "يمنع مباشرة أي عمل في حال كنت غير محصن.", penalty: "ملاحظة" },
+            { text: "يمنع التلاعب في سجلاتك أو الكشوفات أو دفاتر الحضور.", penalty: "ملاحظة وتصل إلي الفصل" },
+            { text: "يمنع قيادة مركبات الهلال الأحمر إلا للأعضاء المصرح لهم.", penalty: "ملاحظة" },
+            { text: "يمنع طلب استقالة إلا بعد ترقيتك لمرتين من تاريخ تعيينك كصحي معتمد.", penalty: "رفض الإستقالة" },
+            { text: "يمنع إستلام أكثر من موعد في نفس الوقت.", penalty: "ملاحظة" },
+            { text: "يمنع إزعاج إدارة الموارد البشرية لأمور مثل حسب النقاط وغيرها.", penalty: "ملاحظة" },
+            { text: "يمنع السؤال عن تقديم القطاعات والكليات مثل دورة الهلال الأحمر.", penalty: "بلاك لست مدة معينة من القطاع" }
+        ];
+
         const loginForm = document.getElementById('loginForm');
         const loginPage = document.getElementById('loginPage');
         const dashboardPage = document.getElementById('dashboardPage');
@@ -162,23 +218,31 @@
         const userField = document.getElementById('username');
         const welcomeBackMsg = document.getElementById('welcomeBack');
 
-        // عند فتح الصفحة: هل هناك اسم مستخدم محفوظ؟
         window.onload = () => {
             const lastUser = localStorage.getItem('lastKRUser');
             if (lastUser) {
                 welcomeBackMsg.style.display = 'block';
-                welcomeBackMsg.innerHTML = `<i class="fa-solid fa-hand-wave"></i> مرحباً بك مجدداً يا <b>${lastUser}</b>`;
-                userField.value = lastUser; // تعبئة الاسم تلقائياً
+                welcomeBackMsg.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> مرحباً بك مجدداً يا <b>${lastUser}</b>`;
+                userField.value = lastUser;
             }
+
+            // تعبئة قائمة القوانين
+            const lawsList = document.getElementById('lawsList');
+            laws.forEach((law, index) => {
+                lawsList.innerHTML += `
+                    <div class="law-item">
+                        <b>${index + 1} - </b> ${law.text}
+                        <span class="penalty">- العقوبة: ${law.penalty}</span>
+                    </div>
+                `;
+            });
         };
 
         loginForm.onsubmit = (e) => {
             e.preventDefault(); 
             const userVal = userField.value;
             if (passField.value === SECRET_KEY) {
-                // حفظ اسم المستخدم في ذاكرة المتصفح
                 localStorage.setItem('lastKRUser', userVal);
-                
                 document.getElementById('displayUser').innerText = userVal;
                 loginPage.classList.add('hidden');
                 dashboardPage.classList.remove('hidden');
@@ -187,6 +251,9 @@
                 passField.value = "";
             }
         };
+
+        function showLaws() { document.getElementById('lawsModal').style.display = 'flex'; }
+        function hideLaws() { document.getElementById('lawsModal').style.display = 'none'; }
     </script>
 </body>
 </html>
