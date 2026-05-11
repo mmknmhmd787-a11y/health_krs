@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* التنسيقات الأساسية - لضمان ظهور الألوان */
         :root {
             --bg-color: #0a0e0a;
             --card-bg: #111611;
@@ -56,6 +55,17 @@
         h2 { color: var(--primary-green); font-size: 1.5rem; margin-bottom: 10px; }
         .subtitle { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px; line-height: 1.5; }
 
+        /* رسالة الترحيب الخاصة بالمستخدم العائد */
+        #welcomeBack {
+            color: var(--accent-blue);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            display: none; /* مخفية افتراضياً */
+        }
+
         .input-group { text-align: right; margin-bottom: 20px; }
         label { display: block; margin-bottom: 8px; color: #d1d5db; font-size: 0.9rem; }
         
@@ -75,6 +85,7 @@
             background: linear-gradient(135deg, #22c55e, #166534);
             color: #000; font-weight: bold; cursor: pointer; font-size: 1rem;
             display: flex; justify-content: center; align-items: center; gap: 10px;
+            transition: 0.3s;
         }
 
         .options-grid { display: grid; gap: 12px; margin-top: 25px; }
@@ -101,7 +112,9 @@
         <div id="loginPage" class="card">
             <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
             <h2>بوابة وزارة العدل</h2>
-            <p class="subtitle">سجّل دخولك للوصول إلى لوحة التحكم - جميع الأنشطة مراقبة في KR</p>
+            <p class="subtitle">نظام الموظفين الرسمي لمجتمع KR</p>
+
+            <div id="welcomeBack"></div>
 
             <form id="loginForm">
                 <div class="input-group">
@@ -146,11 +159,26 @@
         const dashboardPage = document.getElementById('dashboardPage');
         const errorMsg = document.getElementById('errorMessage');
         const passField = document.getElementById('password');
+        const userField = document.getElementById('username');
+        const welcomeBackMsg = document.getElementById('welcomeBack');
+
+        // عند فتح الصفحة: هل هناك اسم مستخدم محفوظ؟
+        window.onload = () => {
+            const lastUser = localStorage.getItem('lastKRUser');
+            if (lastUser) {
+                welcomeBackMsg.style.display = 'block';
+                welcomeBackMsg.innerHTML = `<i class="fa-solid fa-hand-wave"></i> مرحباً بك مجدداً يا <b>${lastUser}</b>`;
+                userField.value = lastUser; // تعبئة الاسم تلقائياً
+            }
+        };
 
         loginForm.onsubmit = (e) => {
             e.preventDefault(); 
-            const userVal = document.getElementById('username').value;
+            const userVal = userField.value;
             if (passField.value === SECRET_KEY) {
+                // حفظ اسم المستخدم في ذاكرة المتصفح
+                localStorage.setItem('lastKRUser', userVal);
+                
                 document.getElementById('displayUser').innerText = userVal;
                 loginPage.classList.add('hidden');
                 dashboardPage.classList.remove('hidden');
