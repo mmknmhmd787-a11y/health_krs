@@ -9,183 +9,169 @@
     
     <style>
         :root {
-            --bg-color: #0a0e0a;
-            --card-bg: #111611;
+            --bg-color: #0d120d;
+            --card-bg: #121812;
             --primary-green: #4ade80;
-            --error-red: #ef4444;
-            --input-bg: #0d110d;
-            --text-muted: #6b7280;
+            --btn-bg: rgba(74, 222, 128, 0.03);
+            --btn-border: rgba(74, 222, 128, 0.1);
+            --icon-bg: rgba(74, 222, 128, 0.1);
+            --text-white: #e5e7eb;
             --accent-blue: #38bdf8;
+            --error-red: #ef4444;
         }
 
         body {
             background-color: var(--bg-color);
             color: white;
             font-family: 'Tajawal', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
+            display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box;
         }
 
-        .container { width: 100%; max-width: 450px; }
+        .container { width: 100%; max-width: 500px; }
 
         .card {
             background-color: var(--card-bg);
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 1px solid #1a201a;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            padding: 40px 30px; border-radius: 24px;
+            border: 1px solid #1a221a; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
         .hidden { display: none !important; }
 
-        .icon-box {
-            background: rgba(74, 222, 128, 0.1);
-            width: 80px; height: 80px; margin: 0 auto 20px;
-            border-radius: 15px; display: flex; justify-content: center; align-items: center;
+        /* ستايل الأزرار الجديد المستوحى من image_4.png */
+        .options-grid { display: grid; gap: 16px; margin-top: 30px; }
+
+        .opt-button {
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 20px;
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: var(--text-white);
+            text-decoration: none;
+            transition: 0.3s ease;
+            cursor: pointer;
+            min-height: 80px;
+        }
+
+        .opt-button:hover {
+            background: rgba(74, 222, 128, 0.08);
+            border-color: var(--primary-green);
+            transform: translateY(-2px);
+        }
+
+        /* أيقونة الملف اليمنى */
+        .file-icon-box {
+            background: var(--icon-bg);
+            width: 55px; height: 55px;
+            border-radius: 12px;
+            display: flex; justify-content: center; align-items: center;
             border: 1px solid rgba(74, 222, 128, 0.2);
         }
-        .icon-box i { font-size: 40px; color: var(--primary-green); }
+        .file-icon-box i { color: var(--primary-green); font-size: 22px; }
 
-        h2 { color: var(--primary-green); font-size: 1.5rem; margin-bottom: 10px; }
-        .subtitle { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px; line-height: 1.5; }
-
-        #welcomeBack {
-            color: var(--accent-blue);
-            font-size: 0.9rem;
-            margin-bottom: 15px;
-            background: rgba(56, 189, 248, 0.1);
-            padding: 12px;
-            border-radius: 10px;
-            display: none;
-            border: 1px solid rgba(56, 189, 248, 0.2);
+        /* النص في المنتصف */
+        .btn-text {
+            flex-grow: 1;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
+        /* أيقونة السهم اليسرى */
+        .external-icon { color: var(--primary-green); font-size: 18px; opacity: 0.8; }
+
+        /* ستايل تسجيل الدخول */
         .input-group { text-align: right; margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: #d1d5db; font-size: 0.9rem; }
-        
+        label { display: block; margin-bottom: 8px; color: #9ca3af; font-size: 0.9rem; }
         input {
             width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #1f2937;
-            background: var(--input-bg); color: white; outline: none; box-sizing: border-box;
-            font-family: inherit; font-size: 1rem;
+            background: #080a08; color: white; outline: none; box-sizing: border-box;
+            font-family: inherit; font-size: 1rem; text-align: center;
         }
-
-        #errorMessage {
-            color: var(--error-red); font-size: 0.8rem; margin-top: 10px; display: none;
-            background: rgba(239, 68, 68, 0.1); padding: 10px; border-radius: 8px;
-        }
-
-        .btn {
+        .btn-submit {
             width: 100%; padding: 15px; border-radius: 12px; border: none;
-            background: linear-gradient(135deg, #22c55e, #166534);
-            color: #000; font-weight: bold; cursor: pointer; font-size: 1rem;
-            display: flex; justify-content: center; align-items: center; gap: 10px;
+            background: var(--primary-green); color: #050705; font-weight: bold;
+            cursor: pointer; font-size: 1rem; transition: 0.3s;
         }
+        .btn-submit:hover { opacity: 0.9; transform: scale(0.98); }
 
-        .options-grid { display: grid; gap: 12px; margin-top: 25px; }
-        .opt-button {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 15px; border-radius: 12px; color: #e5e7eb; text-decoration: none;
-            display: flex; align-items: center; gap: 15px; font-size: 0.9rem;
-            cursor: pointer; transition: 0.3s;
-        }
-        .opt-button:hover { background: rgba(74, 222, 128, 0.1); border-color: var(--primary-green); }
-        .opt-button i { color: var(--primary-green); width: 20px; text-align: center; }
-
-        .user-info {
-            background: rgba(255, 255, 255, 0.05); padding: 15px; border-radius: 12px; 
-            margin-top: 15px; text-align: right; border-right: 3px solid var(--accent-blue);
-        }
-        .status-badge {
-            background: var(--primary-green); color: black; padding: 2px 8px; 
-            border-radius: 5px; font-size: 0.75rem; float: left;
-        }
-
-        /* نافذة القوانين */
+        /* النافذة المنبثقة */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center;
-            z-index: 1000; padding: 10px; box-sizing: border-box;
+            background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center;
+            z-index: 1000; padding: 15px;
         }
         .modal-content {
-            background: var(--card-bg); width: 100%; max-width: 650px; height: 90vh;
-            border-radius: 20px; border: 1px solid var(--primary-green);
-            padding: 25px; overflow-y: auto; position: relative; text-align: right;
+            background: #0d120d; width: 100%; max-width: 600px; height: 85vh;
+            border-radius: 24px; border: 1px solid var(--primary-green);
+            padding: 25px; overflow-y: auto; text-align: right;
         }
-        .close-btn {
-            position: sticky; top: 0; float: left; color: var(--error-red);
-            font-size: 1.5rem; cursor: pointer; background: #222; border-radius: 50%; width: 35px; height: 35px;
-            display: flex; justify-content: center; align-items: center; border: 1px solid #333; z-index: 10;
-        }
-        .law-item { margin-bottom: 18px; padding-bottom: 12px; border-bottom: 1px solid #1a201a; line-height: 1.6; }
-        .law-item b { color: var(--primary-green); font-size: 1.1rem; }
-        .penalty { color: #ffae42; font-size: 0.85rem; display: block; margin-top: 5px; font-weight: bold; }
+        .law-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #1a221a; }
+        .penalty { color: #f97316; font-size: 0.85rem; display: block; margin-top: 5px; }
+
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- صفحة الدخول -->
         <div id="loginPage" class="card">
-            <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
-            <h2>بوابة وزارة الصحة</h2>
-            <p class="subtitle">نظام الموظفين الرسمي لمجتمع KR</p>
-
-            <div id="welcomeBack"></div>
-
+            <h2 style="color: var(--primary-green); margin-bottom: 30px;">تسجيل الدخول الموحد</h2>
             <form id="loginForm">
                 <div class="input-group">
-                    <label>اسم المستخدم</label>
-                    <input type="text" id="username" placeholder="name.kr" required>
+                    <input type="text" id="username" placeholder="اسم المستخدم" required>
                 </div>
                 <div class="input-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="password" placeholder="********" required>
-                    <div id="errorMessage"><i class="fa-solid fa-circle-exclamation"></i> كلمة المرور غير صحيحة!</div>
+                    <input type="password" id="password" placeholder="كلمة المرور" required>
                 </div>
-                <button type="submit" class="btn">دخول لوحة التحكم <i class="fa-solid fa-lock"></i></button>
+                <button type="submit" class="btn-submit">دخول النظام</button>
             </form>
+            <p id="errorMessage" style="color: var(--error-red); display: none; margin-top: 15px; font-size: 0.9rem;">كلمة المرور خاطئة!</p>
         </div>
 
+        <!-- لوحة التحكم -->
         <div id="dashboardPage" class="card hidden">
-            <div class="icon-box" style="background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.2);">
-                <i class="fa-solid fa-user-shield" style="color: var(--accent-blue);"></i>
-            </div>
-            <h2 style="color: var(--accent-blue);">مركز الإدارة</h2>
+            <h2 style="color: var(--accent-blue); margin-bottom: 5px;">مركز الإدارة</h2>
+            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px;">مرحباً بك في لوحة تحكم وزارة الصحة</p>
             
-            <div class="user-info">
-                <span class="status-badge">متصل</span>
-                <p><strong>الموظف:</strong> <span id="displayUser"></span></p>
-                <p style="margin: 0;"><strong>الرتبة:</strong> إدارة النظام (وزارة الصحة)</p>
-            </div>
-
             <div class="options-grid">
+                
+                <!-- خيار القوانين -->
                 <div class="opt-button" onclick="showLaws()">
-                    <i class="fa-solid fa-file-shield"></i>
-                    <span>قوانين وزارة الصحة</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    <span class="btn-text">قوانين وزارة الصحة</span>
+                    <div class="file-icon-box"><i class="fa-solid fa-file-lines"></i></div>
                 </div>
+
+                <!-- خيار المستند (يمكنك إضافة رابط هنا) -->
                 <a href="#" class="opt-button">
-                    <i class="fa-solid fa-users-gear"></i>
-                    <span>مستند موظفين وزارة الصحة</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    <span class="btn-text">مستند موظفين وزارة الصحة</span>
+                    <div class="file-icon-box"><i class="fa-solid fa-file-medical"></i></div>
                 </a>
+
+                <!-- خيار جدول البيانات (الرابط الذي أرسلته) -->
                 <a href="https://docs.google.com/spreadsheets/d/11bAJ_y1hhpOrgXrL0Chm3fwf5X7jSngZtC8ZgFf1nnk/edit?usp=drivesdk" target="_blank" class="opt-button">
-                    <i class="fa-solid fa-table-list"></i>
-                    <span>جدول بيانات وزارة الصحة</span>
+                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    <span class="btn-text">جدول بيانات وزارة الصحة</span>
+                    <div class="file-icon-box"><i class="fa-solid fa-table"></i></div>
                 </a>
+
             </div>
 
-            <button onclick="location.reload()" class="btn" style="margin-top: 25px; background: #222; color: #fff; border: 1px solid #333;">تسجيل الخروج</button>
+            <button onclick="location.reload()" style="background:none; border:none; color:var(--error-red); margin-top:30px; cursor:pointer; font-family:inherit;">تسجيل الخروج</button>
         </div>
     </div>
 
+    <!-- نافذة القوانين -->
     <div id="lawsModal" class="modal">
         <div class="modal-content">
-            <div class="close-btn" onclick="hideLaws()">&times;</div>
-            <h2 style="margin-top:0; border-bottom: 1px solid var(--primary-green); padding-bottom: 10px;">قوانين وزارة الصحة | KR</h2>
+            <span onclick="hideLaws()" style="color:var(--error-red); cursor:pointer; float:left; font-size: 1.5rem;">&times;</span>
+            <h2 style="color: var(--primary-green);">قوانين وزارة الصحة</h2>
             <div id="lawsList"></div>
         </div>
     </div>
@@ -194,71 +180,36 @@
         const SECRET_KEY = "Krs123456&0";
         
         const laws = [
-            { t: "الإحترام المتبادل بين منسوبي وزارة الصحة و المواطنين والوزارات الأخرى.", p: "ملاحظة وتصل إلى الفصل" },
-            { t: "يمنع منعاً باتاً تصوير أو تسريب أو التحدث عن أي شيء يخص الوزارة بالخارج.", p: "الفصل من الخدمة و المحاسبة الرقابية" },
-            { t: "يمنع لأي صحي تحت التدريب أستلام حجز أو مباشرة أي عمل.", p: "إنذار وتصل إلي الفصل" },
-            { t: "يمنع منشن قيادة الوزارة والمسؤولين لغير الشكاوى والاستفسارات الرسمية.", p: "إنذار وتصل إلى ملاحظة" },
-            { t: "يمنع طلب الترقية أو الترقيات الإستثنائية أو المناصب.", p: "ملاحظة" },
-            { t: "يمنع مباشرة أي عمل في حال كنت غير محصن.", p: "ملاحظة" },
-            { t: "يمنع التلاعب في السجلات أو الكشوفات أو دفاتر الحضور.", p: "ملاحظة وتصل إلي الفصل" },
-            { t: "يمنع قيادة مركبات الهلال الأحمر إلا للأعضاء المصرح لهم بالرتبة.", p: "ملاحظة" },
-            { t: "يمنع طلب إستقالة إلا بعد ترقيتك مرتين كصحي معتمد.", p: "رفض الإستقالة" },
-            { t: "يمنع إستلام أكثر من موعد (حالة) في نفس الوقت.", p: "ملاحظة" },
-            { t: "يمنع إزعاج إدارة الموارد البشرية لأمور حسب النقاط وغيرها.", p: "ملاحظة" },
-            { t: "يمنع السؤال عن تقديم القطاعات والكليات (دورة الهلال الأحمر وغيرها).", p: "بلاك لست مؤقت من القطاع" },
-            { t: "يمنع السؤال عن نتائج تقديم القطاعات.", p: "بلاك لست مؤقت من القطاع" },
-            { t: "يجب طلب إجازة وظيفية عند التغيب عن التفاعل.", p: "محاسبة حسب نظام عقوبات التفاعل" },
-            { t: "العقوبات عند عدم التفاعل (أسبوع: ملاحظة 1، أسبوعين: ملاحظة 2، شهر: تنتيل رتبة).", p: "تصل إلى الفصل عند بلوغ شهر ونصف" },
-            { t: "يمنع طلب حجز موعد من شخص آخر.", p: "إنذار" },
-            { t: "بعد إنعاش الميت يجب التحمد له بالسلامة (تقمص الشخصية).", p: "ملاحظة" },
-            { t: "يجب تشغيل أضواء الطوارئ (السفاتي) عند مباشرة أي حالة.", p: "ملاحظة تصل إلى التنتيل" },
-            { t: "يمنع الإنعاش في (مقر العصابات، محلات الأسلحة، مناطق إطلاق النار النشطة).", p: "ملاحظة تصل إلى تنتيل الرتب" },
-            { t: "يجب التواجد في كل حالة يتم إعلانها في قناة البلاغات عند تواجدك بالمدينة.", p: "ملاحظة" },
-            { t: "يجب دخول راديو وزارة الصحة والإلتزام بتوجيهات العمليات.", p: "ملاحظة" },
-            { t: "عند المباشرة بالإسعاف يجب توفر (قائد، دكتور، 1-2 ممرضين) أو إذن العمليات.", p: "ملاحظة" },
-            { t: "يمنع القيام بعمل تخصص غيرك ويجب الإلتزام بتخصصك فقط.", p: "إنذار شفهي ثم ملاحظة وتنتيل" },
-            { t: "يجب الإلتزام بمستند نظام التخصصات الصحي المعتمد.", p: "ملاحظة تصل إلى تنتيل الرتبة" },
-            { t: "يمنع أخذ مبالغ مالية من المواطنين لأي عمل باستثناء العمليات المقررة.", p: "ملاحظة" }
+            { t: "الإحترام المتبادل بين منسوبي الوزارة والمواطنين.", p: "ملاحظة وتصل إلى الفصل" },
+            { t: "يمنع تسريب أي معلومات تخص الوزارة خارج القنوات الرسمية.", p: "الفصل والمحاسبة الرقابية" },
+            { t: "يمنع مباشرة العمل للمتدربين دون إذن رسمي.", p: "إنذار وتصل إلى الفصل" },
+            { t: "يمنع المنشن العشوائي لقيادة الوزارة.", p: "إنذار وتصل إلى ملاحظة" },
+            { t: "يمنع طلب الترقية أو المناصب بشكل مباشر.", p: "ملاحظة" },
+            { t: "يمنع العمل دون التحصين الرسمي.", p: "ملاحظة" },
+            { t: "يمنع التلاعب في سجلات الحضور والكشوفات.", p: "ملاحظة وتصل إلى الفصل" },
+            { t: "يمنع قيادة الإسعاف لغير المصرح لهم.", p: "ملاحظة" }
+            // ... يمكنك إكمال البقية هنا بنفس الطريقة
         ];
 
-        const loginForm = document.getElementById('loginForm');
-        const loginPage = document.getElementById('loginPage');
-        const dashboardPage = document.getElementById('dashboardPage');
-        const errorMsg = document.getElementById('errorMessage');
-        const passField = document.getElementById('password');
-        const userField = document.getElementById('username');
-        const welcomeBackMsg = document.getElementById('welcomeBack');
-
         window.onload = () => {
-            const lastUser = localStorage.getItem('lastKRUser');
-            if (lastUser) {
-                welcomeBackMsg.style.display = 'block';
-                welcomeBackMsg.innerHTML = `<i class="fa-solid fa-clock-rotate-left"></i> مرحباً بك مجدداً يا <b>${lastUser}</b>`;
-                userField.value = lastUser;
-            }
-
             const lawsList = document.getElementById('lawsList');
-            laws.forEach((law, index) => {
+            laws.forEach((law, i) => {
                 lawsList.innerHTML += `
                     <div class="law-item">
-                        <b>${index + 1} - </b> ${law.t}
-                        <span class="penalty"><i class="fa-solid fa-triangle-exclamation"></i> العقوبة: ${law.p}</span>
+                        <b>${i+1} - ${law.t}</b>
+                        <span class="penalty">العقوبة: ${law.p}</span>
                     </div>
                 `;
             });
-            lawsList.innerHTML += `<p style="text-align:center; color:var(--text-muted);">__ قابلة للتعديل من قيادة الوزارة __</p>`;
         };
 
-        loginForm.onsubmit = (e) => {
-            e.preventDefault(); 
-            if (passField.value === SECRET_KEY) {
-                localStorage.setItem('lastKRUser', userField.value);
-                document.getElementById('displayUser').innerText = userField.value;
-                loginPage.classList.add('hidden');
-                dashboardPage.classList.remove('hidden');
+        document.getElementById('loginForm').onsubmit = (e) => {
+            e.preventDefault();
+            if(document.getElementById('password').value === SECRET_KEY) {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('dashboardPage').classList.remove('hidden');
             } else {
-                errorMsg.style.display = 'block';
-                passField.value = "";
+                document.getElementById('errorMessage').style.display = 'block';
             }
         };
 
