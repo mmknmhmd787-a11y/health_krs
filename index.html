@@ -39,14 +39,13 @@
 
         .hidden { display: none !important; }
 
-        /* ستايل الأزرار الجديد المستوحى من image_4.png */
-        .options-grid { display: grid; gap: 16px; margin-top: 30px; }
+        .options-grid { display: grid; gap: 14px; margin-top: 30px; }
 
         .opt-button {
             background: var(--btn-bg);
             border: 1px solid var(--btn-border);
             border-radius: 20px;
-            padding: 12px 15px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -54,7 +53,7 @@
             text-decoration: none;
             transition: 0.3s ease;
             cursor: pointer;
-            min-height: 80px;
+            min-height: 75px;
         }
 
         .opt-button:hover {
@@ -63,56 +62,46 @@
             transform: translateY(-2px);
         }
 
-        /* أيقونة الملف اليمنى */
         .file-icon-box {
             background: var(--icon-bg);
-            width: 55px; height: 55px;
+            width: 50px; height: 50px;
             border-radius: 12px;
             display: flex; justify-content: center; align-items: center;
             border: 1px solid rgba(74, 222, 128, 0.2);
         }
-        .file-icon-box i { color: var(--primary-green); font-size: 22px; }
+        .file-icon-box i { color: var(--primary-green); font-size: 20px; }
 
-        /* النص في المنتصف */
         .btn-text {
             flex-grow: 1;
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 500;
         }
 
-        /* أيقونة السهم اليسرى */
-        .external-icon { color: var(--primary-green); font-size: 18px; opacity: 0.8; }
+        .external-icon { color: var(--primary-green); font-size: 16px; opacity: 0.7; }
 
-        /* ستايل تسجيل الدخول */
-        .input-group { text-align: right; margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; color: #9ca3af; font-size: 0.9rem; }
         input {
             width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #1f2937;
             background: #080a08; color: white; outline: none; box-sizing: border-box;
-            font-family: inherit; font-size: 1rem; text-align: center;
+            font-family: inherit; font-size: 1rem; text-align: center; margin-bottom: 15px;
         }
         .btn-submit {
             width: 100%; padding: 15px; border-radius: 12px; border: none;
             background: var(--primary-green); color: #050705; font-weight: bold;
-            cursor: pointer; font-size: 1rem; transition: 0.3s;
+            cursor: pointer; font-size: 1rem;
         }
-        .btn-submit:hover { opacity: 0.9; transform: scale(0.98); }
 
-        /* النافذة المنبثقة */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center;
             z-index: 1000; padding: 15px;
         }
         .modal-content {
-            background: #0d120d; width: 100%; max-width: 600px; height: 85vh;
+            background: #0d120d; width: 100%; max-width: 600px; height: 80vh;
             border-radius: 24px; border: 1px solid var(--primary-green);
             padding: 25px; overflow-y: auto; text-align: right;
         }
-        .law-item { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #1a221a; }
-        .penalty { color: #f97316; font-size: 0.85rem; display: block; margin-top: 5px; }
-
+        .law-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #1a221a; }
     </style>
 </head>
 <body>
@@ -120,50 +109,53 @@
     <div class="container">
         <!-- صفحة الدخول -->
         <div id="loginPage" class="card">
-            <h2 style="color: var(--primary-green); margin-bottom: 30px;">تسجيل الدخول الموحد</h2>
+            <h2 style="color: var(--primary-green); margin-bottom: 30px;">وزارة العدل | KR</h2>
             <form id="loginForm">
-                <div class="input-group">
-                    <input type="text" id="username" placeholder="اسم المستخدم" required>
-                </div>
-                <div class="input-group">
-                    <input type="password" id="password" placeholder="كلمة المرور" required>
-                </div>
-                <button type="submit" class="btn-submit">دخول النظام</button>
+                <input type="text" id="username" placeholder="اسم المستخدم" required>
+                <input type="password" id="password" placeholder="كلمة المرور" required>
+                <button type="submit" class="btn-submit">دخول</button>
             </form>
-            <p id="errorMessage" style="color: var(--error-red); display: none; margin-top: 15px; font-size: 0.9rem;">كلمة المرور خاطئة!</p>
+            <p id="errorMessage" style="color: var(--error-red); display: none; margin-top: 15px;">كلمة المرور خاطئة!</p>
         </div>
 
-        <!-- لوحة التحكم -->
+        <!-- لوحة التحكم المحدثة بالخيارات الجديدة -->
         <div id="dashboardPage" class="card hidden">
             <h2 style="color: var(--accent-blue); margin-bottom: 5px;">مركز الإدارة</h2>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 25px;">مرحباً بك في لوحة تحكم وزارة الصحة</p>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px;">بوابة وزارة الصحة الموحدة</p>
             
             <div class="options-grid">
                 
-                <!-- خيار القوانين -->
+                <!-- قوانين وزارة الصحة -->
                 <div class="opt-button" onclick="showLaws()">
                     <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
                     <span class="btn-text">قوانين وزارة الصحة</span>
-                    <div class="file-icon-box"><i class="fa-solid fa-file-lines"></i></div>
+                    <div class="file-icon-box"><i class="fa-solid fa-file-shield"></i></div>
                 </div>
 
-                <!-- خيار المستند (يمكنك إضافة رابط هنا) -->
-                <a href="#" class="opt-button">
-                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
-                    <span class="btn-text">مستند موظفين وزارة الصحة</span>
-                    <div class="file-icon-box"><i class="fa-solid fa-file-medical"></i></div>
-                </a>
-
-                <!-- خيار جدول البيانات (الرابط الذي أرسلته) -->
+                <!-- جدول بيانات وزارة الصحة -->
                 <a href="https://docs.google.com/spreadsheets/d/11bAJ_y1hhpOrgXrL0Chm3fwf5X7jSngZtC8ZgFf1nnk/edit?usp=drivesdk" target="_blank" class="opt-button">
                     <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
                     <span class="btn-text">جدول بيانات وزارة الصحة</span>
                     <div class="file-icon-box"><i class="fa-solid fa-table"></i></div>
                 </a>
 
+                <!-- الترقيات والتعيينات -->
+                <a href="https://discord.com/channels/851534602576461854/851534608729374777" target="_blank" class="opt-button">
+                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    <span class="btn-text">الترقيات والتعيينات</span>
+                    <div class="file-icon-box"><i class="fa-solid fa-user-plus"></i></div>
+                </a>
+
+                <!-- الإجازات والاستقالات -->
+                <a href="https://discord.com/channels/851534602576461854/851534608729374775" target="_blank" class="opt-button">
+                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    <span class="btn-text">الإجازات والاستقالات</span>
+                    <div class="file-icon-box"><i class="fa-solid fa-calendar-xmark"></i></div>
+                </a>
+
             </div>
 
-            <button onclick="location.reload()" style="background:none; border:none; color:var(--error-red); margin-top:30px; cursor:pointer; font-family:inherit;">تسجيل الخروج</button>
+            <button onclick="location.reload()" style="background:none; border:none; color:var(--error-red); margin-top:25px; cursor:pointer; font-family:inherit;">تسجيل الخروج</button>
         </div>
     </div>
 
@@ -171,7 +163,7 @@
     <div id="lawsModal" class="modal">
         <div class="modal-content">
             <span onclick="hideLaws()" style="color:var(--error-red); cursor:pointer; float:left; font-size: 1.5rem;">&times;</span>
-            <h2 style="color: var(--primary-green);">قوانين وزارة الصحة</h2>
+            <h2 style="color: var(--primary-green);">لائحة القوانين</h2>
             <div id="lawsList"></div>
         </div>
     </div>
@@ -179,16 +171,33 @@
     <script>
         const SECRET_KEY = "Krs123456&0";
         
+        // قوانين الوزارة الـ 25
         const laws = [
-            { t: "الإحترام المتبادل بين منسوبي الوزارة والمواطنين.", p: "ملاحظة وتصل إلى الفصل" },
-            { t: "يمنع تسريب أي معلومات تخص الوزارة خارج القنوات الرسمية.", p: "الفصل والمحاسبة الرقابية" },
-            { t: "يمنع مباشرة العمل للمتدربين دون إذن رسمي.", p: "إنذار وتصل إلى الفصل" },
-            { t: "يمنع المنشن العشوائي لقيادة الوزارة.", p: "إنذار وتصل إلى ملاحظة" },
-            { t: "يمنع طلب الترقية أو المناصب بشكل مباشر.", p: "ملاحظة" },
-            { t: "يمنع العمل دون التحصين الرسمي.", p: "ملاحظة" },
-            { t: "يمنع التلاعب في سجلات الحضور والكشوفات.", p: "ملاحظة وتصل إلى الفصل" },
-            { t: "يمنع قيادة الإسعاف لغير المصرح لهم.", p: "ملاحظة" }
-            // ... يمكنك إكمال البقية هنا بنفس الطريقة
+            { t: "الاحترام المتبادل بين المنسوبين والمواطنين.", p: "ملاحظة وتصل للفصل" },
+            { t: "يمنع تسريب معلومات الوزارة للخارج.", p: "الفصل والمحاسبة" },
+            { t: "يمنع مباشرة العمل للمتدرب دون إذن.", p: "إنذار وتصل للفصل" },
+            { t: "يمنع المنشن لغير الشكاوى الرسمية.", p: "ملاحظة" },
+            { t: "يمنع طلب الترقية أو المناصب.", p: "ملاحظة" },
+            { t: "يمنع العمل دون تحصين رسمي.", p: "ملاحظة" },
+            { t: "يمنع التلاعب في سجلات الحضور.", p: "ملاحظة وتصل للفصل" },
+            { t: "يمنع قيادة الإسعاف لغير المصرح لهم.", p: "ملاحظة" },
+            { t: "يمنع طلب الاستقالة قبل ترقيتين كصحي معتمد.", p: "رفض الاستقالة" },
+            { t: "يمنع استلام أكثر من موعد في وقت واحد.", p: "ملاحظة" },
+            { t: "يمنع إزعاج الموارد البشرية بشأن النقاط.", p: "ملاحظة" },
+            { t: "يمنع السؤال عن دورات الهلال الأحمر.", p: "بلاك لست مؤقت" },
+            { t: "يمنع السؤال عن نتائج التقديم.", p: "بلاك لست مؤقت" },
+            { t: "يجب طلب إجازة عند التغيب عن التفاعل.", p: "محاسبة نظام العقوبات" },
+            { t: "عدم التفاعل لشهر يؤدي لتنتيل الرتبة.", p: "الفصل عند بلوغ 45 يوم" },
+            { t: "يمنع طلب حجز موعد من شخص آخر.", p: "إنذار" },
+            { t: "يجب التحمد بالسلامة بعد الإنعاش.", p: "ملاحظة (تقمص)" },
+            { t: "يجب تشغيل أضواء الطوارئ عند المباشرة.", p: "ملاحظة وتنتيل" },
+            { t: "يمنع الإنعاش في مناطق إطلاق النار النشطة.", p: "ملاحظة وتنتيل" },
+            { t: "يجب التواجد في كل حالة عند إعلانها بالبلاغات.", p: "ملاحظة" },
+            { t: "يجب دخول راديو وزارة الصحة والالتزام.", p: "ملاحظة" },
+            { t: "يشترط توفر طاقم كامل للمباشرة بالإسعاف.", p: "ملاحظة" },
+            { t: "يمنع القيام بعمل تخصص غيرك.", p: "إنذار شفهي ثم ملاحظة" },
+            { t: "الالتزام بمستند نظام التخصصات الصحي.", p: "ملاحظة وتنتيل" },
+            { t: "يمنع أخذ مبالغ مالية من المواطنين.", p: "ملاحظة" }
         ];
 
         window.onload = () => {
@@ -197,7 +206,7 @@
                 lawsList.innerHTML += `
                     <div class="law-item">
                         <b>${i+1} - ${law.t}</b>
-                        <span class="penalty">العقوبة: ${law.p}</span>
+                        <span style="color:#f97316; display:block; font-size:0.8rem;">العقوبة: ${law.p}</span>
                     </div>
                 `;
             });
