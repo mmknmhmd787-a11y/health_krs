@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة وزارة الصحة | KR</title>
+    <title>بوابة وزارة العدل | KR</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -18,6 +18,7 @@
             --text-white: #e5e7eb;
             --accent-blue: #38bdf8;
             --error-red: #ef4444;
+            --warning-orange: #f97316;
         }
 
         body {
@@ -80,78 +81,106 @@
 
         .external-icon { color: var(--primary-green); font-size: 16px; opacity: 0.7; }
 
-        input {
-            width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #1f2937;
+        /* ستايل حقول الإدخال والفورم */
+        .form-group { text-align: right; margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #9ca3af; font-size: 0.9rem; }
+        
+        input, textarea {
+            width: 100%; padding: 14px; border-radius: 12px; border: 1px solid #1f2937;
             background: #080a08; color: white; outline: none; box-sizing: border-box;
-            font-family: inherit; font-size: 1rem; text-align: center; margin-bottom: 15px;
+            font-family: inherit; font-size: 0.95rem; text-align: right;
         }
+        textarea { resize: none; height: 100px; }
+        input:focus, textarea:focus { border-color: var(--primary-green); }
+
         .btn-submit {
             width: 100%; padding: 15px; border-radius: 12px; border: none;
             background: var(--primary-green); color: #050705; font-weight: bold;
-            cursor: pointer; font-size: 1rem;
+            cursor: pointer; font-size: 1rem; transition: 0.2s;
         }
+        .btn-submit:hover { opacity: 0.9; }
 
+        /* أزرار اختيار نوع النموذج */
+        .type-selector { display: flex; gap: 15px; margin-bottom: 25px; }
+        .type-btn {
+            flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #22c55e33;
+            background: rgba(255,255,255,0.02); color: white; cursor: pointer;
+            font-family: inherit; font-weight: bold; transition: 0.3s;
+        }
+        .type-btn.active { background: var(--primary-green); color: black; border-color: var(--primary-green); }
+
+        /* النوافذ المنبثقة */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center;
             z-index: 1000; padding: 15px;
         }
         .modal-content {
-            background: #0d120d; width: 100%; max-width: 600px; height: 80vh;
+            background: #0d120d; width: 100%; max-width: 550px; height: 85vh;
             border-radius: 24px; border: 1px solid var(--primary-green);
             padding: 25px; overflow-y: auto; text-align: right;
         }
-        .law-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid #1a221a; }
+        .law-item { margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #1a221a; line-height: 1.6; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- صفحة الدخول -->
         <div id="loginPage" class="card">
             <h2 style="color: var(--primary-green); margin-bottom: 30px;">وزارة العدل | KR</h2>
             <form id="loginForm">
-                <input type="text" id="username" placeholder="اسم المستخدم" required>
-                <input type="password" id="password" placeholder="كلمة المرور" required>
+                <div class="form-group"><input type="text" id="username" placeholder="اسم المستخدم" style="text-align:center;" required></div>
+                <div class="form-group"><input type="password" id="password" placeholder="كلمة المرور" style="text-align:center;" required></div>
                 <button type="submit" class="btn-submit">دخول</button>
             </form>
-            <p id="errorMessage" style="color: var(--error-red); display: none; margin-top: 15px;">كلمة المرور خاطئة!</p>
+            <p id="errorMessage" style="color: var(--error-red); display: none; margin-top: 15px; text-align:center;">كلمة المرور خاطئة!</p>
         </div>
 
-        <!-- لوحة التحكم المحدثة بالخيارات الجديدة -->
         <div id="dashboardPage" class="card hidden">
             <h2 style="color: var(--accent-blue); margin-bottom: 5px;">مركز الإدارة</h2>
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px;">بوابة وزارة الصحة الموحدة</p>
             
             <div class="options-grid">
                 
-                <!-- قوانين وزارة الصحة -->
-                <div class="opt-button" onclick="showLaws()">
+                <div class="opt-button" onclick="showModal('lawsModal')">
                     <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
                     <span class="btn-text">قوانين وزارة الصحة</span>
                     <div class="file-icon-box"><i class="fa-solid fa-file-shield"></i></div>
                 </div>
 
-                <!-- جدول بيانات وزارة الصحة -->
                 <a href="https://docs.google.com/spreadsheets/d/11bAJ_y1hhpOrgXrL0Chm3fwf5X7jSngZtC8ZgFf1nnk/edit?usp=drivesdk" target="_blank" class="opt-button">
                     <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
                     <span class="btn-text">جدول بيانات وزارة الصحة</span>
                     <div class="file-icon-box"><i class="fa-solid fa-table"></i></div>
                 </a>
 
-                <!-- الترقيات والتعيينات -->
                 <a href="https://discord.com/channels/851534602576461854/851534608729374777" target="_blank" class="opt-button">
                     <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
                     <span class="btn-text">الترقيات والتعيينات</span>
                     <div class="file-icon-box"><i class="fa-solid fa-user-plus"></i></div>
                 </a>
 
-                <!-- الإجازات والاستقالات -->
                 <a href="https://discord.com/channels/851534602576461854/851534608729374775" target="_blank" class="opt-button">
                     <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
                     <span class="btn-text">الإجازات والاستقالات</span>
                     <div class="file-icon-box"><i class="fa-solid fa-calendar-xmark"></i></div>
                 </a>
+
+                <div class="opt-button" onclick="showModal('punishmentsModal')">
+                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    <span class="btn-text">لائحة العقوبات</span>
+                    <div class="file-icon-box" style="border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05);">
+                        <i class="fa-solid fa-gavel" style="color: var(--error-red);"></i>
+                    </div>
+                </div>
+
+                <div class="opt-button" onclick="showModal('ticketsModal')">
+                    <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
+                    <span class="btn-text">الاقتراحات والشكاوى</span>
+                    <div class="file-icon-box" style="border-color: rgba(56, 189, 248, 0.2); background: rgba(56, 189, 248, 0.05);">
+                        <i class="fa-solid fa-comments" style="color: var(--accent-blue);"></i>
+                    </div>
+                </div>
 
             </div>
 
@@ -159,45 +188,90 @@
         </div>
     </div>
 
-    <!-- نافذة القوانين -->
     <div id="lawsModal" class="modal">
         <div class="modal-content">
-            <span onclick="hideLaws()" style="color:var(--error-red); cursor:pointer; float:left; font-size: 1.5rem;">&times;</span>
-            <h2 style="color: var(--primary-green);">لائحة القوانين</h2>
+            <span onclick="hideModal('lawsModal')" style="color:var(--error-red); cursor:pointer; float:left; font-size: 1.5rem;">&times;</span>
+            <h2 style="color: var(--primary-green); border-bottom:1px solid #1a221a; padding-bottom:10px;">لائحة قوانين الوزارة</h2>
             <div id="lawsList"></div>
+        </div>
+    </div>
+
+    <div id="punishmentsModal" class="modal">
+        <div class="modal-content" style="border-color: var(--error-red);">
+            <span onclick="hideModal('punishmentsModal')" style="color:var(--error-red); cursor:pointer; float:left; font-size: 1.5rem;">&times;</span>
+            <h2 style="color: var(--error-red); border-bottom:1px solid #1a221a; padding-bottom:10px;">لائحة العقوبات الرسمية</h2>
+            <div id="punishmentsList">
+                <div class="law-item"><b>تنبيه شفهي / إنذار أول:</b> يُعطى عند إزعاج المسؤولين، والمنشن العشوائي، ومخالفة نظام التخصصات للمرة الأولى.</div>
+                <div class="law-item"><b>تسجيل ملاحظة رسمية:</b> تُسجل في ملف الموظف مباشرة عند التغيب عن التفاعل دون إجازة، مباشرة العمل دون تحصين، أو عدم تشغيل أضواء الطوارئ (السفاتي).</div>
+                <div class="law-item"><b>تنتيل الرتبة وخفضها:</b> يتم تطبيقها عند تكرار مخالفة التخصصات، الإنعاش في مقار العصابات ومناطق إطلاق النار، أو التغيب عن التفاعل لمدة شهر كامل.</div>
+                <div class="law-item"><b>الفصل التام من الخدمة:</b> يُطبق فوراً عند ثبوت تسريب معلومات الوزارة وتصوير القنوات (خيانة وظيفية)، التلاعب بالسجلات والكشوفات، أو التغيب بلا عذر لمدة شهر ونصف.</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="ticketsModal" class="modal">
+        <div class="modal-content" style="border-color: var(--accent-blue);">
+            <span onclick="hideModal('ticketsModal')" style="color:var(--error-red); cursor:pointer; float:left; font-size: 1.5rem;">&times;</span>
+            <h2 style="color: var(--accent-blue); margin-bottom: 5px;" id="ticketTitle">تقديم طلب جديد</h2>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">الرجاء اختيار نوع الطلب وتعبئة البيانات</p>
+            
+            <div class="type-selector">
+                <button type="button" class="type-btn" id="btnTypeSuggestion" onclick="setTicketType('اقتراح')">اقتراحات</button>
+                <button type="button" class="type-btn active" id="btnTypeComplaint" onclick="setTicketType('شكوى')">شكاوى</button>
+            </div>
+
+            <form id="ticketForm">
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" id="ticketEmail" placeholder="example@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>اسم حسابك Roblox</label>
+                    <input type="text" id="ticketRoblox" placeholder="Roblox Username" required>
+                </div>
+                <div class="form-group">
+                    <label>يوزر حسابك Discord</label>
+                    <input type="text" id="ticketDiscord" placeholder="username_kr" required>
+                </div>
+                <div class="form-group">
+                    <label id="lblContent">تفاصيل الشكوى</label>
+                    <textarea id="ticketContent" placeholder="اكتب هنا بالتفصيل..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit" style="background: var(--accent-blue); color: black;">إرسال الطلب</button>
+            </form>
         </div>
     </div>
 
     <script>
         const SECRET_KEY = "Krs123456&0";
+        let currentTicketType = "شكوى";
         
-        // قوانين الوزارة الـ 25
         const laws = [
             { t: "الاحترام المتبادل بين المنسوبين والمواطنين.", p: "ملاحظة وتصل للفصل" },
-            { t: "يمنع تسريب معلومات الوزارة للخارج.", p: "الفصل والمحاسبة" },
-            { t: "يمنع مباشرة العمل للمتدرب دون إذن.", p: "إنذار وتصل للفصل" },
-            { t: "يمنع المنشن لغير الشكاوى الرسمية.", p: "ملاحظة" },
-            { t: "يمنع طلب الترقية أو المناصب.", p: "ملاحظة" },
-            { t: "يمنع العمل دون تحصين رسمي.", p: "ملاحظة" },
-            { t: "يمنع التلاعب في سجلات الحضور.", p: "ملاحظة وتصل للفصل" },
-            { t: "يمنع قيادة الإسعاف لغير المصرح لهم.", p: "ملاحظة" },
+            { t: "يمنع تسريب معلومات الوزارة للخارج وصور القنوات.", p: "الفصل والمحاسبة" },
+            { t: "يمنع مباشرة العمل للمتدرب دون عذر وإذن رسمي.", p: "إنذار وتصل للفصل" },
+            { t: "يمنع المنشن لغير الشكاوى والاستفسارات الرسمية.", p: "ملاحظة" },
+            { t: "يمنع طلب الترقية أو المناصب في القنوات.", p: "ملاحظة" },
+            { t: "يمنع العمل دون تحصين رسمي في المدينة.", p: "ملاحظة" },
+            { t: "يمنع التلاعب في سجلات الحضور والكشوفات.", p: "ملاحظة وتصل للفصل" },
+            { t: "يمنع قيادة الإسعاف لغير المصرح لهم برتبتها.", p: "ملاحظة" },
             { t: "يمنع طلب الاستقالة قبل ترقيتين كصحي معتمد.", p: "رفض الاستقالة" },
-            { t: "يمنع استلام أكثر من موعد في وقت واحد.", p: "ملاحظة" },
-            { t: "يمنع إزعاج الموارد البشرية بشأن النقاط.", p: "ملاحظة" },
-            { t: "يمنع السؤال عن دورات الهلال الأحمر.", p: "بلاك لست مؤقت" },
-            { t: "يمنع السؤال عن نتائج التقديم.", p: "بلاك لست مؤقت" },
-            { t: "يجب طلب إجازة عند التغيب عن التفاعل.", p: "محاسبة نظام العقوبات" },
-            { t: "عدم التفاعل لشهر يؤدي لتنتيل الرتبة.", p: "الفصل عند بلوغ 45 يوم" },
-            { t: "يمنع طلب حجز موعد من شخص آخر.", p: "إنذار" },
-            { t: "يجب التحمد بالسلامة بعد الإنعاش.", p: "ملاحظة (تقمص)" },
-            { t: "يجب تشغيل أضواء الطوارئ عند المباشرة.", p: "ملاحظة وتنتيل" },
-            { t: "يمنع الإنعاش في مناطق إطلاق النار النشطة.", p: "ملاحظة وتنتيل" },
-            { t: "يجب التواجد في كل حالة عند إعلانها بالبلاغات.", p: "ملاحظة" },
-            { t: "يجب دخول راديو وزارة الصحة والالتزام.", p: "ملاحظة" },
-            { t: "يشترط توفر طاقم كامل للمباشرة بالإسعاف.", p: "ملاحظة" },
-            { t: "يمنع القيام بعمل تخصص غيرك.", p: "إنذار شفهي ثم ملاحظة" },
-            { t: "الالتزام بمستند نظام التخصصات الصحي.", p: "ملاحظة وتنتيل" },
-            { t: "يمنع أخذ مبالغ مالية من المواطنين.", p: "ملاحظة" }
+            { t: "يمنع استلام أكثر من موعد وحالة في وقت واحد.", p: "ملاحظة" },
+            { t: "يمنع إزعاج إدارة الموارد البشرية بشأن النقاط.", p: "ملاحظة" },
+            { t: "يمنع السؤال عن دورات الهلال الأحمر وتقديم القطاعات.", p: "بلاك لست مؤقت" },
+            { t: "يمنع السؤال عن نتائج التقديم للقطاعات.", p: "بلاك لست مؤقت" },
+            { t: "يجب طلب إجازة رسمية عند التغيب عن التفاعل.", p: "محاسبة نظام العقوبات" },
+            { t: "عدم التفاعل لشهر يؤدي لتنتيل الرتبة مباشرة.", p: "الفصل عند بلوغ 45 يوم" },
+            { t: "يمنع طلب حجز موعد وحالات من شخص آخر.", p: "إنذار" },
+            { t: "يجب التحمد بالسلامة بعد الإنعاش الناجح.", p: "ملاحظة (تقمص)" },
+            { t: "يجب تشغيل أضواء الطوارئ (السفاتي) عند المباشرة.", p: "ملاحظة وتنتيل" },
+            { t: "يمنع الإنعاش في مناطق إطلاق النار ومقار العصابات.", p: "ملاحظة وتنتيل" },
+            { t: "يجب التواجد في كل حالة عند إعلانها بقناة البلاغات.", p: "ملاحظة" },
+            { t: "يجب دخول راديو وزارة الصحة والالتزام بالتعليمات.", p: "ملاحظة" },
+            { t: "يشترط توفر طاقم كامل للمباشرة بالإسعاف في المدينة.", p: "ملاحظة" },
+            { t: "يمنع القيام بعمل تخصص غير تخصصك المعتمد.", p: "إنذار شفهي ثم ملاحظة" },
+            { t: "الالتزام التام بمستند نظام التخصصات الصحي.", p: "ملاحظة وتنتيل" },
+            { t: "يمنع أخذ مبالغ مالية من المواطنين لغير العمليات.", p: "ملاحظة" }
         ];
 
         window.onload = () => {
@@ -206,7 +280,7 @@
                 lawsList.innerHTML += `
                     <div class="law-item">
                         <b>${i+1} - ${law.t}</b>
-                        <span style="color:#f97316; display:block; font-size:0.8rem;">العقوبة: ${law.p}</span>
+                        <span style="color:var(--warning-orange); display:block; font-size:0.8rem; margin-top:4px;">العقوبة: ${law.p}</span>
                     </div>
                 `;
             });
@@ -222,8 +296,47 @@
             }
         };
 
-        function showLaws() { document.getElementById('lawsModal').style.display = 'flex'; }
-        function hideLaws() { document.getElementById('lawsModal').style.display = 'none'; }
+        // التحكم في فتح وإغلاق النوافذ
+        function showModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function hideModal(id) { document.getElementById(id).style.display = 'none'; }
+
+        // تغيير نوع التذكرة وتحديث النصوص بناءً على اختيار المستخدم
+        function setTicketType(type) {
+            currentTicketType = type;
+            const btnSugg = document.getElementById('btnTypeSuggestion');
+            const btnComp = document.getElementById('btnTypeComplaint');
+            const lblContent = document.getElementById('lblContent');
+            const txtContent = document.getElementById('ticketContent');
+
+            if(type === 'اقتراح') {
+                btnSugg.classList.add('active');
+                btnComp.classList.remove('active');
+                lblContent.innerText = "ماهو الاقتراح؟";
+                txtContent.placeholder = "اكتب اقتراحك هنا بالتفصيل المريح...";
+            } else {
+                btnComp.classList.add('active');
+                btnSugg.classList.remove('active');
+                lblContent.innerText = "ماهي الشكوى؟";
+                txtContent.placeholder = "اكتب تفاصيل الشكوى والحدث هنا...";
+            }
+        }
+
+        // عند الضغط على زر إرسال التذكرة
+        document.getElementById('ticketForm').onsubmit = (e) => {
+            e.preventDefault();
+            
+            // جمع البيانات في متغيرات (جاهزة إذا أردت ربطها مستقبلاً بـ Webhook ديسكورد)
+            const email = document.getElementById('ticketEmail').value;
+            const roblox = document.getElementById('ticketRoblox').value;
+            const discord = document.getElementById('ticketDiscord').value;
+            const content = document.getElementById('ticketContent').value;
+
+            alert(`تم إرسال الـ ${currentTicketType} بنجاح! شكرًا لك.`);
+            
+            // تصفير الحقول وإغلاق النافذة
+            document.getElementById('ticketForm').reset();
+            hideModal('ticketsModal');
+        };
     </script>
 </body>
 </html>
