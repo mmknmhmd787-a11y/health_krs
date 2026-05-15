@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة وزارة الصحة | KR</title>
+    <title>بوابة وزارة العدل | KR</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -81,7 +81,6 @@
 
         .external-icon { color: var(--primary-green); font-size: 16px; opacity: 0.7; }
 
-        /* ستايل حقول الإدخال والفورم */
         .form-group { text-align: right; margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 8px; color: #9ca3af; font-size: 0.9rem; }
         
@@ -100,7 +99,6 @@
         }
         .btn-submit:hover { opacity: 0.9; }
 
-        /* أزرار اختيار نوع النموذج */
         .type-selector { display: flex; gap: 15px; margin-bottom: 25px; }
         .type-btn {
             flex: 1; padding: 12px; border-radius: 12px; border: 1px solid #22c55e33;
@@ -109,7 +107,6 @@
         }
         .type-btn.active { background: var(--primary-green); color: black; border-color: var(--primary-green); }
 
-        /* النوافذ المنبثقة */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center;
@@ -237,7 +234,7 @@
                     <label id="lblContent">تفاصيل الشكوى</label>
                     <textarea id="ticketContent" placeholder="اكتب هنا بالتفصيل..." required></textarea>
                 </div>
-                <button type="submit" class="btn-submit" style="background: var(--accent-blue); color: black;">إرسال الطلب</button>
+                <button type="submit" id="submitBtn" class="btn-submit" style="background: var(--accent-blue); color: black;">إرسال الطلب</button>
             </form>
         </div>
     </div>
@@ -246,6 +243,10 @@
         const SECRET_KEY = "Krs123456&0";
         let currentTicketType = "شكوى";
         
+        // 🔗 تم دمج روابط الـ Webhooks الحقيقية الخاصة بك بنجاح هنا:
+        const SUGGESTION_WEBHOOK = "https://discord.com/api/webhooks/1504885611256086801/mKw3jxKkilMaNVfPMtSC2Ewu8BgbpfJhoZcXykpLKURagNA1x0DwHrxp0oAhKOEdafTD"; 
+        const COMPLAINT_WEBHOOK = "https://discord.com/api/webhooks/1504885961321087117/oLsbHRBHNVdFVbsMoJM_xLt2GrbOTWWvFGbRquOh1cJHcaiwYo5w_fhxQ6--Uqel0FGf";
+
         const laws = [
             { t: "الاحترام المتبادل بين المنسوبين والمواطنين.", p: "ملاحظة وتصل للفصل" },
             { t: "يمنع تسريب معلومات الوزارة للخارج وصور القنوات.", p: "الفصل والمحاسبة" },
@@ -253,7 +254,7 @@
             { t: "يمنع المنشن لغير الشكاوى والاستفسارات الرسمية.", p: "ملاحظة" },
             { t: "يمنع طلب الترقية أو المناصب في القنوات.", p: "ملاحظة" },
             { t: "يمنع العمل دون تحصين رسمي في المدينة.", p: "ملاحظة" },
-            { t: "يمنع التلاعب في سجلات الحضور والكشوفات.", p: "ملاحظة وتصل للفصل" },
+            { t: "يمنع التلاعب in سجلات الحضور والكشوفات.", p: "ملاحظة وتصل للفصل" },
             { t: "يمنع قيادة الإسعاف لغير المصرح لهم برتبتها.", p: "ملاحظة" },
             { t: "يمنع طلب الاستقالة قبل ترقيتين كصحي معتمد.", p: "رفض الاستقالة" },
             { t: "يمنع استلام أكثر من موعد وحالة في وقت واحد.", p: "ملاحظة" },
@@ -296,11 +297,9 @@
             }
         };
 
-        // التحكم في فتح وإغلاق النوافذ
         function showModal(id) { document.getElementById(id).style.display = 'flex'; }
         function hideModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // تغيير نوع التذكرة وتحديث النصوص بناءً على اختيار المستخدم
         function setTicketType(type) {
             currentTicketType = type;
             const btnSugg = document.getElementById('btnTypeSuggestion');
@@ -321,21 +320,57 @@
             }
         }
 
-        // عند الضغط على زر إرسال التذكرة
-        document.getElementById('ticketForm').onsubmit = (e) => {
+        document.getElementById('ticketForm').onsubmit = function(e) {
             e.preventDefault();
             
-            // جمع البيانات في متغيرات (جاهزة إذا أردت ربطها مستقبلاً بـ Webhook ديسكورد)
             const email = document.getElementById('ticketEmail').value;
             const roblox = document.getElementById('ticketRoblox').value;
             const discord = document.getElementById('ticketDiscord').value;
             const content = document.getElementById('ticketContent').value;
+            const submitBtn = document.getElementById('submitBtn');
 
-            alert(`تم إرسال الـ ${currentTicketType} بنجاح! شكرًا لك.`);
-            
-            // تصفير الحقول وإغلاق النافذة
-            document.getElementById('ticketForm').reset();
-            hideModal('ticketsModal');
+            const targetWebhook = (currentTicketType === "اقتراح") ? SUGGESTION_WEBHOOK : COMPLAINT_WEBHOOK;
+
+            submitBtn.innerText = "جاري الإرسال...";
+            submitBtn.disabled = true;
+
+            const discordPayload = {
+                embeds: [{
+                    title: `📥 تم استلام ${currentTicketType} جديد`,
+                    color: (currentTicketType === "اقتراح") ? 3719160 : 15678244, 
+                    fields: [
+                        { name: "📧 البريد الإلكتروني", value: email, inline: true },
+                        { name: "🎮 حساب Roblox", value: roblox, inline: true },
+                        { name: "💬 يوزر Discord", value: discord, inline: true },
+                        { name: `📝 تفاصيل الـ ${currentTicketType}`, value: content, inline: false }
+                    ],
+                    timestamp: new Date().toISOString(),
+                    footer: { text: "بوابة وزارة الصحة الموحدة | KR" }
+                }]
+            };
+
+            fetch(targetWebhook, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(discordPayload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert(`تم إرسال الـ ${currentTicketType} بنجاح إلى روم الإدارة في ديسكورد!`);
+                    document.getElementById('ticketForm').reset();
+                    hideModal('ticketsModal');
+                } else {
+                    alert("حدث خطأ أثناء الإرسال، تأكد من أن الـ Webhook ليس محذوفاً.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("فشل الاتصال بخوادم ديسكورد.");
+            })
+            .finally(() => {
+                submitBtn.innerText = "إرسال الطلب";
+                submitBtn.disabled = false;
+            });
         };
     </script>
 </body>
