@@ -30,7 +30,7 @@
             overflow: hidden; /* لمنع السكرول أثناء شاشة التحميل */
         }
 
-        /* 🎬 ستايل شاشة التحميل الاحترافية (Loading Screen) */
+        /* 🎬 شاشة التحميل الاحترافية (Loading Screen) */
         #loadingScreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: #050705; display: flex; flex-direction: column;
@@ -45,7 +45,7 @@
 
         .loading-logo {
             width: 100%; height: 100%; object-fit: contain;
-            filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.6)); /* توهج أزرق نيون حول الشعار */
+            filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.6)); /* التوهج النيون الأزرق */
             animation: pulse 2s infinite ease-in-out;
         }
 
@@ -79,8 +79,8 @@
             100% { width: 100%; }
         }
 
-        /* 📋 بقية ستايلات الموقع الأساسية */
-        .container { width: 100%; max-width: 500px; display: none; } /* تظهر بعد انتهاء التحميل */
+        /* 📋 بقية اللوحة */
+        .container { width: 100%; max-width: 500px; display: none; }
 
         .card {
             background-color: var(--card-bg);
@@ -90,7 +90,6 @@
         }
 
         .hidden { display: none !important; }
-
         .options-grid { display: grid; gap: 14px; margin-top: 30px; }
 
         .opt-button {
@@ -159,7 +158,7 @@
 
     <div id="loadingScreen">
         <div class="loading-logo-box">
-            <img src="https://api.screenshot.net/images/user/f38b55c6-c95a-4b95-a83a-d68a9b23b3f2.png" alt="وزارة الصحة" class="loading-logo">
+            <img src="https://i.ibb.co/QjYQBrPW/1643260841283.png" alt="وزارة الصحة" class="loading-logo">
         </div>
         <div class="progress-container">
             <div class="progress-bar"></div>
@@ -169,7 +168,7 @@
 
     <div class="container" id="mainContainer">
         <div id="loginPage" class="card">
-            <img src="https://api.screenshot.net/images/user/f38b55c6-c95a-4b95-a83a-d68a9b23b3f2.png" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px;" alt="شعار الصحة">
+            <img src="https://i.ibb.co/QjYQBrPW/1643260841283.png" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px;" alt="شعار الصحة">
             <h2 style="color: var(--primary-green); margin-top: 0; margin-bottom: 5px;">بوابة وزارة الصحة | KR</h2>
             <p style="color: #6b7280; font-size: 0.85rem; margin-bottom: 30px;">نظام الموظفين الرسمي لمجتمع KR</p>
             
@@ -292,7 +291,7 @@
         const SUGGESTION_WEBHOOK = "https://discord.com/api/webhooks/1504885611256086801/mKw3jxKkilMaNVfPMtSC2Ewu8BgbpfJhoZcXykpLKURagNA1x0DwHrxp0oAhKOEdafTD"; 
         const COMPLAINT_WEBHOOK = "https://discord.com/api/webhooks/1504885961321087117/oLsbHRBHNVdFVbsMoJM_xLt2GrbOTWWvFGbRquOh1cJHcaiwYo5w_fhxQ6--Uqel0FGf";
 
-        // ⏱️ ميكانيكية إخفاء شاشة التحميل وإظهار الموقع تلقائياً
+        // ⏱️ تأثير شاشة التحميل (تختفي بعد 3 ثوانٍ)
         setTimeout(() => {
             const loader = document.getElementById('loadingScreen');
             const mainContent = document.getElementById('mainContainer');
@@ -300,10 +299,10 @@
             loader.style.opacity = '0';
             loader.style.transform = 'scale(1.1)';
             mainContent.style.display = 'block';
-            document.body.style.overflow = 'auto'; // إعادة تفعيل السكرول
+            document.body.style.overflow = 'auto';
 
             setTimeout(() => { loader.style.display = 'none'; }, 800);
-        }, 3000); // 3 ثوانٍ مدة التحميل
+        }, 3000);
 
         const laws = [
             { t: "الاحترام المتبادل بين المنسوبين والمواطنين.", p: "ملاحظة وتصل للفصل" },
@@ -336,12 +335,7 @@
         window.onload = () => {
             const lawsList = document.getElementById('lawsList');
             laws.forEach((law, i) => {
-                lawsList.innerHTML += `
-                    <div class="law-item">
-                        <b>${i+1} - ${law.t}</b>
-                        <span style="color:var(--warning-orange); display:block; font-size:0.8rem; margin-top:4px;">العقوبة: ${law.p}</span>
-                    </div>
-                `;
+                lawsList.innerHTML += `<div class="law-item"><b>${i+1} - ${law.t}</b><span style="color:var(--warning-orange); display:block; font-size:0.8rem; margin-top:4px;">العقوبة: ${law.p}</span></div>`;
             });
         };
 
@@ -415,7 +409,7 @@
                     document.getElementById('ticketForm').reset();
                     hideModal('ticketsModal');
                 } else {
-                    alert("حدث خطأ أثناء الإرسال، تأكد من أن الـ Webhook شغال.");
+                    alert("حدث خطأ أثناء الإرسال.");
                 }
             })
             .catch(error => {
