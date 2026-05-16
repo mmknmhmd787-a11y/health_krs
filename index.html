@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة وزارة العدل | KR</title>
+    <title>بوابة وزارة الصحة | KR</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -27,9 +27,60 @@
             font-family: 'Tajawal', sans-serif;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box;
+            overflow: hidden; /* لمنع السكرول أثناء شاشة التحميل */
         }
 
-        .container { width: 100%; max-width: 500px; }
+        /* 🎬 ستايل شاشة التحميل الاحترافية (Loading Screen) */
+        #loadingScreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #050705; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .loading-logo-box {
+            position: relative; width: 180px; height: 180px; margin-bottom: 30px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .loading-logo {
+            width: 100%; height: 100%; object-fit: contain;
+            filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.6)); /* توهج أزرق نيون حول الشعار */
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        /* شريط التحميل */
+        .progress-container {
+            width: 200px; height: 4px; background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px; overflow: hidden; margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            width: 0%; height: 100%; background: var(--accent-blue);
+            box-shadow: 0 0 10px var(--accent-blue);
+            border-radius: 10px; animation: loadProgress 2.8s forwards ease-in-out;
+        }
+
+        .loading-text {
+            color: var(--accent-blue); font-size: 1.1rem; font-weight: 500;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5); letter-spacing: 1px;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.4)); }
+            50% { transform: scale(1.04); filter: drop-shadow(0 0 30px rgba(56, 189, 248, 0.8)); }
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            20% { width: 15%; }
+            50% { width: 65%; }
+            80% { width: 85%; }
+            100% { width: 100%; }
+        }
+
+        /* 📋 بقية ستايلات الموقع الأساسية */
+        .container { width: 100%; max-width: 500px; display: none; } /* تظهر بعد انتهاء التحميل */
 
         .card {
             background-color: var(--card-bg);
@@ -43,42 +94,26 @@
         .options-grid { display: grid; gap: 14px; margin-top: 30px; }
 
         .opt-button {
-            background: var(--btn-bg);
-            border: 1px solid var(--btn-border);
-            border-radius: 20px;
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: var(--text-white);
-            text-decoration: none;
-            transition: 0.3s ease;
-            cursor: pointer;
-            min-height: 75px;
+            background: var(--btn-bg); border: 1px solid var(--btn-border);
+            border-radius: 20px; padding: 10px 15px; display: flex;
+            align-items: center; justify-content: space-between;
+            color: var(--text-white); text-decoration: none;
+            transition: 0.3s ease; cursor: pointer; min-height: 75px;
         }
 
         .opt-button:hover {
-            background: rgba(74, 222, 128, 0.08);
-            border-color: var(--primary-green);
+            background: rgba(74, 222, 128, 0.08); border-color: var(--primary-green);
             transform: translateY(-2px);
         }
 
         .file-icon-box {
-            background: var(--icon-bg);
-            width: 50px; height: 50px;
-            border-radius: 12px;
+            background: var(--icon-bg); width: 50px; height: 50px; border-radius: 12px;
             display: flex; justify-content: center; align-items: center;
             border: 1px solid rgba(74, 222, 128, 0.2);
         }
         .file-icon-box i { color: var(--primary-green); font-size: 20px; }
 
-        .btn-text {
-            flex-grow: 1;
-            text-align: center;
-            font-size: 1rem;
-            font-weight: 500;
-        }
-
+        .btn-text { flex-grow: 1; text-align: center; font-size: 1rem; font-weight: 500; }
         .external-icon { color: var(--primary-green); font-size: 16px; opacity: 0.7; }
 
         .form-group { text-align: right; margin-bottom: 15px; }
@@ -122,23 +157,35 @@
 </head>
 <body>
 
-    <div class="container">
+    <div id="loadingScreen">
+        <div class="loading-logo-box">
+            <img src="https://api.screenshot.net/images/user/f38b55c6-c95a-4b95-a83a-d68a9b23b3f2.png" alt="وزارة الصحة" class="loading-logo">
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        <div class="loading-text">جاري الاتصال بالنظام...</div>
+    </div>
+
+    <div class="container" id="mainContainer">
         <div id="loginPage" class="card">
-            <h2 style="color: var(--primary-green); margin-bottom: 30px;">وزارة العدل | KR</h2>
+            <img src="https://api.screenshot.net/images/user/f38b55c6-c95a-4b95-a83a-d68a9b23b3f2.png" style="width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px;" alt="شعار الصحة">
+            <h2 style="color: var(--primary-green); margin-top: 0; margin-bottom: 5px;">بوابة وزارة الصحة | KR</h2>
+            <p style="color: #6b7280; font-size: 0.85rem; margin-bottom: 30px;">نظام الموظفين الرسمي لمجتمع KR</p>
+            
             <form id="loginForm">
                 <div class="form-group"><input type="text" id="username" placeholder="اسم المستخدم" style="text-align:center;" required></div>
                 <div class="form-group"><input type="password" id="password" placeholder="كلمة المرور" style="text-align:center;" required></div>
-                <button type="submit" class="btn-submit">دخول</button>
+                <button type="submit" class="btn-submit">دخول اللوحة</button>
             </form>
             <p id="errorMessage" style="color: var(--error-red); display: none; margin-top: 15px; text-align:center;">كلمة المرور خاطئة!</p>
         </div>
 
         <div id="dashboardPage" class="card hidden">
             <h2 style="color: var(--accent-blue); margin-bottom: 5px;">مركز الإدارة</h2>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 25px;">بوابة وزارة الصحة الموحدة</p>
+            <p style="color: #6b7280; font-size: 0.85rem; margin-bottom: 25px;">بوابة وزارة الصحة الموحدة</p>
             
             <div class="options-grid">
-                
                 <div class="opt-button" onclick="showModal('lawsModal')">
                     <i class="fa-solid fa-arrow-up-right-from-square external-icon"></i>
                     <span class="btn-text">قوانين وزارة الصحة</span>
@@ -178,7 +225,6 @@
                         <i class="fa-solid fa-comments" style="color: var(--accent-blue);"></i>
                     </div>
                 </div>
-
             </div>
 
             <button onclick="location.reload()" style="background:none; border:none; color:var(--error-red); margin-top:25px; cursor:pointer; font-family:inherit;">تسجيل الخروج</button>
@@ -210,7 +256,7 @@
         <div class="modal-content" style="border-color: var(--accent-blue);">
             <span onclick="hideModal('ticketsModal')" style="color:var(--error-red); cursor:pointer; float:left; font-size: 1.5rem;">&times;</span>
             <h2 style="color: var(--accent-blue); margin-bottom: 5px;" id="ticketTitle">تقديم طلب جديد</h2>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">الرجاء اختيار نوع الطلب وتعبئة البيانات</p>
+            <p style="color: #6b7280; font-size: 0.85rem; margin-bottom: 20px;">الرجاء اختيار نوع الطلب وتعبئة البيانات</p>
             
             <div class="type-selector">
                 <button type="button" class="type-btn" id="btnTypeSuggestion" onclick="setTicketType('اقتراح')">اقتراحات</button>
@@ -243,9 +289,21 @@
         const SECRET_KEY = "Krs123456&0";
         let currentTicketType = "شكوى";
         
-        // 🔗 تم دمج روابط الـ Webhooks الحقيقية الخاصة بك بنجاح هنا:
         const SUGGESTION_WEBHOOK = "https://discord.com/api/webhooks/1504885611256086801/mKw3jxKkilMaNVfPMtSC2Ewu8BgbpfJhoZcXykpLKURagNA1x0DwHrxp0oAhKOEdafTD"; 
         const COMPLAINT_WEBHOOK = "https://discord.com/api/webhooks/1504885961321087117/oLsbHRBHNVdFVbsMoJM_xLt2GrbOTWWvFGbRquOh1cJHcaiwYo5w_fhxQ6--Uqel0FGf";
+
+        // ⏱️ ميكانيكية إخفاء شاشة التحميل وإظهار الموقع تلقائياً
+        setTimeout(() => {
+            const loader = document.getElementById('loadingScreen');
+            const mainContent = document.getElementById('mainContainer');
+            
+            loader.style.opacity = '0';
+            loader.style.transform = 'scale(1.1)';
+            mainContent.style.display = 'block';
+            document.body.style.overflow = 'auto'; // إعادة تفعيل السكرول
+
+            setTimeout(() => { loader.style.display = 'none'; }, 800);
+        }, 3000); // 3 ثوانٍ مدة التحميل
 
         const laws = [
             { t: "الاحترام المتبادل بين المنسوبين والمواطنين.", p: "ملاحظة وتصل للفصل" },
@@ -254,7 +312,7 @@
             { t: "يمنع المنشن لغير الشكاوى والاستفسارات الرسمية.", p: "ملاحظة" },
             { t: "يمنع طلب الترقية أو المناصب في القنوات.", p: "ملاحظة" },
             { t: "يمنع العمل دون تحصين رسمي في المدينة.", p: "ملاحظة" },
-            { t: "يمنع التلاعب in سجلات الحضور والكشوفات.", p: "ملاحظة وتصل للفصل" },
+            { t: "يمنع التلاعب في سجلات الحضور والكشوفات.", p: "ملاحظة وتصل للفصل" },
             { t: "يمنع قيادة الإسعاف لغير المصرح لهم برتبتها.", p: "ملاحظة" },
             { t: "يمنع طلب الاستقالة قبل ترقيتين كصحي معتمد.", p: "رفض الاستقالة" },
             { t: "يمنع استلام أكثر من موعد وحالة في وقت واحد.", p: "ملاحظة" },
@@ -308,13 +366,11 @@
             const txtContent = document.getElementById('ticketContent');
 
             if(type === 'اقتراح') {
-                btnSugg.classList.add('active');
-                btnComp.classList.remove('active');
+                btnSugg.classList.add('active'); btnComp.classList.remove('active');
                 lblContent.innerText = "ماهو الاقتراح؟";
                 txtContent.placeholder = "اكتب اقتراحك هنا بالتفصيل المريح...";
             } else {
-                btnComp.classList.add('active');
-                btnSugg.classList.remove('active');
+                btnComp.classList.add('active'); btnSugg.classList.remove('active');
                 lblContent.innerText = "ماهي الشكوى؟";
                 txtContent.placeholder = "اكتب تفاصيل الشكوى والحدث هنا...";
             }
@@ -322,7 +378,6 @@
 
         document.getElementById('ticketForm').onsubmit = function(e) {
             e.preventDefault();
-            
             const email = document.getElementById('ticketEmail').value;
             const roblox = document.getElementById('ticketRoblox').value;
             const discord = document.getElementById('ticketDiscord').value;
@@ -360,7 +415,7 @@
                     document.getElementById('ticketForm').reset();
                     hideModal('ticketsModal');
                 } else {
-                    alert("حدث خطأ أثناء الإرسال، تأكد من أن الـ Webhook ليس محذوفاً.");
+                    alert("حدث خطأ أثناء الإرسال، تأكد من أن الـ Webhook شغال.");
                 }
             })
             .catch(error => {
