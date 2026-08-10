@@ -24,26 +24,7 @@
             width: 350px;
         }
 
-        .sheet-link-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            background-color: #333;
-            color: #4CAF50;
-            border: 1px solid #4CAF50;
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: bold;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-            transition: background-color 0.3s;
-        }
-
-        .sheet-link-btn:hover {
-            background-color: rgba(76, 175, 80, 0.15);
-        }
-
+        /* زر حالة التسجيل (أخضر/أحمر) */
         .status-toggle-btn {
             width: 100%;
             padding: 14px;
@@ -121,9 +102,6 @@
 <body>
 
     <div class="container">
-        <!-- رابط المستند الخاص بك -->
-        <a href="https://docs.google.com/spreadsheets/d/146odT5MhdL6-QsMYwjnLmN3OnLFmMoqxWNEASikV4Ng/edit?usp=drivesdk" target="_blank" class="sheet-link-btn">📊 فتح جدول الحضور والبيانات</a>
-
         <!-- زر التبديل بين تسجيل الدخول والخروج -->
         <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">تسجيل دخول</button>
 
@@ -174,11 +152,9 @@
             const discordUser = document.getElementById('discord').value.trim().toLowerCase();
             const todayDate = new Date().toISOString().split('T')[0];
 
-            // مفاتيح الحفظ بناءً على البريد والديسكورد
             const emailKey = `submission_email_${emailUser}_${todayDate}`;
             const discordKey = `submission_discord_${discordUser}_${todayDate}`;
 
-            // التحقق مما إذا تم استخدام هذا البريد أو اليوزر اليوم
             if (localStorage.getItem(emailKey) || localStorage.getItem(discordKey)) {
                 alert('عذراً! تم تسجيل الحضور بهذا البريد الإلكتروني أو حساب Discord اليوم بالفعل. لا يمكنك التسجيل أكثر من مرة في اليوم الواحد.');
                 return;
@@ -203,7 +179,6 @@
                     body: JSON.stringify(payload)
                 });
 
-                // حفظ بيانات المنع لليوم الحالي
                 localStorage.setItem(emailKey, "true");
                 localStorage.setItem(discordKey, "true");
 
