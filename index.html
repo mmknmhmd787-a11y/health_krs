@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نظام تسجيل حضور المسعفين المتطور</title>
-    <!-- استدعاء خط Tajawal من Google Fonts للمظهر الحديث -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
         * {
@@ -25,7 +24,6 @@
             overflow-x: hidden;
         }
 
-        /* الخلفية الزجاجية الحديثة Glassmorphism */
         .container {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(16px);
@@ -88,7 +86,6 @@
             margin: 0;
         }
 
-        /* زر الحالة التفاعلي والنيون */
         .status-toggle-btn {
             width: 100%;
             padding: 16px;
@@ -106,7 +103,6 @@
             overflow: hidden;
         }
 
-        /* حالة تسجيل الدخول (أخضر نيون) */
         .status-toggle-btn.login-state {
             background: linear-gradient(135deg, #00e676, #00b0ff);
             color: #000;
@@ -118,7 +114,6 @@
             transform: translateY(-2px);
         }
 
-        /* حالة تسجيل الخروج (أحمر نيون) */
         .status-toggle-btn.logout-state {
             background: linear-gradient(135deg, #ff1744, #f50057);
             color: #fff;
@@ -168,7 +163,6 @@
             color: #525665;
         }
 
-        /* زر الإرسال المتطور */
         .submit-button {
             width: 100%;
             padding: 16px;
@@ -201,7 +195,6 @@
 <body>
 
     <div class="container">
-        <!-- قسم العنوان الحديث -->
         <div class="header">
             <div class="badge">
                 <span>🚑</span> قطاع الهلال الأحمر
@@ -210,7 +203,6 @@
             <p>سجّل استلامك اليومي بسهولة وسرعة</p>
         </div>
 
-        <!-- زر التبديل بين تسجيل الدخول والخروج -->
         <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">
             <span>تسجيل دخول</span>
         </button>
@@ -242,7 +234,8 @@
     </div>
 
     <script>
-        const WEBHOOK_URL = "ضع_رابط_GOOGLE_WEBHOOK_هنا";
+        // رابط الـ Webhook الخاص بك المدمج بنجاح
+        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxllHLBhJG0OlZGsNJoyic72Zat6LapTc2a59daDu8KH1_Flye4Fdl2PLchc6mQQMe51A/exec";
 
         let isLoggedIn = false;
 
