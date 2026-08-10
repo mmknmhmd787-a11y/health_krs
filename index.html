@@ -24,7 +24,28 @@
             width: 350px;
         }
 
-        /* زر التبديل العلوي */
+        /* زر فتح جدول البيانات المباشر */
+        .sheet-link-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #333;
+            color: #4CAF50;
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            transition: background-color 0.3s;
+        }
+
+        .sheet-link-btn:hover {
+            background-color: rgba(76, 175, 80, 0.15);
+        }
+
+        /* زر حالة التسجيل (أخضر/أحمر) */
         .status-toggle-btn {
             width: 100%;
             padding: 14px;
@@ -34,30 +55,19 @@
             cursor: pointer;
             border: none;
             transition: background-color 0.3s, color 0.3s;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
-        /* حالة تسجيل الدخول (أخضر) */
         .status-toggle-btn.login-state {
             background-color: #4CAF50;
             color: #121212;
         }
 
-        .status-toggle-btn.login-state:hover {
-            background-color: #45a049;
-        }
-
-        /* حالة تسجيل الخروج (أحمر) */
         .status-toggle-btn.logout-state {
             background-color: #f44336;
             color: white;
         }
 
-        .status-toggle-btn.logout-state:hover {
-            background-color: #d32f2f;
-        }
-
-        /* تنسيق الحقول */
         .input-group {
             margin-bottom: 15px;
             text-align: right;
@@ -86,7 +96,6 @@
             border-color: #2196F3;
         }
 
-        /* زر إرسال الطلب الأزرق */
         .submit-button {
             width: 100%;
             padding: 15px;
@@ -109,10 +118,12 @@
 <body>
 
     <div class="container">
-        <!-- الزر الديناميكي: يبدأ خضراء وتتبدل للأحمر عند الضغط -->
+        <!-- رابط الجدول المباشر الخاص بك -->
+        <a href="https://docs.google.com/spreadsheets/d/146odT5MhdL6-QsMYwjnLmN3OnLFmMoqxWNEASikV4Ng/edit?usp=drivesdk" target="_blank" class="sheet-link-btn">📊 فتح جدول الحضور والبيانات</a>
+
+        <!-- زر التبديل بين تسجيل الدخول والخروج -->
         <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">تسجيل دخول</button>
 
-        <!-- نموذج إدخال بيانات المسعف -->
         <form id="paramedicForm" onsubmit="handleSubmit(event)">
             <div class="input-group">
                 <label for="email">البريد الإلكتروني</label>
@@ -129,25 +140,24 @@
                 <input type="text" id="discord" placeholder="username_kr" required>
             </div>
 
-            <button type="submit" class="submit-button">إرسال الطلب</button>
+            <button type="submit" id="submitBtn" class="submit-button">إرسال الطلب وتسجيل البيانات</button>
         </form>
     </div>
 
     <script>
-        // متغير لمتابعة حالة المسعف (false = خروج، true = دخول)
+        // رابط الـ Webhook لإرسال البيانات آلياً بعد إنشاء Deployment
+        const WEBHOOK_URL = "ضع_رابط_GOOGLE_WEBHOOK_هنا";
+
         let isLoggedIn = false;
 
         function toggleAuthStatus() {
             const btn = document.getElementById('authBtn');
-            
             if (!isLoggedIn) {
-                // التحويل إلى حالة تسجيل الخروج (أحمر)
                 btn.textContent = 'تسجيل خروج';
                 btn.classList.remove('login-state');
                 btn.classList.add('logout-state');
                 isLoggedIn = true;
             } else {
-                // العودة إلى حالة تسجيل الدخول (أخضر)
                 btn.textContent = 'تسجيل دخول';
                 btn.classList.remove('logout-state');
                 btn.classList.add('login-state');
@@ -155,10 +165,35 @@
             }
         }
 
-        function handleSubmit(event) {
+        async function handleSubmit(event) {
             event.preventDefault();
-            const actionText = isLoggedIn ? 'تسجيل الدخول' : 'تسجيل الخروج';
-            alert('تم إرسال طلب ' + actionText + ' بنجاح!');
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الإرسال...';
+
+            const payload = {
+                action: isLoggedIn ? 'تسجيل خروج' : 'تسجيل دخول',
+                email: document.getElementById('email').value,
+                roblox: document.getElementById('roblox').value,
+                discord: document.getElementById('discord').value
+            };
+
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                alert('تم تسجيل البيانات بنجاح!');
+            } catch (error) {
+                alert('حدث خطأ أثناء الإرسال!');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'إرسال الطلب وتسجيل البيانات';
+            }
         }
     </script>
 
