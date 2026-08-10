@@ -229,13 +229,13 @@
                 </div>
             </div>
 
-            <button type="submit" id="submitBtn" class="submit-button">تاكيد وإرسال البيانات</button>
+            <button type="submit" id="submitBtn" class="submit-button">تأكيد وإرسال البيانات</button>
         </form>
     </div>
 
     <script>
-        // رابط الـ Webhook الخاص بك المدمج بنجاح
-        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbxllHLBhJG0OlZGsNJoyic72Zat6LapTc2a59daDu8KH1_Flye4Fdl2PLchc6mQQMe51A/exec";
+        // رابط الـ Webhook الجديد
+        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbz8lKkHQpq_H29QZ7yUnyVJswX6OP_s-cjemzxMzbJkif6jDHT4nAx4m1v6WYuR4cOutg/exec";
 
         let isLoggedIn = false;
 
@@ -296,7 +296,7 @@
                 alert('حدث خطأ أثناء الإرسال!');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'تاكيد وإرسال البيانات';
+                submitBtn.textContent = 'تأكيد وإرسال البيانات';
             }
         }
     </script>
