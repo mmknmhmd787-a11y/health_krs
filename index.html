@@ -3,125 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تسجيل حضور المسعفين</title>
+    <title>نظام تسجيل حضور المسعفين المتطور</title>
+    <!-- استدعاء خط Tajawal من Google Fonts للمظهر الحديث -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
         body {
-            background-color: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
+            background: radial-gradient(circle at top right, #1a1c29, #0d0e15, #050508);
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* الخلفية الزجاجية الحديثة Glassmorphism */
+        .container {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 35px 30px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
+                        0 0 30px rgba(229, 57, 53, 0.05);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff1744, transparent, #29b6f6);
+            border-radius: 26px;
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(229, 57, 53, 0.12);
+            border: 1px solid rgba(229, 57, 53, 0.3);
+            color: #ff5252;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin: 0 0 6px 0;
+            background: linear-gradient(135deg, #ffffff 30%, #a5a5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            font-size: 13px;
+            color: #8f92a1;
             margin: 0;
         }
 
-        .container {
-            background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            width: 350px;
-        }
-
-        /* زر حالة التسجيل (أخضر/أحمر) */
+        /* زر الحالة التفاعلي والنيون */
         .status-toggle-btn {
             width: 100%;
-            padding: 14px;
-            border-radius: 8px;
+            padding: 16px;
+            border-radius: 14px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             border: none;
-            transition: background-color 0.3s, color 0.3s;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
         }
 
+        /* حالة تسجيل الدخول (أخضر نيون) */
         .status-toggle-btn.login-state {
-            background-color: #4CAF50;
-            color: #121212;
+            background: linear-gradient(135deg, #00e676, #00b0ff);
+            color: #000;
+            box-shadow: 0 8px 25px rgba(0, 230, 118, 0.25);
         }
 
+        .status-toggle-btn.login-state:hover {
+            box-shadow: 0 10px 30px rgba(0, 230, 118, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* حالة تسجيل الخروج (أحمر نيون) */
         .status-toggle-btn.logout-state {
-            background-color: #f44336;
-            color: white;
+            background: linear-gradient(135deg, #ff1744, #f50057);
+            color: #fff;
+            box-shadow: 0 8px 25px rgba(255, 23, 68, 0.3);
+        }
+
+        .status-toggle-btn.logout-state:hover {
+            box-shadow: 0 10px 30px rgba(255, 23, 68, 0.5);
+            transform: translateY(-2px);
         }
 
         .input-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             text-align: right;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 14px;
-            color: #b0b0b0;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #a0a5b5;
+        }
+
+        .input-wrapper {
+            position: relative;
         }
 
         input {
             width: 100%;
-            padding: 12px;
-            background-color: #222;
-            border: 1px solid #444;
-            border-radius: 8px;
-            color: white;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
             font-size: 14px;
-            box-sizing: border-box;
+            outline: none;
         }
 
         input:focus {
-            outline: none;
-            border-color: #2196F3;
+            background: rgba(255, 255, 255, 0.07);
+            border-color: #00b0ff;
+            box-shadow: 0 0 15px rgba(0, 176, 255, 0.2);
         }
 
+        input::placeholder {
+            color: #525665;
+        }
+
+        /* زر الإرسال المتطور */
         .submit-button {
             width: 100%;
-            padding: 15px;
-            background-color: #2196F3;
+            padding: 16px;
+            background: linear-gradient(135deg, #29b6f6, #0288d1);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 14px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
-            margin-top: 15px;
-            transition: background-color 0.3s;
+            margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(2, 136, 209, 0.3);
         }
 
         .submit-button:hover {
-            background-color: #1e88e5;
+            background: linear-gradient(135deg, #4fc3f7, #0288d1);
+            box-shadow: 0 10px 25px rgba(2, 136, 209, 0.45);
+            transform: translateY(-2px);
         }
 
         .submit-button:disabled {
-            background-color: #555;
+            background: #2a2d3a;
+            color: #6c727f;
+            box-shadow: none;
             cursor: not-allowed;
+            transform: none;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- قسم العنوان الحديث -->
+        <div class="header">
+            <div class="badge">
+                <span>🚑</span> قطاع الهلال الأحمر
+            </div>
+            <h1>بوابة الحضور الرقمية</h1>
+            <p>سجّل استلامك اليومي بسهولة وسرعة</p>
+        </div>
+
         <!-- زر التبديل بين تسجيل الدخول والخروج -->
-        <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">تسجيل دخول</button>
+        <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">
+            <span>تسجيل دخول</span>
+        </button>
 
         <form id="paramedicForm" onsubmit="handleSubmit(event)">
             <div class="input-group">
                 <label for="email">البريد الإلكتروني</label>
-                <input type="email" id="email" placeholder="example@gmail.com" required>
+                <div class="input-wrapper">
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
             </div>
 
             <div class="input-group">
                 <label for="roblox">اسم حسابك Roblox</label>
-                <input type="text" id="roblox" placeholder="Roblox Username" required>
+                <div class="input-wrapper">
+                    <input type="text" id="roblox" placeholder="Roblox Username" required>
+                </div>
             </div>
 
             <div class="input-group">
                 <label for="discord">يوزر حسابك Discord</label>
-                <input type="text" id="discord" placeholder="username_kr" required>
+                <div class="input-wrapper">
+                    <input type="text" id="discord" placeholder="username_kr" required>
+                </div>
             </div>
 
-            <button type="submit" id="submitBtn" class="submit-button">إرسال الطلب وتسجيل البيانات</button>
+            <button type="submit" id="submitBtn" class="submit-button">تاكيد وإرسال البيانات</button>
         </form>
     </div>
 
@@ -133,12 +249,12 @@
         function toggleAuthStatus() {
             const btn = document.getElementById('authBtn');
             if (!isLoggedIn) {
-                btn.textContent = 'تسجيل خروج';
+                btn.innerHTML = '<span>تسجيل خروج</span>';
                 btn.classList.remove('login-state');
                 btn.classList.add('logout-state');
                 isLoggedIn = true;
             } else {
-                btn.textContent = 'تسجيل دخول';
+                btn.innerHTML = '<span>تسجيل دخول</span>';
                 btn.classList.remove('logout-state');
                 btn.classList.add('login-state');
                 isLoggedIn = false;
@@ -156,7 +272,7 @@
             const discordKey = `submission_discord_${discordUser}_${todayDate}`;
 
             if (localStorage.getItem(emailKey) || localStorage.getItem(discordKey)) {
-                alert('عذراً! تم تسجيل الحضور بهذا البريد الإلكتروني أو حساب Discord اليوم بالفعل. لا يمكنك التسجيل أكثر من مرة في اليوم الواحد.');
+                alert('عذراً! تم تسجيل الحضور بهذا البريد الإلكتروني أو حساب Discord اليوم بالفعل.');
                 return;
             }
 
@@ -187,7 +303,7 @@
                 alert('حدث خطأ أثناء الإرسال!');
             } finally {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'إرسال الطلب وتسجيل البيانات';
+                submitBtn.textContent = 'تاكيد وإرسال البيانات';
             }
         }
     </script>
