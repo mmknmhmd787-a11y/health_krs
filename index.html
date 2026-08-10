@@ -24,7 +24,6 @@
             width: 350px;
         }
 
-        /* زر فتح جدول البيانات المباشر */
         .sheet-link-btn {
             display: block;
             width: 100%;
@@ -45,7 +44,6 @@
             background-color: rgba(76, 175, 80, 0.15);
         }
 
-        /* زر حالة التسجيل (أخضر/أحمر) */
         .status-toggle-btn {
             width: 100%;
             padding: 14px;
@@ -113,12 +111,17 @@
         .submit-button:hover {
             background-color: #1e88e5;
         }
+
+        .submit-button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- رابط الجدول المباشر الخاص بك -->
+        <!-- رابط المستند الخاص بك -->
         <a href="https://docs.google.com/spreadsheets/d/146odT5MhdL6-QsMYwjnLmN3OnLFmMoqxWNEASikV4Ng/edit?usp=drivesdk" target="_blank" class="sheet-link-btn">📊 فتح جدول الحضور والبيانات</a>
 
         <!-- زر التبديل بين تسجيل الدخول والخروج -->
@@ -145,7 +148,6 @@
     </div>
 
     <script>
-        // رابط الـ Webhook لإرسال البيانات آلياً بعد إنشاء Deployment
         const WEBHOOK_URL = "ضع_رابط_GOOGLE_WEBHOOK_هنا";
 
         let isLoggedIn = false;
@@ -168,15 +170,29 @@
         async function handleSubmit(event) {
             event.preventDefault();
 
+            const emailUser = document.getElementById('email').value.trim().toLowerCase();
+            const discordUser = document.getElementById('discord').value.trim().toLowerCase();
+            const todayDate = new Date().toISOString().split('T')[0];
+
+            // مفاتيح الحفظ بناءً على البريد والديسكورد
+            const emailKey = `submission_email_${emailUser}_${todayDate}`;
+            const discordKey = `submission_discord_${discordUser}_${todayDate}`;
+
+            // التحقق مما إذا تم استخدام هذا البريد أو اليوزر اليوم
+            if (localStorage.getItem(emailKey) || localStorage.getItem(discordKey)) {
+                alert('عذراً! تم تسجيل الحضور بهذا البريد الإلكتروني أو حساب Discord اليوم بالفعل. لا يمكنك التسجيل أكثر من مرة في اليوم الواحد.');
+                return;
+            }
+
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
             submitBtn.textContent = 'جاري الإرسال...';
 
             const payload = {
                 action: isLoggedIn ? 'تسجيل خروج' : 'تسجيل دخول',
-                email: document.getElementById('email').value,
+                email: emailUser,
                 roblox: document.getElementById('roblox').value,
-                discord: document.getElementById('discord').value
+                discord: discordUser
             };
 
             try {
@@ -186,6 +202,10 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
+                // حفظ بيانات المنع لليوم الحالي
+                localStorage.setItem(emailKey, "true");
+                localStorage.setItem(discordKey, "true");
 
                 alert('تم تسجيل البيانات بنجاح!');
             } catch (error) {
