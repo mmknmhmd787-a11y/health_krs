@@ -32,7 +32,7 @@
             border-radius: 24px;
             padding: 35px 30px;
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
                         0 0 30px rgba(229, 57, 53, 0.05);
             position: relative;
@@ -50,7 +50,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .badge {
@@ -90,7 +90,7 @@
             font-weight: 700;
             cursor: pointer;
             border: none;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -109,7 +109,7 @@
         }
 
         .input-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             text-align: right;
         }
 
@@ -152,52 +152,159 @@
             box-shadow: 0 8px 20px rgba(2, 136, 209, 0.3);
         }
 
-        .submit-button:disabled {
-            background: #2a2d3a;
-            color: #6c727f;
-            cursor: not-allowed;
+        /* زر لوحة الإدارة */
+        .admin-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #8f92a1;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .admin-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border-color: #00b0ff;
+        }
+
+        /* قسم اللوحة */
+        .admin-panel {
+            display: none;
+        }
+
+        .table-wrapper {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 8px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.4);
+            color: #00b0ff;
+            position: sticky;
+            top: 0;
+        }
+
+        .back-btn {
+            background: #ff1744;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            width: 48%;
+        }
+
+        .clear-btn {
+            background: #444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            width: 48%;
+        }
+
+        .admin-controls {
+            display: flex;
+            justify-content: space-between;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="header">
-            <div class="badge">
-                <span>🚑</span> قطاع الهلال الأحمر
+        <!-- قسم تسجيل المسعفين -->
+        <div id="userSection">
+            <div class="header">
+                <div class="badge">
+                    <span>🚑</span> قطاع الهلال الأحمر
+                </div>
+                <h1>بوابة الحضور الرقمية</h1>
+                <p>سجّل استلامك اليومي بسهولة وسرعة</p>
             </div>
-            <h1>بوابة الحضور الرقمية</h1>
-            <p>سجّل استلامك اليومي بسهولة وسرعة</p>
+
+            <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">
+                <span>تسجيل دخول</span>
+            </button>
+
+            <form id="paramedicForm" onsubmit="handleSubmit(event)">
+                <div class="input-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" placeholder="name@example.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="roblox">اسم حسابك Roblox</label>
+                    <input type="text" id="roblox" placeholder="Roblox Username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="discord">يوزر حسابك Discord</label>
+                    <input type="text" id="discord" placeholder="username_kr" required>
+                </div>
+
+                <button type="submit" id="submitBtn" class="submit-button">تأكيد وإرسال البيانات</button>
+            </form>
+
+            <button class="admin-btn" onclick="openAdminPanel()">⚙️ لوحة الإدارة</button>
         </div>
 
-        <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">
-            <span>تسجيل دخول</span>
-        </button>
-
-        <form id="paramedicForm" onsubmit="handleSubmit(event)">
-            <div class="input-group">
-                <label for="email">البريد الإلكتروني</label>
-                <input type="email" id="email" placeholder="name@example.com" required>
+        <!-- قسم لوحة الإدارة -->
+        <div id="adminSection" class="admin-panel">
+            <div class="header">
+                <h1>🔐 لوحة التحكم والسجلات</h1>
+                <p>عرض المسجلين للحضور والخروج</p>
             </div>
 
-            <div class="input-group">
-                <label for="roblox">اسم حسابك Roblox</label>
-                <input type="text" id="roblox" placeholder="Roblox Username" required>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الوقت</th>
+                            <th>الإجراء</th>
+                            <th>البريد</th>
+                            <th>روبلوكس</th>
+                            <th>ديسكورد</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logsTableBody">
+                    </tbody>
+                </table>
             </div>
 
-            <div class="input-group">
-                <label for="discord">يوزر حسابك Discord</label>
-                <input type="text" id="discord" placeholder="username_kr" required>
+            <div class="admin-controls">
+                <button class="back-btn" onclick="closeAdminPanel()">العودة</button>
+                <button class="clear-btn" onclick="clearLogs()">مسح السجل</button>
             </div>
-
-            <button type="submit" id="submitBtn" class="submit-button">تأكيد وإرسال البيانات</button>
-        </form>
+        </div>
     </div>
 
     <script>
-        // رابط الـ Webhook الجديد المحدث
-        const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbw80Xoy9VCng8sYr-Xyq3E8EzutBVzJQHa7PvkdwRQVqnr3jkKzTB6EoBwMOjbw2Mk46w/exec";
-
+        const ADMIN_PASS = "kr-2026-8";
         let isLoggedIn = false;
 
         function toggleAuthStatus() {
@@ -215,7 +322,7 @@
             }
         }
 
-        async function handleSubmit(event) {
+        function handleSubmit(event) {
             event.preventDefault();
 
             const emailUser = document.getElementById('email').value.trim().toLowerCase();
@@ -230,37 +337,70 @@
                 return;
             }
 
-            const submitBtn = document.getElementById('submitBtn');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'جاري الإرسال...';
-
-            const payload = {
+            const record = {
+                time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }),
                 action: isLoggedIn ? 'تسجيل خروج' : 'تسجيل دخول',
                 email: emailUser,
                 roblox: document.getElementById('roblox').value,
                 discord: discordUser
             };
 
-            try {
-                await fetch(WEBHOOK_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'text/plain;charset=utf-8'
-                    },
-                    body: JSON.stringify(payload)
-                });
+            // حفظ السجل محلياً
+            let logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
+            logs.unshift(record);
+            localStorage.setItem('attendance_logs', JSON.stringify(logs));
 
-                localStorage.setItem(emailKey, "true");
-                localStorage.setItem(discordKey, "true");
+            // وضع حظر التكرار لنفس اليوم
+            localStorage.setItem(emailKey, "true");
+            localStorage.setItem(discordKey, "true");
 
-                alert('تم تسجيل البيانات بنجاح!');
-                document.getElementById('paramedicForm').reset();
-            } catch (error) {
-                alert('حدث خطأ أثناء الإرسال!');
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'تأكيد وإرسال البيانات';
+            alert('تم تسجيل البيانات بنجاح!');
+            document.getElementById('paramedicForm').reset();
+        }
+
+        function openAdminPanel() {
+            const password = prompt('يرجى إدخال كلمة سر لوحة الإدارة:');
+            if (password === ADMIN_PASS) {
+                renderLogs();
+                document.getElementById('userSection').style.display = 'none';
+                document.getElementById('adminSection').style.display = 'block';
+            } else if (password !== null) {
+                alert('كلمة السر غير صحيحة!');
+            }
+        }
+
+        function closeAdminPanel() {
+            document.getElementById('adminSection').style.display = 'none';
+            document.getElementById('userSection').style.display = 'block';
+        }
+
+        function renderLogs() {
+            const logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
+            const tbody = document.getElementById('logsTableBody');
+            tbody.innerHTML = '';
+
+            if (logs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا توجد سجلات بعد</td></tr>';
+                return;
+            }
+
+            logs.forEach(log => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${log.time}</td>
+                    <td style="color: ${log.action === 'تسجيل دخول' ? '#00e676' : '#ff1744'};">${log.action}</td>
+                    <td>${log.email}</td>
+                    <td>${log.roblox}</td>
+                    <td>${log.discord}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function clearLogs() {
+            if (confirm('هل أنت تأكد من مسح جميع السجلات المحفوظة؟')) {
+                localStorage.removeItem('attendance_logs');
+                renderLogs();
             }
         }
     </script>
