@@ -190,6 +190,18 @@
             display: none;
         }
 
+        /* مربع البحث */
+        .search-box {
+            margin-bottom: 12px;
+        }
+
+        .search-box input {
+            padding: 10px 14px;
+            font-size: 13px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
         .table-wrapper {
             max-height: 260px;
             overflow-y: auto;
@@ -256,7 +268,6 @@
                 <div class="badge">
                     <span>🚑</span> قطاع الهلال الأحمر
                 </div>
-                <!-- عرض التاريخ الميلادي والهجري -->
                 <div class="date-box" id="currentDateBox">
                     <span id="gregorianDate">--/--/----</span>
                     <span>|</span>
@@ -299,6 +310,11 @@
                 <p>عرض المسجلين مع تواريخ الحضور</p>
             </div>
 
+            <!-- حقل البحث -->
+            <div class="search-box">
+                <input type="text" id="searchInput" onkeyup="filterLogs()" placeholder="🔍 ابحث بالاسم، الديسكورد، أو البريد...">
+            </div>
+
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -326,15 +342,11 @@
         const ADMIN_PASS = "kr-2026-8";
         let isLoggedIn = false;
 
-        // عرض التواريخ عند تحميل الصفحة
         window.onload = function() {
             const now = new Date();
-            
-            // التاريخ الميلادي
             const optionsGreg = { year: 'numeric', month: '2-digit', day: '2-digit' };
             document.getElementById('gregorianDate').textContent = now.toLocaleDateString('en-GB', optionsGreg);
 
-            // التاريخ الهجري (أم القرى)
             const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
             const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
             document.getElementById('hijriDate').textContent = hijriStr + ' هـ';
@@ -399,6 +411,7 @@
         function openAdminPanel() {
             const password = prompt('يرجى إدخال كلمة سر لوحة الإدارة:');
             if (password === ADMIN_PASS) {
+                document.getElementById('searchInput').value = '';
                 renderLogs();
                 document.getElementById('userSection').style.display = 'none';
                 document.getElementById('adminSection').style.display = 'block';
@@ -412,17 +425,24 @@
             document.getElementById('userSection').style.display = 'block';
         }
 
-        function renderLogs() {
+        function renderLogs(filterText = '') {
             const logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
             const tbody = document.getElementById('logsTableBody');
             tbody.innerHTML = '';
 
-            if (logs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا توجد سجلات بعد</td></tr>';
+            const filteredLogs = logs.filter(log => {
+                const query = filterText.toLowerCase();
+                return log.email.toLowerCase().includes(query) ||
+                       log.roblox.toLowerCase().includes(query) ||
+                       log.discord.toLowerCase().includes(query);
+            });
+
+            if (filteredLogs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا توجد سجلات مطابقة</td></tr>';
                 return;
             }
 
-            logs.forEach(log => {
+            filteredLogs.forEach(log => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${log.dateTime}</td>
@@ -433,6 +453,11 @@
                 `;
                 tbody.appendChild(tr);
             });
+        }
+
+        function filterLogs() {
+            const query = document.getElementById('searchInput').value;
+            renderLogs(query);
         }
 
         function clearLogs() {
