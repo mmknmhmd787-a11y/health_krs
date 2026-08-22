@@ -32,7 +32,7 @@
             border-radius: 24px;
             padding: 35px 30px;
             width: 100%;
-            max-width: 420px;
+            max-width: 440px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
                         0 0 30px rgba(229, 57, 53, 0.05);
             position: relative;
@@ -65,6 +65,21 @@
             font-size: 12px;
             font-weight: 700;
             margin-bottom: 12px;
+        }
+
+        .date-box {
+            background: rgba(0, 176, 255, 0.08);
+            border: 1px solid rgba(0, 176, 255, 0.2);
+            color: #29b6f6;
+            padding: 8px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-around;
+            gap: 5px;
+            direction: ltr;
         }
 
         .header h1 {
@@ -152,7 +167,6 @@
             box-shadow: 0 8px 20px rgba(2, 136, 209, 0.3);
         }
 
-        /* زر لوحة الإدارة */
         .admin-btn {
             width: 100%;
             padding: 12px;
@@ -172,13 +186,12 @@
             border-color: #00b0ff;
         }
 
-        /* قسم اللوحة */
         .admin-panel {
             display: none;
         }
 
         .table-wrapper {
-            max-height: 250px;
+            max-height: 260px;
             overflow-y: auto;
             margin-bottom: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -193,7 +206,7 @@
         }
 
         th, td {
-            padding: 8px 10px;
+            padding: 8px 8px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
@@ -243,6 +256,12 @@
                 <div class="badge">
                     <span>🚑</span> قطاع الهلال الأحمر
                 </div>
+                <!-- عرض التاريخ الميلادي والهجري -->
+                <div class="date-box" id="currentDateBox">
+                    <span id="gregorianDate">--/--/----</span>
+                    <span>|</span>
+                    <span id="hijriDate">--/--/---- هـ</span>
+                </div>
                 <h1>بوابة الحضور الرقمية</h1>
                 <p>سجّل استلامك اليومي بسهولة وسرعة</p>
             </div>
@@ -277,14 +296,14 @@
         <div id="adminSection" class="admin-panel">
             <div class="header">
                 <h1>🔐 لوحة التحكم والسجلات</h1>
-                <p>عرض المسجلين للحضور والخروج</p>
+                <p>عرض المسجلين مع تواريخ الحضور</p>
             </div>
 
             <div class="table-wrapper">
                 <table>
                     <thead>
                         <tr>
-                            <th>الوقت</th>
+                            <th>التاريخ والوقت</th>
                             <th>الإجراء</th>
                             <th>البريد</th>
                             <th>روبلوكس</th>
@@ -307,6 +326,20 @@
         const ADMIN_PASS = "kr-2026-8";
         let isLoggedIn = false;
 
+        // عرض التواريخ عند تحميل الصفحة
+        window.onload = function() {
+            const now = new Date();
+            
+            // التاريخ الميلادي
+            const optionsGreg = { year: 'numeric', month: '2-digit', day: '2-digit' };
+            document.getElementById('gregorianDate').textContent = now.toLocaleDateString('en-GB', optionsGreg);
+
+            // التاريخ الهجري (أم القرى)
+            const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
+            const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
+            document.getElementById('hijriDate').textContent = hijriStr + ' هـ';
+        };
+
         function toggleAuthStatus() {
             const btn = document.getElementById('authBtn');
             if (!isLoggedIn) {
@@ -327,30 +360,35 @@
 
             const emailUser = document.getElementById('email').value.trim().toLowerCase();
             const discordUser = document.getElementById('discord').value.trim().toLowerCase();
-            const todayDate = new Date().toISOString().split('T')[0];
+            const todayDateKey = new Date().toISOString().split('T')[0];
 
-            const emailKey = `submission_email_${emailUser}_${todayDate}`;
-            const discordKey = `submission_discord_${discordUser}_${todayDate}`;
+            const emailKey = `submission_email_${emailUser}_${todayDateKey}`;
+            const discordKey = `submission_discord_${discordUser}_${todayDateKey}`;
 
             if (localStorage.getItem(emailKey) || localStorage.getItem(discordKey)) {
                 alert('عذراً! تم تسجيل الحضور بهذا البريد الإلكتروني أو حساب Discord اليوم بالفعل.');
                 return;
             }
 
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+            const gregStr = now.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
+            
+            const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
+            const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
+
             const record = {
-                time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' }),
+                dateTime: `${gregStr} | ${hijriStr}هـ<br><span style="color:#00b0ff;">${timeStr}</span>`,
                 action: isLoggedIn ? 'تسجيل خروج' : 'تسجيل دخول',
                 email: emailUser,
                 roblox: document.getElementById('roblox').value,
                 discord: discordUser
             };
 
-            // حفظ السجل محلياً
             let logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
             logs.unshift(record);
             localStorage.setItem('attendance_logs', JSON.stringify(logs));
 
-            // وضع حظر التكرار لنفس اليوم
             localStorage.setItem(emailKey, "true");
             localStorage.setItem(discordKey, "true");
 
@@ -387,7 +425,7 @@
             logs.forEach(log => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${log.time}</td>
+                    <td>${log.dateTime}</td>
                     <td style="color: ${log.action === 'تسجيل دخول' ? '#00e676' : '#ff1744'};">${log.action}</td>
                     <td>${log.email}</td>
                     <td>${log.roblox}</td>
