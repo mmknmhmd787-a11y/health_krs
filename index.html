@@ -3,211 +3,512 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام تسجيل حضور المسعفين المتطور</title>
+    <title>موقع متطوعين الهلال الأحمر</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-main: #0a0b10;
+            --bg-card: rgba(18, 20, 29, 0.7);
+            --border-card: rgba(255, 30, 68, 0.2);
+            --border-hover: rgba(255, 30, 68, 0.5);
+            --primary-red: #ff1e44;
+            --primary-glow: rgba(255, 30, 68, 0.35);
+            --text-main: #ffffff;
+            --text-sub: #949ab1;
+        }
+
         * {
             box-sizing: border-box;
             font-family: 'Tajawal', sans-serif;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
         }
 
         body {
-            background: radial-gradient(circle at top right, #1a1c29, #0d0e15, #050508);
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(255, 30, 68, 0.12), transparent 50%),
+                radial-gradient(circle at 10% 90%, rgba(18, 20, 29, 0.8), transparent 40%);
+            color: var(--text-main);
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 15px;
             overflow-x: hidden;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 35px 30px;
+        /* Navbar - الستايل الأنيق المستوحى من wzkir */
+        .navbar {
             width: 100%;
-            max-width: 440px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6),
-                        0 0 30px rgba(229, 57, 53, 0.05);
-            position: relative;
-        }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -2px; left: -2px; right: -2px; bottom: -2px;
-            background: linear-gradient(45deg, #ff1744, transparent, #29b6f6);
-            border-radius: 26px;
-            z-index: -1;
-            opacity: 0.15;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(229, 57, 53, 0.12);
-            border: 1px solid rgba(229, 57, 53, 0.3);
-            color: #ff5252;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .date-box {
-            background: rgba(0, 176, 255, 0.08);
-            border: 1px solid rgba(0, 176, 255, 0.2);
-            color: #29b6f6;
-            padding: 8px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 15px;
+            max-width: 500px;
             display: flex;
-            justify-content: space-around;
-            gap: 5px;
-            direction: ltr;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 18px;
+            background: rgba(14, 16, 24, 0.85);
+            border: 1px solid var(--border-card);
+            border-radius: 24px;
+            backdrop-filter: blur(16px);
+            margin-bottom: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
         }
 
-        .header h1 {
-            font-size: 22px;
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-weight: 800;
-            margin: 0 0 6px 0;
-            background: linear-gradient(135deg, #ffffff 30%, #a5a5a5);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .header p {
-            font-size: 13px;
-            color: #8f92a1;
-            margin: 0;
-        }
-
-        .status-toggle-btn {
-            width: 100%;
-            padding: 16px;
-            border-radius: 14px;
             font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            border: none;
-            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-red);
+            box-shadow: 0 0 12px var(--primary-glow);
+            object-fit: cover;
+        }
+
+        .nav-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            text-decoration: none;
         }
 
-        .status-toggle-btn.login-state {
-            background: linear-gradient(135deg, #00e676, #00b0ff);
-            color: #000;
-            box-shadow: 0 8px 25px rgba(0, 230, 118, 0.25);
-        }
-
-        .status-toggle-btn.logout-state {
-            background: linear-gradient(135deg, #ff1744, #f50057);
+        .nav-icon-btn.active {
+            background: var(--primary-red);
             color: #fff;
-            box-shadow: 0 8px 25px rgba(255, 23, 68, 0.3);
+            box-shadow: 0 0 15px var(--primary-glow);
+            border-color: var(--primary-red);
         }
 
-        .input-group {
-            margin-bottom: 16px;
-            text-align: right;
+        /* Modal التنبيهات بستايل Wzkir */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 6, 10, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
         }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
-            font-weight: 500;
-            color: #a0a5b5;
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        input {
+        .custom-modal {
+            background: #10121a;
+            border: 1px solid var(--primary-red);
+            box-shadow: 0 10px 40px var(--primary-glow);
+            border-radius: 24px;
+            padding: 28px 24px;
+            max-width: 380px;
             width: 100%;
-            padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            color: #ffffff;
-            font-size: 14px;
-            outline: none;
+            text-align: center;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
         }
 
-        input:focus {
-            background: rgba(255, 255, 255, 0.07);
-            border-color: #00b0ff;
-            box-shadow: 0 0 15px rgba(0, 176, 255, 0.2);
+        .modal-overlay.active .custom-modal {
+            transform: translateY(0);
         }
 
-        .submit-button {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #29b6f6, #0288d1);
-            color: white;
-            border: none;
-            border-radius: 14px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 8px 20px rgba(2, 136, 209, 0.3);
-        }
-
-        .admin-btn {
-            width: 100%;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            color: #8f92a1;
-            border: 1px dashed rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 15px;
-        }
-
-        .admin-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border-color: #00b0ff;
-        }
-
-        .admin-panel {
-            display: none;
-        }
-
-        /* مربع البحث */
-        .search-box {
+        .modal-icon {
+            font-size: 36px;
             margin-bottom: 12px;
         }
 
-        .search-box input {
-            padding: 10px 14px;
+        .modal-title {
+            color: var(--primary-red);
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .modal-message {
+            color: var(--text-sub);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 22px;
+        }
+
+        .btn-modal-close {
+            background: var(--primary-red);
+            color: #fff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px var(--primary-glow);
+            width: 100%;
+        }
+
+        /* القائمة الجانبية Sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 290px;
+            height: 100vh;
+            background: #0f1118;
+            border-left: 1px solid var(--border-card);
+            box-shadow: -10px 0 40px rgba(0, 0, 0, 0.9);
+            z-index: 999;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            transition: right 0.3s ease;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-card);
+            padding-bottom: 15px;
+        }
+
+        .sidebar-title {
+            color: var(--primary-red);
+            font-weight: 800;
+            font-size: 16px;
+        }
+
+        .close-sidebar {
+            background: transparent;
+            border: none;
+            color: var(--text-sub);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu li a:hover {
+            border-color: var(--border-card);
+            background: rgba(255, 30, 68, 0.08);
+            color: var(--primary-red);
+        }
+
+        /* Container الرئيسي */
+        .main-wrapper {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Hero Card */
+        .hero-section {
+            text-align: center;
+            padding: 10px 5px 15px 5px;
+        }
+
+        .pill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 30, 68, 0.08);
+            border: 1px solid var(--border-card);
+            color: var(--primary-red);
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            animation: pulseGlow 2.5s infinite ease-in-out;
+        }
+
+        .pill-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-red);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--primary-red);
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 0 0 rgba(255, 30, 68, 0.4); }
+            50% { box-shadow: 0 0 20px 4px rgba(255, 30, 68, 0.25); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 30, 68, 0.4); }
+        }
+
+        .hero-title {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-desc {
+            font-size: 14px;
+            color: var(--text-sub);
+            line-height: 1.6;
+        }
+
+        /* الإحصائيات */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 20px;
+            padding: 15px 10px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+        }
+
+        .stat-num {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary-red);
+        }
+
+        .stat-lbl {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Card الأنيق بستايل Wzkir */
+        .wzkir-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: 24px;
+            padding: 25px 22px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .wzkir-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .date-badge-wrapper {
+            background: rgba(10, 11, 16, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 12px;
+            display: flex;
+            justify-content: space-around;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-red);
+            margin-bottom: 22px;
+            direction: ltr;
+        }
+
+        .buttons-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 15px;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff1e44, #be0d2a);
+            color: #fff;
+            box-shadow: 0 6px 25px var(--primary-glow);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 30, 68, 0.5);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-card);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 30, 68, 0.08);
+            border-color: var(--primary-red);
+            color: var(--primary-red);
+        }
+
+        .btn-admin-link {
+            width: 100%;
+            background: transparent;
+            border: 1px dashed var(--border-card);
+            color: var(--text-sub);
             font-size: 13px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.06);
+            border-radius: 14px;
+            padding: 12px;
+        }
+
+        .btn-admin-link:hover {
+            color: var(--primary-red);
+            border-color: var(--primary-red);
+        }
+
+        /* قيادة القطاع */
+        .section-title {
+            text-align: center;
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            color: var(--primary-red);
+        }
+
+        .leader-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .leader-item {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--border-card);
+            border-radius: 16px;
+            padding: 14px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .leader-role {
+            font-size: 12px;
+            color: var(--primary-red);
+            font-weight: 700;
+        }
+
+        .leader-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        /* تعريف التطوع */
+        .about-text {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.8;
+            text-align: justify;
+        }
+
+        /* View Toggle */
+        .page-view { display: block; }
+        .page-view.hidden { display: none; }
+
+        /* Admin Table */
+        .admin-panel { display: none; }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            font-size: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-card);
+            color: #fff;
+            margin-bottom: 14px;
+            outline: none;
         }
 
         .table-wrapper {
-            max-height: 260px;
+            max-height: 250px;
             overflow-y: auto;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            border: 1px solid var(--border-card);
+            border-radius: 14px;
+            margin-bottom: 14px;
         }
 
         table {
@@ -218,99 +519,223 @@
         }
 
         th, td {
-            padding: 8px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 10px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
 
         th {
-            background: rgba(0, 0, 0, 0.4);
-            color: #00b0ff;
+            background: #0d0f17;
+            color: var(--primary-red);
             position: sticky;
             top: 0;
         }
 
-        .back-btn {
-            background: #ff1744;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 12px;
-            width: 48%;
-        }
-
-        .clear-btn {
-            background: #444;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 12px;
-            width: 48%;
-        }
-
-        .admin-controls {
+        .ctrl-btns {
             display: flex;
-            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .ctrl-btns button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-back { background: var(--primary-red); color: #fff; }
+        .btn-clear { background: #1a1c28; color: #fff; border: 1px solid #333; }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: #fff;
+            font-size: 13px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-red);
+            box-shadow: 0 0 12px var(--primary-glow);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- قسم تسجيل المسعفين -->
-        <div id="userSection">
-            <div class="header">
-                <div class="badge">
-                    <span>🚑</span> قطاع الهلال الأحمر
+    <!-- نافذة التنبيه المنبثقة Modal بستايل Wzkir -->
+    <div class="modal-overlay" id="customModalOverlay">
+        <div class="custom-modal">
+            <div class="modal-icon">⚠️</div>
+            <div class="modal-title" id="modalTitle">تنبيه بالنظام</div>
+            <div class="modal-message" id="modalMessage">يرجى تسجيل البيانات أولاً للوصول لخيارات القائمة الجانبية!</div>
+            <button class="btn-modal-close" onclick="closeCustomModal()">حسناً، فهمت</button>
+        </div>
+    </div>
+
+    <!-- القائمة الجانبية Sidebar -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-title">خيارات المنظومة</span>
+            <button class="close-sidebar" onclick="closeSidebar()">✕</button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#">📋 السجل الشخصي للساعات</a></li>
+            <li><a href="#">🚑 تقديم طلب استلام ميداني</a></li>
+            <li><a href="#">📜 اللوائح والتعليمات الطبية</a></li>
+            <li><a href="#">📞 التواصل مع غرفة العمليات</a></li>
+            <li><a href="#">⚙️ إعدادات الحساب</a></li>
+        </ul>
+    </aside>
+
+    <!-- الهيدر العلوي -->
+    <header class="navbar">
+        <div class="nav-controls">
+            <div class="nav-icon-btn" onclick="handleSidebarClick()">☰</div>
+            <div class="nav-icon-btn">AR</div>
+            <a href="#" class="nav-icon-btn active" onclick="showMainPage()">🚑</a>
+        </div>
+        <div class="nav-brand">
+            <span>موقع المتطوعين</span>
+            <img src="https://i.ibb.co/h1YHCPWK/image.jpg" alt="قطاع الهلال الأحمر" class="brand-logo" onerror="this.src='https://ibb.co/h1YHCPWK'">
+        </div>
+    </header>
+
+    <div class="main-wrapper">
+
+        <!-- الصفحة الرئيسية MAIN VIEW -->
+        <div id="mainPage" class="page-view">
+
+            <section class="hero-section">
+                <div class="pill-tag">
+                    <span class="pill-dot"></span>
+                    موقع متطوعين الهلال الأحمر
                 </div>
-                <div class="date-box" id="currentDateBox">
-                    <span id="gregorianDate">--/--/----</span>
+                <h1 class="hero-title">بوابة المتطوعين الميدانية</h1>
+                <p class="hero-desc">منظومة متابعة وتسجيل ساعات التطوع لقطاع الإسعاف والهلال الأحمر بسهولة وسرعة.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-num">+1,500</div>
+                        <div class="stat-lbl">ساعة تطوعية</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">24/7</div>
+                        <div class="stat-lbl">جاهزية ميدانية</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">9</div>
+                        <div class="stat-lbl">متطوع مسجل</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="wzkir-card">
+                <div class="date-badge-wrapper">
+                    <span id="gregDate">--/--/----</span>
                     <span>|</span>
                     <span id="hijriDate">--/--/---- هـ</span>
                 </div>
-                <h1>بوابة الحضور الرقمية</h1>
-                <p>سجّل استلامك اليومي بسهولة وسرعة</p>
+
+                <div class="buttons-row">
+                    <button class="btn-action btn-primary" onclick="showRegisterPage()">
+                        تسجيل البيانات
+                    </button>
+                    <a href="#aboutSection" class="btn-action btn-secondary">
+                        تعريف التطوع
+                    </a>
+                </div>
+
+                <button class="btn-action btn-admin-link" onclick="openAdminPanel()">⚙️ لوحة الإدارة العامة</button>
             </div>
 
-            <button id="authBtn" class="status-toggle-btn login-state" onclick="toggleAuthStatus()">
-                <span>تسجيل دخول</span>
-            </button>
-
-            <form id="paramedicForm" onsubmit="handleSubmit(event)">
-                <div class="input-group">
-                    <label for="email">البريد الإلكتروني</label>
-                    <input type="email" id="email" placeholder="name@example.com" required>
+            <!-- قيادة القطاع -->
+            <div class="wzkir-card" style="margin-top: 20px;">
+                <div class="section-title">قيادة القطاع</div>
+                
+                <div class="leader-list">
+                    <div class="leader-item">
+                        <span class="leader-role">وزير الصحة</span>
+                        <span class="leader-name">عمار</span>
+                    </div>
+                    <div class="leader-item">
+                        <span class="leader-role">نائب وزير الصحة</span>
+                        <span class="leader-name">هورس</span>
+                    </div>
+                    <div class="leader-item">
+                        <span class="leader-role">مدير المستشفى</span>
+                        <span class="leader-name">عبدالرحمن المطرفي</span>
+                    </div>
+                    <div class="leader-item">
+                        <span class="leader-role">مدير الهلال الأحمر</span>
+                        <span class="leader-name">صالح بن عبدالعزيز الزهراني</span>
+                    </div>
                 </div>
+            </div>
 
-                <div class="input-group">
-                    <label for="roblox">اسم حسابك Roblox</label>
-                    <input type="text" id="roblox" placeholder="Roblox Username" required>
-                </div>
+            <!-- قسم تعريف التطوع -->
+            <div class="wzkir-card" id="aboutSection" style="margin-top: 20px;">
+                <div class="section-title">💡 تعريف التطوع</div>
+                <p class="about-text">
+                    التطوع في قطاع الهلال الأحمر هو ركيزة أساسية لتقديم الاستجابة السريعة والدعم الإسعافي الميداني. يهدف البرنامج إلى تمكين المتطوعين وتأهيلهم للمشاركة في إنقاذ الأرواح، وتقديم الخدمات الطبية الطارئة، وتعزيز الوعي الصحي والإنساني داخل المجتمع وفق أعلى معايير الجودة والسلامة.
+                </p>
+            </div>
 
-                <div class="input-group">
-                    <label for="discord">يوزر حسابك Discord</label>
-                    <input type="text" id="discord" placeholder="username_kr" required>
-                </div>
-
-                <button type="submit" id="submitBtn" class="submit-button">تأكيد وإرسال البيانات</button>
-            </form>
-
-            <button class="admin-btn" onclick="openAdminPanel()">⚙️ لوحة الإدارة</button>
         </div>
 
-        <!-- قسم لوحة الإدارة -->
-        <div id="adminSection" class="admin-panel">
-            <div class="header">
-                <h1>🔐 لوحة التحكم والسجلات</h1>
-                <p>عرض المسجلين مع تواريخ الحضور</p>
-            </div>
+        <!-- صفحة تسجيل البيانات المخصصة REGISTER VIEW -->
+        <div id="registerPage" class="page-view hidden">
+            <div class="wzkir-card">
+                <div class="section-title">📝 تسجيل بيانات المتطوع</div>
+                
+                <form id="volunteerForm" onsubmit="handleSubmit(event)">
+                    <div class="input-group">
+                        <label>البريد الإلكتروني الرسمي</label>
+                        <input type="email" id="email" placeholder="volunteer@redcrescent.sa" required>
+                    </div>
 
-            <!-- حقل البحث -->
+                    <div class="input-group">
+                        <label>اسم الحساب (Roblox)</label>
+                        <input type="text" id="roblox" placeholder="Roblox Username" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label>معرف الديسكورد (Discord)</label>
+                        <input type="text" id="discord" placeholder="username_kr" required>
+                    </div>
+
+                    <button type="submit" class="btn-action btn-primary" style="width: 100%; margin-bottom: 12px;">
+                        تأكيد وإرسال البيانات
+                    </button>
+                    
+                    <button type="button" class="btn-action btn-secondary" style="width: 100%;" onclick="showMainPage()">
+                        الرجوع للرئيسية
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- لوحة الإدارة Admin Panel -->
+        <div id="adminSection" class="wzkir-card admin-panel">
+            <h3 style="color: var(--primary-red); text-align:center; margin-bottom: 14px;">🔐 سجلات الحضور والانصراف</h3>
+            
             <div class="search-box">
                 <input type="text" id="searchInput" onkeyup="filterLogs()" placeholder="🔍 ابحث بالاسم، الديسكورد، أو البريد...">
             </div>
@@ -326,45 +751,69 @@
                             <th>ديسكورد</th>
                         </tr>
                     </thead>
-                    <tbody id="logsTableBody">
-                    </tbody>
+                    <tbody id="logsTableBody"></tbody>
                 </table>
             </div>
 
-            <div class="admin-controls">
-                <button class="back-btn" onclick="closeAdminPanel()">العودة</button>
-                <button class="clear-btn" onclick="clearLogs()">مسح السجل</button>
+            <div class="ctrl-btns">
+                <button class="btn-back" onclick="closeAdminPanel()">إغلاق</button>
+                <button class="btn-clear" onclick="clearLogs()">مسح السجلات</button>
             </div>
         </div>
+
     </div>
 
     <script>
         const ADMIN_PASS = "kr-2026-8";
-        let isLoggedIn = false;
+        let isRegistered = false;
 
         window.onload = function() {
             const now = new Date();
-            const optionsGreg = { year: 'numeric', month: '2-digit', day: '2-digit' };
-            document.getElementById('gregorianDate').textContent = now.toLocaleDateString('en-GB', optionsGreg);
+            document.getElementById('gregDate').textContent = now.toLocaleDateString('en-GB');
 
             const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
             const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
             document.getElementById('hijriDate').textContent = hijriStr + ' هـ';
         };
 
-        function toggleAuthStatus() {
-            const btn = document.getElementById('authBtn');
-            if (!isLoggedIn) {
-                btn.innerHTML = '<span>تسجيل خروج</span>';
-                btn.classList.remove('login-state');
-                btn.classList.add('logout-state');
-                isLoggedIn = true;
+        function showAlert(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('customModalOverlay').classList.add('active');
+        }
+
+        function closeCustomModal() {
+            document.getElementById('customModalOverlay').classList.remove('active');
+        }
+
+        function showRegisterPage() {
+            document.getElementById('mainPage').classList.add('hidden');
+            document.getElementById('registerPage').classList.remove('hidden');
+            document.getElementById('adminSection').style.display = 'none';
+        }
+
+        function showMainPage() {
+            document.getElementById('registerPage').classList.add('hidden');
+            document.getElementById('mainPage').classList.remove('hidden');
+            document.getElementById('adminSection').style.display = 'none';
+        }
+
+        function handleSidebarClick() {
+            if (!isRegistered) {
+                showAlert('تنبيه بالوصول', 'يرجى تسجيل البيانات أولاً للوصول لخيارات القائمة الجانبية!');
             } else {
-                btn.innerHTML = '<span>تسجيل دخول</span>';
-                btn.classList.remove('logout-state');
-                btn.classList.add('login-state');
-                isLoggedIn = false;
+                openSidebar();
             }
+        }
+
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('active');
+            document.getElementById('sidebarOverlay').classList.add('active');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('sidebarOverlay').classList.remove('active');
         }
 
         function handleSubmit(event) {
@@ -378,20 +827,19 @@
             const discordKey = `submission_discord_${discordUser}_${todayDateKey}`;
 
             if (localStorage.getItem(emailKey) || localStorage.getItem(discordKey)) {
-                alert('عذراً! تم تسجيل الحضور بهذا البريد الإلكتروني أو حساب Discord اليوم بالفعل.');
+                showAlert('تنبيه مكرر', 'تم تسجيل بياناتك لهذا اليوم بالفعل!');
                 return;
             }
 
             const now = new Date();
             const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
-            const gregStr = now.toLocaleDateString('en-GB', { year: 'numeric', month: '2-digit', day: '2-digit' });
-            
+            const gregStr = now.toLocaleDateString('en-GB');
             const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
             const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
 
             const record = {
-                dateTime: `${gregStr} | ${hijriStr}هـ<br><span style="color:#00b0ff;">${timeStr}</span>`,
-                action: isLoggedIn ? 'تسجيل خروج' : 'تسجيل دخول',
+                dateTime: `${gregStr} | ${hijriStr}هـ<br><span style="color:var(--primary-red);">${timeStr}</span>`,
+                action: 'تسجيل بيانات',
                 email: emailUser,
                 roblox: document.getElementById('roblox').value,
                 discord: discordUser
@@ -404,25 +852,28 @@
             localStorage.setItem(emailKey, "true");
             localStorage.setItem(discordKey, "true");
 
-            alert('تم تسجيل البيانات بنجاح!');
-            document.getElementById('paramedicForm').reset();
+            isRegistered = true;
+            showAlert('تم بنجاح', 'تم تسجيل البيانات بنجاح! يمكنك الآن الاستفادة من القائمة الجانبية.');
+            document.getElementById('volunteerForm').reset();
+            showMainPage();
         }
 
         function openAdminPanel() {
-            const password = prompt('يرجى إدخال كلمة سر لوحة الإدارة:');
+            const password = prompt('أدخل كلمة سر لوحة الإدارة:');
             if (password === ADMIN_PASS) {
                 document.getElementById('searchInput').value = '';
                 renderLogs();
-                document.getElementById('userSection').style.display = 'none';
+                document.getElementById('mainPage').classList.add('hidden');
+                document.getElementById('registerPage').classList.add('hidden');
                 document.getElementById('adminSection').style.display = 'block';
             } else if (password !== null) {
-                alert('كلمة السر غير صحيحة!');
+                showAlert('خطأ بالوصول', 'كلمة السر غير صحيحة!');
             }
         }
 
         function closeAdminPanel() {
             document.getElementById('adminSection').style.display = 'none';
-            document.getElementById('userSection').style.display = 'block';
+            showMainPage();
         }
 
         function renderLogs(filterText = '') {
@@ -446,7 +897,7 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${log.dateTime}</td>
-                    <td style="color: ${log.action === 'تسجيل دخول' ? '#00e676' : '#ff1744'};">${log.action}</td>
+                    <td style="color: #ff1e44;">${log.action}</td>
                     <td>${log.email}</td>
                     <td>${log.roblox}</td>
                     <td>${log.discord}</td>
@@ -456,17 +907,15 @@
         }
 
         function filterLogs() {
-            const query = document.getElementById('searchInput').value;
-            renderLogs(query);
+            renderLogs(document.getElementById('searchInput').value);
         }
 
         function clearLogs() {
-            if (confirm('هل أنت تأكد من مسح جميع السجلات المحفوظة؟')) {
+            if (confirm('تأكيد مسح جميع سجلات الحضور؟')) {
                 localStorage.removeItem('attendance_logs');
                 renderLogs();
             }
         }
     </script>
-
 </body>
 </html>
