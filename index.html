@@ -8,14 +8,13 @@
     <style>
         :root {
             --bg-main: #0a0b10;
-            --bg-card: rgba(18, 20, 29, 0.75);
-            --border-card: rgba(255, 30, 68, 0.22);
-            --border-hover: rgba(255, 30, 68, 0.55);
+            --bg-card: rgba(18, 20, 29, 0.7);
+            --border-card: rgba(255, 30, 68, 0.2);
+            --border-hover: rgba(255, 30, 68, 0.5);
             --primary-red: #ff1e44;
             --primary-glow: rgba(255, 30, 68, 0.35);
             --text-main: #ffffff;
             --text-sub: #949ab1;
-            --accent-green: #00e676;
         }
 
         * {
@@ -41,7 +40,6 @@
             overflow-x: hidden;
         }
 
-        /* Navbar - الستايل الأنيق المستوحى من wzkir */
         .navbar {
             width: 100%;
             max-width: 500px;
@@ -63,7 +61,6 @@
             gap: 12px;
             font-weight: 800;
             font-size: 16px;
-            letter-spacing: -0.3px;
         }
 
         .brand-logo {
@@ -102,7 +99,6 @@
             border-color: var(--primary-red);
         }
 
-        /* Modal التنبيهات والنافذة المنبثقة */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -132,24 +128,27 @@
             box-shadow: 0 10px 40px var(--primary-glow);
             border-radius: 24px;
             padding: 28px 24px;
-            max-width: 420px;
+            max-width: 380px;
             width: 100%;
             text-align: center;
             transform: translateY(20px);
             transition: transform 0.3s ease;
-            max-height: 85vh;
-            overflow-y: auto;
         }
 
         .modal-overlay.active .custom-modal {
             transform: translateY(0);
         }
 
+        .modal-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
         .modal-title {
             color: var(--primary-red);
             font-size: 18px;
             font-weight: 800;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .modal-message {
@@ -172,7 +171,6 @@
             width: 100%;
         }
 
-        /* القائمة الجانبية Sidebar - بدون إيموجيات */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -242,10 +240,10 @@
             gap: 12px;
         }
 
-        .sidebar-menu li button, .sidebar-menu li a {
-            width: 100%;
-            text-align: right;
-            display: block;
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             color: var(--text-main);
             text-decoration: none;
             padding: 14px 16px;
@@ -254,16 +252,14 @@
             border: 1px solid transparent;
             font-size: 14px;
             font-weight: 600;
-            cursor: pointer;
         }
 
-        .sidebar-menu li button:hover, .sidebar-menu li a:hover {
+        .sidebar-menu li a:hover {
             border-color: var(--border-card);
             background: rgba(255, 30, 68, 0.08);
             color: var(--primary-red);
         }
 
-        /* Container الرئيسي */
         .main-wrapper {
             width: 100%;
             max-width: 500px;
@@ -272,7 +268,6 @@
             gap: 20px;
         }
 
-        /* Hero Card */
         .hero-section {
             text-align: center;
             padding: 10px 5px 15px 5px;
@@ -321,7 +316,6 @@
             line-height: 1.6;
         }
 
-        /* الإحصائيات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -351,7 +345,6 @@
             font-weight: 500;
         }
 
-        /* Card الأنيق بستايل Wzkir */
         .wzkir-card {
             background: var(--bg-card);
             border: 1px solid var(--border-card);
@@ -359,10 +352,6 @@
             padding: 25px 22px;
             backdrop-filter: blur(16px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .wzkir-card:hover {
-            border-color: var(--border-hover);
         }
 
         .date-badge-wrapper {
@@ -411,6 +400,13 @@
             box-shadow: 0 8px 30px rgba(255, 30, 68, 0.5);
         }
 
+        .btn-logout {
+            background: linear-gradient(135deg, #22222a, #141418);
+            border: 1px solid var(--primary-red);
+            color: #ff1e44;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+
         .btn-secondary {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-card);
@@ -421,18 +417,6 @@
             background: rgba(255, 30, 68, 0.08);
             border-color: var(--primary-red);
             color: var(--primary-red);
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, #00c853, #009624);
-            color: #fff;
-            box-shadow: 0 6px 25px rgba(0, 230, 118, 0.3);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #d50000, #9b0000);
-            color: #fff;
-            box-shadow: 0 6px 25px rgba(213, 0, 0, 0.4);
         }
 
         .btn-admin-link {
@@ -450,47 +434,6 @@
             border-color: var(--primary-red);
         }
 
-        /* الموقت المباشر للاستلام الميداني */
-        .duty-timer-box {
-            background: rgba(10, 11, 16, 0.8);
-            border: 1px solid var(--border-card);
-            border-radius: 20px;
-            padding: 18px;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .duty-status-badge {
-            display: inline-block;
-            font-size: 12px;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-            margin-bottom: 8px;
-        }
-
-        .duty-status-badge.active {
-            background: rgba(0, 230, 118, 0.15);
-            color: var(--accent-green);
-            border: 1px solid rgba(0, 230, 118, 0.3);
-        }
-
-        .duty-status-badge.inactive {
-            background: rgba(255, 30, 68, 0.15);
-            color: var(--primary-red);
-            border: 1px solid rgba(255, 30, 68, 0.3);
-        }
-
-        .timer-display {
-            font-size: 26px;
-            font-weight: 800;
-            letter-spacing: 2px;
-            color: #fff;
-            font-family: monospace;
-            margin: 6px 0;
-        }
-
-        /* قيادة القطاع */
         .section-title {
             text-align: center;
             font-size: 18px;
@@ -527,7 +470,6 @@
             color: #fff;
         }
 
-        /* تعريف التطوع */
         .about-text {
             font-size: 13px;
             color: var(--text-sub);
@@ -535,12 +477,34 @@
             text-align: justify;
         }
 
-        /* View Toggle */
         .page-view { display: block; }
         .page-view.hidden { display: none; }
 
-        /* Admin Table */
         .admin-panel { display: none; }
+
+        .admin-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .admin-tab-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--border-card);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-sub);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .admin-tab-btn.active {
+            background: var(--primary-red);
+            color: #fff;
+            border-color: var(--primary-red);
+        }
 
         .search-box input {
             width: 100%;
@@ -627,58 +591,38 @@
             box-shadow: 0 0 12px var(--primary-glow);
         }
 
-        /* بطاقة السجل الشخصي للساعات */
-        .log-history-card {
-            background: rgba(255, 255, 255, 0.02);
+        .user-status-card {
+            background: rgba(255, 30, 68, 0.05);
             border: 1px solid var(--border-card);
-            border-radius: 14px;
-            padding: 12px;
-            margin-bottom: 10px;
-            text-align: right;
+            border-radius: 16px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 15px;
         }
 
-        .log-history-header {
-            display: flex;
-            justify-content: space-between;
+        .user-status-card h4 {
             color: var(--primary-red);
-            font-weight: 700;
-            font-size: 13px;
-            margin-bottom: 6px;
+            font-size: 15px;
+            margin-bottom: 5px;
         }
 
-        .log-history-detail {
-            font-size: 12px;
+        .user-status-card p {
             color: var(--text-sub);
-            line-height: 1.5;
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
 
-    <!-- نافذة التنبيه المنبثقة Modal بستايل Wzkir -->
     <div class="modal-overlay" id="customModalOverlay">
         <div class="custom-modal">
+            <div class="modal-icon">⚠️</div>
             <div class="modal-title" id="modalTitle">تنبيه بالنظام</div>
             <div class="modal-message" id="modalMessage">يرجى تسجيل البيانات أولاً للوصول لخيارات القائمة الجانبية!</div>
             <button class="btn-modal-close" onclick="closeCustomModal()">حسناً، فهمت</button>
         </div>
     </div>
 
-    <!-- نافذة السجل الشخصي للساعات الميدانية -->
-    <div class="modal-overlay" id="hoursModalOverlay">
-        <div class="custom-modal" style="max-width: 460px;">
-            <div class="modal-title">السجل الشخصي للساعات الميدانية</div>
-            <div id="personalHoursSummary" style="margin-bottom: 15px; font-weight: bold; color: var(--accent-green); font-size: 15px;">
-                إجمالي الساعات المكتسبة: 0 ساعة
-            </div>
-            <div id="personalHistoryList" style="max-height: 250px; overflow-y: auto; margin-bottom: 20px;">
-                <!-- القائمة المحملة من اللوكال ستورج -->
-            </div>
-            <button class="btn-modal-close" onclick="closeHoursModal()">إغلاق النافذة</button>
-        </div>
-    </div>
-
-    <!-- القائمة الجانبية Sidebar - بدون إيموجيات -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
@@ -686,15 +630,14 @@
             <button class="close-sidebar" onclick="closeSidebar()">✕</button>
         </div>
         <ul class="sidebar-menu">
-            <li><button onclick="openPersonalHoursModal()">السجل الشخصي للساعات الميدانية</button></li>
-            <li><a href="#" onclick="showRegisterPage(); closeSidebar();">تقديم طلب استلام ميداني</a></li>
-            <li><a href="#aboutSection" onclick="closeSidebar();">اللوائح والتعليمات الطبية</a></li>
-            <li><a href="#" onclick="showAlert('غرفة العمليات', 'طرق التواصل المباشرة المتاحة: الديسكورد الرسمي لقطاع الهلال الأحمر.'); closeSidebar();">التواصل مع غرفة العمليات</a></li>
-            <li><a href="#" onclick="showAlert('إعدادات الحساب', 'البيانات المسجلة مرتبطة بحساب روبلوكس والديسكورد المعتمد لديك.'); closeSidebar();">إعدادات الحساب</a></li>
+            <li><a href="#" onclick="closeSidebar(); showHoursModal(); return false;">السجل الشخصي للساعات</a></li>
+            <li><a href="#">تقديم طلب استلام ميداني</a></li>
+            <li><a href="#">اللوائح والتعليمات الطبية</a></li>
+            <li><a href="#">التواصل مع غرفة العمليات</a></li>
+            <li><a href="#">إعدادات الحساب</a></li>
         </ul>
     </aside>
 
-    <!-- الهيدر العلوي -->
     <header class="navbar">
         <div class="nav-controls">
             <div class="nav-icon-btn" onclick="handleSidebarClick()">☰</div>
@@ -709,7 +652,6 @@
 
     <div class="main-wrapper">
 
-        <!-- الصفحة الرئيسية MAIN VIEW -->
         <div id="mainPage" class="page-view">
 
             <section class="hero-section">
@@ -722,7 +664,7 @@
                 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <div class="stat-num" id="totalHoursStat">0h</div>
+                        <div class="stat-num">+1,500</div>
                         <div class="stat-lbl">ساعة تطوعية</div>
                     </div>
                     <div class="stat-card">
@@ -743,32 +685,18 @@
                     <span id="hijriDate">--/--/---- هـ</span>
                 </div>
 
-                <!-- موقت الاستلام الميداني التلقائي -->
-                <div class="duty-timer-box">
-                    <span id="dutyStatusBadge" class="duty-status-badge inactive">خارج الاستلام الميداني</span>
-                    <div class="timer-display" id="timerDisplay">00:00:00</div>
-                    <div style="font-size: 11px; color: var(--text-sub);">عداد الساعات الميدانية التلقائي</div>
+                <div id="dynamicAuthSection">
                 </div>
 
-                <div class="buttons-row" id="dutyControlRow">
-                    <button class="btn-action btn-success" id="btnStartDuty" onclick="toggleDutySession()">
-                        تسجيل دخول الاستلام الميداني
-                    </button>
-                    <button class="btn-action btn-secondary" onclick="showRegisterPage()">
-                        تعديل البيانات
-                    </button>
-                </div>
-
-                <div class="buttons-row">
-                    <a href="#aboutSection" class="btn-action btn-secondary">
+                <div class="buttons-row" style="margin-top: 15px;">
+                    <a href="#aboutSection" class="btn-action btn-secondary" style="width:100%;">
                         تعريف التطوع
                     </a>
                 </div>
 
-                <button class="btn-action btn-admin-link" onclick="openAdminPanel()">⚙️ لوحة الإدارة العامة</button>
+                <button class="btn-action btn-admin-link" onclick="openAdminPanel()">لوحة الإدارة العامة</button>
             </div>
 
-            <!-- قيادة القطاع -->
             <div class="wzkir-card" style="margin-top: 20px;">
                 <div class="section-title">قيادة القطاع</div>
                 
@@ -792,9 +720,8 @@
                 </div>
             </div>
 
-            <!-- قسم تعريف التطوع -->
             <div class="wzkir-card" id="aboutSection" style="margin-top: 20px;">
-                <div class="section-title">💡 تعريف التطوع</div>
+                <div class="section-title">تعريف التطوع</div>
                 <p class="about-text">
                     التطوع في قطاع الهلال الأحمر هو ركيزة أساسية لتقديم الاستجابة السريعة والدعم الإسعافي الميداني. يهدف البرنامج إلى تمكين المتطوعين وتأهيلهم للمشاركة في إنقاذ الأرواح، وتقديم الخدمات الطبية الطارئة، وتعزيز الوعي الصحي والإنساني داخل المجتمع وفق أعلى معايير الجودة والسلامة.
                 </p>
@@ -802,10 +729,9 @@
 
         </div>
 
-        <!-- صفحة تسجيل البيانات المخصصة REGISTER VIEW -->
         <div id="registerPage" class="page-view hidden">
             <div class="wzkir-card">
-                <div class="section-title">📝 تسجيل بيانات المتطوع</div>
+                <div class="section-title">تسجيل بيانات المتطوع</div>
                 
                 <form id="volunteerForm" onsubmit="handleSubmit(event)">
                     <div class="input-group">
@@ -824,7 +750,7 @@
                     </div>
 
                     <button type="submit" class="btn-action btn-primary" style="width: 100%; margin-bottom: 12px;">
-                        تأكيد وإرسال البيانات
+                        تأكيد وحفظ البيانات نهائياً
                     </button>
                     
                     <button type="button" class="btn-action btn-secondary" style="width: 100%;" onclick="showMainPage()">
@@ -834,30 +760,53 @@
             </div>
         </div>
 
-        <!-- لوحة الإدارة Admin Panel -->
         <div id="adminSection" class="wzkir-card admin-panel">
-            <h3 style="color: var(--primary-red); text-align:center; margin-bottom: 14px;">🔐 سجلات الحضور والساعات الميدانية</h3>
+            <h3 style="color: var(--primary-red); text-align:center; margin-bottom: 14px;">لوحة الإدارة والسجلات</h3>
             
-            <div class="search-box">
-                <input type="text" id="searchInput" onkeyup="filterLogs()" placeholder="🔍 ابحث بالاسم، الديسكورد، أو البريد...">
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" id="tabLogsBtn" onclick="switchAdminTab('logs')">سجلات الحركات</button>
+                <button class="admin-tab-btn" id="tabActiveBtn" onclick="switchAdminTab('active')">المتواجدون ميدانياً حالياً</button>
             </div>
 
-            <div class="table-wrapper">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>التاريخ والوقت</th>
-                            <th>مدة الاستلام</th>
-                            <th>البريد</th>
-                            <th>روبلوكس</th>
-                            <th>ديسكورد</th>
-                        </tr>
-                    </thead>
-                    <tbody id="logsTableBody"></tbody>
-                </table>
+            <div id="logsViewContainer">
+                <div class="search-box">
+                    <input type="text" id="searchInput" onkeyup="filterLogs()" placeholder="ابحث بالاسم، الديسكورد، أو البريد...">
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>التاريخ والوقت</th>
+                                <th>الإجراء</th>
+                                <th>البريد</th>
+                                <th>روبلوكس</th>
+                                <th>ديسكورد</th>
+                            </tr>
+                        </thead>
+                        <tbody id="logsTableBody"></tbody>
+                    </table>
+                </div>
             </div>
 
-            <div class="ctrl-btns">
+            <div id="activeViewContainer" style="display: none;">
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>وقت الدخول</th>
+                                <th>البريد</th>
+                                <th>روبلوكس</th>
+                                <th>ديسكورد</th>
+                                <th>المدة الحالية</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="ctrl-btns" style="margin-top: 15px;">
                 <button class="btn-back" onclick="closeAdminPanel()">إغلاق</button>
                 <button class="btn-clear" onclick="clearLogs()">مسح السجلات</button>
             </div>
@@ -867,7 +816,7 @@
 
     <script>
         const ADMIN_PASS = "kr-2026-8";
-        let timerInterval = null;
+        let sessionTimer = null;
 
         window.onload = function() {
             const now = new Date();
@@ -877,123 +826,106 @@
             const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
             document.getElementById('hijriDate').textContent = hijriStr + ' هـ';
 
-            // استعادة بيانات الحساب والعداد المباشر
-            checkActiveSession();
-            updateStatsSummary();
+            renderAuthSection();
         };
 
-        function getUserProfile() {
-            return JSON.parse(localStorage.getItem('volunteer_profile') || 'null');
+        function getStoredUser() {
+            const data = localStorage.getItem('saved_volunteer_profile');
+            return data ? JSON.parse(data) : null;
         }
 
-        function checkActiveSession() {
-            const activeStartTime = localStorage.getItem('duty_start_time');
-            const btn = document.getElementById('btnStartDuty');
-            const badge = document.getElementById('dutyStatusBadge');
+        function renderAuthSection() {
+            const container = document.getElementById('dynamicAuthSection');
+            const user = getStoredUser();
 
-            if (activeStartTime) {
-                btn.textContent = 'تسجيل خروج الاستلام الميداني';
-                btn.className = 'btn-action btn-danger';
-                badge.textContent = 'في الاستلام الميداني المباشر';
-                badge.className = 'duty-status-badge active';
-                startTimerUI(parseInt(activeStartTime));
+            if (!user) {
+                container.innerHTML = `
+                    <div class="buttons-row">
+                        <button class="btn-action btn-primary" onclick="showRegisterPage()" style="width:100%;">
+                            تسجيل البيانات (مرة واحدة)
+                        </button>
+                    </div>
+                `;
             } else {
-                btn.textContent = 'تسجيل دخول الاستلام الميداني';
-                btn.className = 'btn-action btn-success';
-                badge.textContent = 'خارج الاستلام الميداني';
-                badge.className = 'duty-status-badge inactive';
-                document.getElementById('timerDisplay').textContent = '00:00:00';
+                const activeSession = localStorage.getItem(`active_session_${user.email}`);
+                const btnText = activeSession ? "تسجيل خروج (إنهاء الخدمة)" : "تسجيل دخول (بدء الخدمة)";
+                const btnClass = activeSession ? "btn-logout" : "btn-primary";
+
+                container.innerHTML = `
+                    <div class="user-status-card">
+                        <h4>مرحباً، ${user.roblox}</h4>
+                        <p>${user.email}</p>
+                    </div>
+                    <div class="buttons-row">
+                        <button class="btn-action ${btnClass}" onclick="toggleDutyStatus()" style="width:100%;">
+                            ${btnText}
+                        </button>
+                    </div>
+                `;
             }
         }
 
-        function toggleDutySession() {
-            const profile = getUserProfile();
-            if (!profile) {
-                showAlert('تسجيل البيانات مطلوب', 'يرجى إدخال بياناتك الرسمية أولاً قبل البدء في تسجيل دخول الاستلام الميداني!');
-                showRegisterPage();
-                return;
-            }
+        function toggleDutyStatus() {
+            const user = getStoredUser();
+            if (!user) return;
 
-            const activeStartTime = localStorage.getItem('duty_start_time');
+            const sessionKey = `active_session_${user.email}`;
+            const activeSession = localStorage.getItem(sessionKey);
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+            const gregStr = now.toLocaleDateString('en-GB');
+            const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
+            const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
+            const dateTimeFormat = `${gregStr} | ${hijriStr}هـ<br><span style="color:var(--primary-red);">${timeStr}</span>`;
 
-            if (!activeStartTime) {
-                // بدء جلسة استلام جديدة
-                const startTime = Date.now();
-                localStorage.setItem('duty_start_time', startTime.toString());
-                checkActiveSession();
-                showAlert('بدء الاستلام', 'تم تسجيل دخولك للاستلام الميداني بنجاح! يتم الآن احتساب ساعاتك الميدانية تلقائياً.');
-            } else {
-                // إيقاف وتأكيد الاستلام وحساب الساعات
-                const startTime = parseInt(activeStartTime);
-                const endTime = Date.now();
-                const durationMs = endTime - startTime;
-                
-                clearInterval(timerInterval);
-                localStorage.removeItem('duty_start_time');
+            let logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
+            let activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
 
-                const totalSeconds = Math.floor(durationMs / 1000);
-                const hours = Math.floor(totalSeconds / 3600);
-                const minutes = Math.floor((totalSeconds % 3600) / 60);
-                const seconds = totalSeconds % 60;
-
-                const durationFormatted = `${hours} ساعة و ${minutes} دقيقة`;
-                
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
-                const gregStr = now.toLocaleDateString('en-GB');
-                const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
-                const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
-
-                const record = {
-                    dateTime: `${gregStr} | ${hijriStr}هـ<br><span style="color:var(--primary-red);">${timeStr}</span>`,
-                    action: 'استلام ميداني',
-                    duration: durationFormatted,
-                    durationMs: durationMs,
-                    email: profile.email,
-                    roblox: profile.roblox,
-                    discord: profile.discord
+            if (!activeSession) {
+                const sessionData = {
+                    startTime: now.getTime(),
+                    dateTime: dateTimeFormat,
+                    email: user.email,
+                    roblox: user.roblox,
+                    discord: user.discord
                 };
+                localStorage.setItem(sessionKey, JSON.stringify(sessionData));
+                
+                activeList.push(sessionData);
+                localStorage.setItem('active_duty_list', JSON.stringify(activeList));
 
-                let logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
-                logs.unshift(record);
-                localStorage.setItem('attendance_logs', JSON.stringify(logs));
+                logs.unshift({
+                    dateTime: dateTimeFormat,
+                    action: 'تسجيل دخول (بدء الخدمة)',
+                    email: user.email,
+                    roblox: user.roblox,
+                    discord: user.discord
+                });
 
-                checkActiveSession();
-                updateStatsSummary();
-                showAlert('إيقاف الاستلام', `تم تسجيل خروجك من الاستلام الميداني بنجاح.\nإجمالي المدة المكتسبة: ${durationFormatted}`);
+                showAlert('بدء العمل', 'تم تسجيل دخولك وبدء احتساب ساعاتك الميدانية بنجاح!');
+            } else {
+                const sessionData = JSON.parse(activeSession);
+                const diffMs = now.getTime() - sessionData.startTime;
+                const diffHrs = (diffMs / (1000 * 60 * 60)).toFixed(2);
+
+                localStorage.removeItem(sessionKey);
+                
+                activeList = activeList.filter(item => item.email !== user.email);
+                localStorage.setItem('active_duty_list', JSON.stringify(activeList));
+
+                logs.unshift({
+                    dateTime: dateTimeFormat,
+                    action: `تسجيل خروج (أتممت ${diffHrs} ساعة)`,
+                    email: user.email,
+                    roblox: user.roblox,
+                    discord: user.discord
+                });
+
+                showAlert('إنهاء العمل', `تم تسجيل خروجك بنجاح. إجمالي مدة الجلسة: ${diffHrs} ساعة.`);
             }
-        }
 
-        function startTimerUI(startTime) {
-            if (timerInterval) clearInterval(timerInterval);
-
-            function update() {
-                const now = Date.now();
-                const diffMs = now - startTime;
-                const totalSec = Math.floor(diffMs / 1000);
-
-                const hrs = Math.floor(totalSec / 3600);
-                const mins = Math.floor((totalSec % 3600) / 60);
-                const secs = totalSec % 60;
-
-                const pad = (n) => n.toString().padStart(2, '0');
-                document.getElementById('timerDisplay').textContent = `${pad(hrs)}:${pad(mins)}:${pad(secs)}`;
-            }
-
-            update();
-            timerInterval = setInterval(update, 1000);
-        }
-
-        function updateStatsSummary() {
-            const logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
-            let totalMs = 0;
-
-            logs.forEach(log => {
-                if (log.durationMs) totalMs += log.durationMs;
-            });
-
-            const totalHrs = (totalMs / (1000 * 60 * 60)).toFixed(1);
-            document.getElementById('totalHoursStat').textContent = `${totalHrs}h`;
+            localStorage.setItem('attendance_logs', JSON.stringify(logs));
+            renderAuthSection();
         }
 
         function showAlert(title, message) {
@@ -1006,71 +938,23 @@
             document.getElementById('customModalOverlay').classList.remove('active');
         }
 
-        function openPersonalHoursModal() {
-            closeSidebar();
-            const profile = getUserProfile();
-            if (!profile) {
-                showAlert('تسجيل البيانات مطلوب', 'يرجى تسجيل بياناتك أولاً لاستعراض السجل الشخصي!');
-                return;
-            }
-
-            const logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
-            const userLogs = logs.filter(log => log.email === profile.email || log.discord === profile.discord);
-
-            let totalMs = 0;
-            const historyContainer = document.getElementById('personalHistoryList');
-            historyContainer.innerHTML = '';
-
-            if (userLogs.length === 0) {
-                historyContainer.innerHTML = '<div style="color:var(--text-sub); font-size:13px;">لا توجد استلامات متممة مسجلة حالياً.</div>';
-            } else {
-                userLogs.forEach(log => {
-                    if (log.durationMs) totalMs += log.durationMs;
-                    const card = document.createElement('div');
-                    card.className = 'log-history-card';
-                    card.innerHTML = `
-                        <div class="log-history-header">
-                            <span>مدة الاستلام: ${log.duration || 'غير محدد'}</span>
-                        </div>
-                        <div class="log-history-detail">التاريخ والوقت: ${log.dateTime}</div>
-                    `;
-                    historyContainer.appendChild(card);
-                });
-            }
-
-            const totalHrs = (totalMs / (1000 * 60 * 60)).toFixed(1);
-            document.getElementById('personalHoursSummary').textContent = `إجمالي الساعات المكتسبة لـ (${profile.roblox}): ${totalHrs} ساعة`;
-
-            document.getElementById('hoursModalOverlay').classList.add('active');
-        }
-
-        function closeHoursModal() {
-            document.getElementById('hoursModalOverlay').classList.remove('active');
-        }
-
         function showRegisterPage() {
             document.getElementById('mainPage').classList.add('hidden');
             document.getElementById('registerPage').classList.remove('hidden');
             document.getElementById('adminSection').style.display = 'none';
-
-            const profile = getUserProfile();
-            if (profile) {
-                document.getElementById('email').value = profile.email || '';
-                document.getElementById('roblox').value = profile.roblox || '';
-                document.getElementById('discord').value = profile.discord || '';
-            }
         }
 
         function showMainPage() {
             document.getElementById('registerPage').classList.add('hidden');
             document.getElementById('mainPage').classList.remove('hidden');
             document.getElementById('adminSection').style.display = 'none';
+            renderAuthSection();
         }
 
         function handleSidebarClick() {
-            const profile = getUserProfile();
-            if (!profile) {
-                showAlert('تنبيه بالوصول', 'يرجى تسجيل البيانات أولاً للوصول لخيارات القائمة الجانبية!');
+            const user = getStoredUser();
+            if (!user) {
+                showAlert('تنبيه بالوصول', 'يرجى تسجيل بياناتك أولاً لفتح القائمة الجانبية!');
             } else {
                 openSidebar();
             }
@@ -1086,12 +970,26 @@
             document.getElementById('sidebarOverlay').classList.remove('active');
         }
 
+        function showHoursModal() {
+            const user = getStoredUser();
+            if (!user) return;
+            const session = localStorage.getItem(`active_session_${user.email}`);
+            if (session) {
+                const data = JSON.parse(session);
+                const diffMs = new Date().getTime() - data.startTime;
+                const mins = Math.floor(diffMs / 60000);
+                showAlert('السجل الشخصي', `أنت في الخدمة حالياً منذ ${mins} دقيقة.`);
+            } else {
+                showAlert('السجل الشخصي', 'لست مسجل دخول في الخدمة حالياً. اضغط على "تسجيل دخول" لبدء حساب الساعات.');
+            }
+        }
+
         function handleSubmit(event) {
             event.preventDefault();
 
             const emailUser = document.getElementById('email').value.trim().toLowerCase();
-            const discordUser = document.getElementById('discord').value.trim().toLowerCase();
             const robloxUser = document.getElementById('roblox').value.trim();
+            const discordUser = document.getElementById('discord').value.trim().toLowerCase();
 
             const profile = {
                 email: emailUser,
@@ -1099,9 +997,10 @@
                 discord: discordUser
             };
 
-            localStorage.setItem('volunteer_profile', JSON.stringify(profile));
+            localStorage.setItem('saved_volunteer_profile', JSON.stringify(profile));
 
-            showAlert('تم حفظ البيانات', 'تم اعتماد بياناتك بنجاح! يمكنك الآن الاستفادة من جميع خدمات القائمة الجانبية وحساب الساعات الميدانية.');
+            showAlert('حفظ نهائي', 'تم حفظ بياناتك بنجاح ولن تحتاج لإدخالها مرة أخرى!');
+            document.getElementById('volunteerForm').reset();
             showMainPage();
         }
 
@@ -1110,17 +1009,43 @@
             if (password === ADMIN_PASS) {
                 document.getElementById('searchInput').value = '';
                 renderLogs();
+                renderActiveDuty();
                 document.getElementById('mainPage').classList.add('hidden');
                 document.getElementById('registerPage').classList.add('hidden');
                 document.getElementById('adminSection').style.display = 'block';
+                
+                if (sessionTimer) clearInterval(sessionTimer);
+                sessionTimer = setInterval(renderActiveDuty, 5000);
             } else if (password !== null) {
                 showAlert('خطأ بالوصول', 'كلمة السر غير صحيحة!');
             }
         }
 
         function closeAdminPanel() {
+            if (sessionTimer) clearInterval(sessionTimer);
             document.getElementById('adminSection').style.display = 'none';
             showMainPage();
+        }
+
+        function switchAdminTab(tab) {
+            const logsBtn = document.getElementById('tabLogsBtn');
+            const activeBtn = document.getElementById('tabActiveBtn');
+            const logsCont = document.getElementById('logsViewContainer');
+            const activeCont = document.getElementById('activeViewContainer');
+
+            if (tab === 'logs') {
+                logsBtn.classList.add('active');
+                activeBtn.classList.remove('active');
+                logsCont.style.display = 'block';
+                activeCont.style.display = 'none';
+                renderLogs();
+            } else {
+                activeBtn.classList.add('active');
+                logsBtn.classList.remove('active');
+                activeCont.style.display = 'block';
+                logsCont.style.display = 'none';
+                renderActiveDuty();
+            }
         }
 
         function renderLogs(filterText = '') {
@@ -1144,10 +1069,39 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${log.dateTime}</td>
-                    <td style="color: var(--accent-green); font-weight: bold;">${log.duration || 'استلام مباشر'}</td>
+                    <td style="color: #ff1e44;">${log.action}</td>
                     <td>${log.email}</td>
                     <td>${log.roblox}</td>
                     <td>${log.discord}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderActiveDuty() {
+            const activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
+            const tbody = document.getElementById('activeTableBody');
+            tbody.innerHTML = '';
+
+            if (activeList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا يوجد أي متطوع في الخدمة حالياً</td></tr>';
+                return;
+            }
+
+            const now = new Date().getTime();
+            activeList.forEach(item => {
+                const diffMs = now - item.startTime;
+                const hours = Math.floor(diffMs / (1000 * 60 * 60));
+                const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                const timePassed = `${hours} س و ${mins} د`;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.dateTime}</td>
+                    <td>${item.email}</td>
+                    <td>${item.roblox}</td>
+                    <td>${item.discord}</td>
+                    <td style="color:#00ff88; font-weight:bold;">${timePassed}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1158,10 +1112,11 @@
         }
 
         function clearLogs() {
-            if (confirm('تأكيد مسح جميع سجلات الحضور والساعات؟')) {
+            if (confirm('تأكيد مسح جميع سجلات الحضور؟')) {
                 localStorage.removeItem('attendance_logs');
+                localStorage.removeItem('active_duty_list');
                 renderLogs();
-                updateStatsSummary();
+                renderActiveDuty();
             }
         }
     </script>
