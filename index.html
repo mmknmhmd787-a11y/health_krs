@@ -12,7 +12,13 @@
             --border-card: rgba(255, 30, 68, 0.2);
             --border-hover: rgba(255, 30, 68, 0.5);
             --primary-red: #ff1e44;
-            --primary-glow: rgba(255, 30, 68, 0.35);
+            --primary-red-glow: rgba(255, 30, 68, 0.35);
+            --color-green: #00e676;
+            --color-green-glow: rgba(0, 230, 118, 0.35);
+            --color-orange: #ff9100;
+            --color-orange-glow: rgba(255, 145, 0, 0.35);
+            --color-yellow: #ffd600;
+            --color-yellow-glow: rgba(255, 214, 0, 0.35);
             --text-main: #ffffff;
             --text-sub: #949ab1;
         }
@@ -354,6 +360,10 @@
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
         }
 
+        .wzkir-card:hover {
+            border-color: var(--border-hover);
+        }
+
         .date-badge-wrapper {
             background: rgba(10, 11, 16, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.05);
@@ -368,17 +378,18 @@
             direction: ltr;
         }
 
-        .buttons-row {
-            display: flex;
-            gap: 12px;
+        .action-buttons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
             margin-bottom: 16px;
         }
 
         .btn-action {
-            flex: 1;
-            padding: 15px;
+            width: 100%;
+            padding: 14px;
             border-radius: 16px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 700;
             border: none;
             cursor: pointer;
@@ -389,22 +400,28 @@
             text-align: center;
         }
 
-        .btn-primary {
+        .btn-green {
+            background: linear-gradient(135deg, #00e676, #00a854);
+            color: #000;
+            box-shadow: 0 4px 15px var(--color-green-glow);
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, #ff9100, #c77000);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--color-orange-glow);
+        }
+
+        .btn-yellow {
+            background: linear-gradient(135deg, #ffd600, #c7a700);
+            color: #000;
+            box-shadow: 0 4px 15px var(--color-yellow-glow);
+        }
+
+        .btn-red {
             background: linear-gradient(135deg, #ff1e44, #be0d2a);
             color: #fff;
-            box-shadow: 0 6px 25px var(--primary-glow);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 30, 68, 0.5);
-        }
-
-        .btn-logout {
-            background: linear-gradient(135deg, #22222a, #141418);
-            border: 1px solid var(--primary-red);
-            color: #ff1e44;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px var(--primary-glow);
         }
 
         .btn-secondary {
@@ -610,6 +627,20 @@
             color: var(--text-sub);
             font-size: 13px;
         }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .status-badge.in-service { background: rgba(0, 230, 118, 0.15); color: #00e676; border: 1px solid #00e676; }
+        .status-badge.on-break { background: rgba(255, 145, 0, 0.15); color: #ff9100; border: 1px solid #ff9100; }
+        .status-badge.on-mission { background: rgba(255, 214, 0, 0.15); color: #ffd600; border: 1px solid #ffd600; }
+        .status-badge.out-service { background: rgba(255, 30, 68, 0.15); color: #ff1e44; border: 1px solid #ff1e44; }
     </style>
 </head>
 <body>
@@ -749,7 +780,7 @@
                         <input type="text" id="discord" placeholder="username_kr" required>
                     </div>
 
-                    <button type="submit" class="btn-action btn-primary" style="width: 100%; margin-bottom: 12px;">
+                    <button type="submit" class="btn-action btn-green" style="width: 100%; margin-bottom: 12px; color:#000;">
                         تأكيد وحفظ البيانات نهائياً
                     </button>
                     
@@ -795,10 +826,9 @@
                         <thead>
                             <tr>
                                 <th>وقت الدخول</th>
-                                <th>البريد</th>
-                                <th>روبلوكس</th>
-                                <th>ديسكورد</th>
-                                <th>المدة الحالية</th>
+                                <th>الاسم</th>
+                                <th>الحالة الحالية</th>
+                                <th>المدة بالحالة</th>
                             </tr>
                         </thead>
                         <tbody id="activeTableBody"></tbody>
@@ -834,6 +864,10 @@
             return data ? JSON.parse(data) : null;
         }
 
+        function getCurrentStatus(email) {
+            return localStorage.getItem(`duty_status_${email}`) || 'out_of_service';
+        }
+
         function renderAuthSection() {
             const container = document.getElementById('dynamicAuthSection');
             const user = getStoredUser();
@@ -841,36 +875,51 @@
             if (!user) {
                 container.innerHTML = `
                     <div class="buttons-row">
-                        <button class="btn-action btn-primary" onclick="showRegisterPage()" style="width:100%;">
+                        <button class="btn-action btn-green" onclick="showRegisterPage()" style="width:100%; color:#000;">
                             تسجيل البيانات (مرة واحدة)
                         </button>
                     </div>
                 `;
             } else {
-                const activeSession = localStorage.getItem(`active_session_${user.email}`);
-                const btnText = activeSession ? "تسجيل خروج (إنهاء الخدمة)" : "تسجيل دخول (بدء الخدمة)";
-                const btnClass = activeSession ? "btn-logout" : "btn-primary";
+                const status = getCurrentStatus(user.email);
+                let badgeHTML = '';
+                
+                if (status === 'in_service') {
+                    badgeHTML = '<span class="status-badge status-badge in-service">بالخدمة (متاح للبلاغات)</span>';
+                } else if (status === 'on_break') {
+                    badgeHTML = '<span class="status-badge status-badge on-break">متوقف مؤقتاً (استراحة)</span>';
+                } else if (status === 'on_mission') {
+                    badgeHTML = '<span class="status-badge status-badge on-mission">في مهمة طارئة</span>';
+                } else {
+                    badgeHTML = '<span class="status-badge status-badge out-service">خارج الخدمة</span>';
+                }
 
                 container.innerHTML = `
                     <div class="user-status-card">
                         <h4>مرحباً، ${user.roblox}</h4>
                         <p>${user.email}</p>
+                        ${badgeHTML}
                     </div>
-                    <div class="buttons-row">
-                        <button class="btn-action ${btnClass}" onclick="toggleDutyStatus()" style="width:100%;">
-                            ${btnText}
-                        </button>
+                    <div class="action-buttons-grid">
+                        <button class="btn-action btn-green" onclick="setStatus('in_service')">تسجيل دخول</button>
+                        <button class="btn-action btn-orange" onclick="setStatus('on_break')">استراحة</button>
+                        <button class="btn-action btn-yellow" onclick="setStatus('on_mission')">في مهمة</button>
+                        <button class="btn-action btn-red" onclick="setStatus('out_of_service')">تسجيل خروج</button>
                     </div>
                 `;
             }
         }
 
-        function toggleDutyStatus() {
+        function setStatus(newStatus) {
             const user = getStoredUser();
             if (!user) return;
 
-            const sessionKey = `active_session_${user.email}`;
-            const activeSession = localStorage.getItem(sessionKey);
+            const currentStatus = getCurrentStatus(user.email);
+            if (currentStatus === newStatus) {
+                showAlert('تنبيه الحالات', 'أنت بالفعل في هذه الحالة حالياً!');
+                return;
+            }
+
             const now = new Date();
             const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
             const gregStr = now.toLocaleDateString('en-GB');
@@ -880,51 +929,73 @@
 
             let logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
             let activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
+            let actionText = '';
 
-            if (!activeSession) {
-                const sessionData = {
-                    startTime: now.getTime(),
-                    dateTime: dateTimeFormat,
-                    email: user.email,
-                    roblox: user.roblox,
-                    discord: user.discord
-                };
-                localStorage.setItem(sessionKey, JSON.stringify(sessionData));
-                
-                activeList.push(sessionData);
-                localStorage.setItem('active_duty_list', JSON.stringify(activeList));
-
-                logs.unshift({
-                    dateTime: dateTimeFormat,
-                    action: 'تسجيل دخول (بدء الخدمة)',
-                    email: user.email,
-                    roblox: user.roblox,
-                    discord: user.discord
+            if (newStatus === 'in_service') {
+                actionText = 'تسجيل دخول (في الخدمة - متاح)';
+                if (currentStatus === 'out_of_service') {
+                    activeList.push({
+                        startTime: now.getTime(),
+                        statusChangedTime: now.getTime(),
+                        dateTime: dateTimeFormat,
+                        email: user.email,
+                        roblox: user.roblox,
+                        discord: user.discord,
+                        status: 'in_service'
+                    });
+                } else {
+                    activeList = activeList.map(item => {
+                        if (item.email === user.email) {
+                            return { ...item, status: 'in_service', statusChangedTime: now.getTime() };
+                        }
+                        return item;
+                    });
+                }
+                showAlert('في الخدمة', 'تم تسجيلك في الخدمة الميدانية؛ أنت الآن متاح لاستلام التوجيهات من العمليات.');
+            } else if (newStatus === 'on_break') {
+                if (currentStatus === 'out_of_service') {
+                    showAlert('تنبيه', 'يجب تسجيل الدخول بالخدمة أولاً قبل أخذ استراحة.');
+                    return;
+                }
+                actionText = 'استراحة مؤقتة عن الخدمة';
+                activeList = activeList.map(item => {
+                    if (item.email === user.email) {
+                        return { ...item, status: 'on_break', statusChangedTime: now.getTime() };
+                    }
+                    return item;
                 });
-
-                showAlert('بدء العمل', 'تم تسجيل دخولك وبدء احتساب ساعاتك الميدانية بنجاح!');
-            } else {
-                const sessionData = JSON.parse(activeSession);
-                const diffMs = now.getTime() - sessionData.startTime;
-                const diffHrs = (diffMs / (1000 * 60 * 60)).toFixed(2);
-
-                localStorage.removeItem(sessionKey);
-                
+                showAlert('استراحة', 'تم التغيير إلى حالة (استراحة)؛ مسموح لك أخذ استراحة بمجموع ساعتين متفرقة، ويظهر لمركز العمليات أنك متوقف مؤقتاً.');
+            } else if (newStatus === 'on_mission') {
+                if (currentStatus === 'out_of_service') {
+                    showAlert('تنبيه', 'يجب تسجيل الدخول بالخدمة أولاً قبل البدء بمهمة.');
+                    return;
+                }
+                actionText = 'توجه لحالة طبية (في مهمة)';
+                activeList = activeList.map(item => {
+                    if (item.email === user.email) {
+                        return { ...item, status: 'on_mission', statusChangedTime: now.getTime() };
+                    }
+                    return item;
+                });
+                showAlert('في مهمة', 'تم تحديث حالتك إلى (في مهمة)؛ تم توضيح لمركز العمليات أنك متوجه لحالة طبية ولا تستطيع استقبال توجيهات جديدة حالياً.');
+            } else if (newStatus === 'out_of_service') {
+                actionText = 'تسجيل خروج (إنهاء الخدمة)';
                 activeList = activeList.filter(item => item.email !== user.email);
-                localStorage.setItem('active_duty_list', JSON.stringify(activeList));
-
-                logs.unshift({
-                    dateTime: dateTimeFormat,
-                    action: `تسجيل خروج (أتممت ${diffHrs} ساعة)`,
-                    email: user.email,
-                    roblox: user.roblox,
-                    discord: user.discord
-                });
-
-                showAlert('إنهاء العمل', `تم تسجيل خروجك بنجاح. إجمالي مدة الجلسة: ${diffHrs} ساعة.`);
+                showAlert('تسجيل خروج', 'تم إنهاء نوبتك وتسجيل الخروج بنجاح.');
             }
 
+            localStorage.setItem(`duty_status_${user.email}`, newStatus);
+            localStorage.setItem('active_duty_list', JSON.stringify(activeList));
+
+            logs.unshift({
+                dateTime: dateTimeFormat,
+                action: actionText,
+                email: user.email,
+                roblox: user.roblox,
+                discord: user.discord
+            });
             localStorage.setItem('attendance_logs', JSON.stringify(logs));
+
             renderAuthSection();
         }
 
@@ -973,14 +1044,17 @@
         function showHoursModal() {
             const user = getStoredUser();
             if (!user) return;
-            const session = localStorage.getItem(`active_session_${user.email}`);
-            if (session) {
-                const data = JSON.parse(session);
-                const diffMs = new Date().getTime() - data.startTime;
-                const mins = Math.floor(diffMs / 60000);
-                showAlert('السجل الشخصي', `أنت في الخدمة حالياً منذ ${mins} دقيقة.`);
+            const status = getCurrentStatus(user.email);
+            if (status !== 'out_of_service') {
+                const activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
+                const item = activeList.find(i => i.email === user.email);
+                if (item) {
+                    const diffMs = new Date().getTime() - item.startTime;
+                    const mins = Math.floor(diffMs / 60000);
+                    showAlert('السجل الشخصي', `أنت في النوبة الميدانية حالياً منذ ${mins} دقيقة.`);
+                }
             } else {
-                showAlert('السجل الشخصي', 'لست مسجل دخول في الخدمة حالياً. اضغط على "تسجيل دخول" لبدء حساب الساعات.');
+                showAlert('السجل الشخصي', 'لست مسجل دخول في الخدمة حالياً.');
             }
         }
 
@@ -999,7 +1073,7 @@
 
             localStorage.setItem('saved_volunteer_profile', JSON.stringify(profile));
 
-            showAlert('حفظ نهائي', 'تم حفظ بياناتك بنجاح ولن تحتاج لإدخالها مرة أخرى!');
+            showAlert('حفظ نهائي', 'تم حفظ بياناتك بنجاح!');
             document.getElementById('volunteerForm').reset();
             showMainPage();
         }
@@ -1015,7 +1089,7 @@
                 document.getElementById('adminSection').style.display = 'block';
                 
                 if (sessionTimer) clearInterval(sessionTimer);
-                sessionTimer = setInterval(renderActiveDuty, 5000);
+                sessionTimer = setInterval(renderActiveDuty, 4000);
             } else if (password !== null) {
                 showAlert('خطأ بالوصول', 'كلمة السر غير صحيحة!');
             }
@@ -1084,24 +1158,32 @@
             tbody.innerHTML = '';
 
             if (activeList.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا يوجد أي متطوع في الخدمة حالياً</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا يوجد أي متطوع في الخدمة حالياً</td></tr>';
                 return;
             }
 
             const now = new Date().getTime();
             activeList.forEach(item => {
-                const diffMs = now - item.startTime;
+                const diffMs = now - (item.statusChangedTime || item.startTime);
                 const hours = Math.floor(diffMs / (1000 * 60 * 60));
                 const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
                 const timePassed = `${hours} س و ${mins} د`;
 
+                let statusLabel = '';
+                if (item.status === 'in_service') {
+                    statusLabel = '<span style="color:#00e676; font-weight:bold;">متاح (بالخدمة)</span>';
+                } else if (item.status === 'on_break') {
+                    statusLabel = '<span style="color:#ff9100; font-weight:bold;">استراحة</span>';
+                } else if (item.status === 'on_mission') {
+                    statusLabel = '<span style="color:#ffd600; font-weight:bold;">في مهمة</span>';
+                }
+
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${item.dateTime}</td>
-                    <td>${item.email}</td>
-                    <td>${item.roblox}</td>
-                    <td>${item.discord}</td>
-                    <td style="color:#00ff88; font-weight:bold;">${timePassed}</td>
+                    <td>${item.roblox} (${item.discord})</td>
+                    <td>${statusLabel}</td>
+                    <td style="color:#fff; font-weight:bold;">${timePassed}</td>
                 `;
                 tbody.appendChild(tr);
             });
