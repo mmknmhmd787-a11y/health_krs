@@ -8,17 +8,17 @@
     <style>
         :root {
             --bg-main: #0a0b10;
-            --bg-card: rgba(18, 20, 29, 0.7);
-            --border-card: rgba(255, 30, 68, 0.2);
-            --border-hover: rgba(255, 30, 68, 0.5);
+            --bg-card: rgba(18, 20, 29, 0.75);
+            --border-card: rgba(255, 30, 68, 0.22);
+            --border-hover: rgba(255, 30, 68, 0.55);
             --primary-red: #ff1e44;
-            --primary-red-glow: rgba(255, 30, 68, 0.35);
+            --primary-glow: rgba(255, 30, 68, 0.35);
             --color-green: #00e676;
-            --color-green-glow: rgba(0, 230, 118, 0.35);
+            --color-green-glow: rgba(0, 230, 118, 0.3);
             --color-orange: #ff9100;
-            --color-orange-glow: rgba(255, 145, 0, 0.35);
+            --color-orange-glow: rgba(255, 145, 0, 0.3);
             --color-yellow: #ffd600;
-            --color-yellow-glow: rgba(255, 214, 0, 0.35);
+            --color-yellow-glow: rgba(255, 214, 0, 0.3);
             --text-main: #ffffff;
             --text-sub: #949ab1;
         }
@@ -35,8 +35,8 @@
         body {
             background-color: var(--bg-main);
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(255, 30, 68, 0.12), transparent 50%),
-                radial-gradient(circle at 10% 90%, rgba(18, 20, 29, 0.8), transparent 40%);
+                radial-gradient(circle at 50% 0%, rgba(255, 30, 68, 0.14), transparent 55%),
+                radial-gradient(circle at 10% 90%, rgba(18, 20, 29, 0.85), transparent 45%);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
@@ -46,19 +46,20 @@
             overflow-x: hidden;
         }
 
+        /* Navbar */
         .navbar {
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 12px 18px;
-            background: rgba(14, 16, 24, 0.85);
+            background: rgba(14, 16, 24, 0.88);
             border: 1px solid var(--border-card);
             border-radius: 24px;
             backdrop-filter: blur(16px);
             margin-bottom: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
         }
 
         .nav-brand {
@@ -95,6 +96,7 @@
             justify-content: center;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 700;
             text-decoration: none;
         }
 
@@ -105,13 +107,14 @@
             border-color: var(--primary-red);
         }
 
+        /* Custom Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(5, 6, 10, 0.85);
+            background: rgba(5, 6, 10, 0.88);
             backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
@@ -134,7 +137,7 @@
             box-shadow: 0 10px 40px var(--primary-glow);
             border-radius: 24px;
             padding: 28px 24px;
-            max-width: 380px;
+            max-width: 400px;
             width: 100%;
             text-align: center;
             transform: translateY(20px);
@@ -145,16 +148,11 @@
             transform: translateY(0);
         }
 
-        .modal-icon {
-            font-size: 36px;
-            margin-bottom: 12px;
-        }
-
         .modal-title {
             color: var(--primary-red);
             font-size: 18px;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .modal-message {
@@ -177,13 +175,14 @@
             width: 100%;
         }
 
+        /* Sidebar (بدون إيموجيات) */
         .sidebar-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             backdrop-filter: blur(6px);
             z-index: 998;
             opacity: 0;
@@ -200,7 +199,7 @@
             position: fixed;
             top: 0;
             right: -320px;
-            width: 290px;
+            width: 280px;
             height: 100vh;
             background: #0f1118;
             border-left: 1px solid var(--border-card);
@@ -235,7 +234,8 @@
             background: transparent;
             border: none;
             color: var(--text-sub);
-            font-size: 20px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
         }
 
@@ -243,32 +243,33 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .sidebar-menu li a {
             display: flex;
             align-items: center;
-            gap: 12px;
+            justify-content: space-between;
             color: var(--text-main);
             text-decoration: none;
             padding: 14px 16px;
-            border-radius: 16px;
+            border-radius: 14px;
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid transparent;
+            border: 1px solid rgba(255, 255, 255, 0.04);
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
         }
 
         .sidebar-menu li a:hover {
             border-color: var(--border-card);
-            background: rgba(255, 30, 68, 0.08);
+            background: rgba(255, 30, 68, 0.1);
             color: var(--primary-red);
         }
 
+        /* Main Container */
         .main-wrapper {
             width: 100%;
-            max-width: 500px;
+            max-width: 520px;
             display: flex;
             flex-direction: column;
             gap: 20px;
@@ -313,7 +314,6 @@
             font-weight: 800;
             color: var(--text-main);
             margin-bottom: 10px;
-            letter-spacing: -0.5px;
         }
 
         .hero-desc {
@@ -333,13 +333,13 @@
             background: var(--bg-card);
             border: 1px solid var(--border-card);
             border-radius: 20px;
-            padding: 15px 10px;
+            padding: 16px 10px;
             text-align: center;
             backdrop-filter: blur(12px);
         }
 
         .stat-num {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--primary-red);
         }
@@ -348,7 +348,7 @@
             font-size: 11px;
             color: var(--text-sub);
             margin-top: 4px;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .wzkir-card {
@@ -358,10 +358,6 @@
             padding: 25px 22px;
             backdrop-filter: blur(16px);
             box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .wzkir-card:hover {
-            border-color: var(--border-hover);
         }
 
         .date-badge-wrapper {
@@ -494,92 +490,11 @@
             text-align: justify;
         }
 
+        /* View Switching */
         .page-view { display: block; }
         .page-view.hidden { display: none; }
 
-        .admin-panel { display: none; }
-
-        .admin-tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-
-        .admin-tab-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 10px;
-            border: 1px solid var(--border-card);
-            background: rgba(255, 255, 255, 0.03);
-            color: var(--text-sub);
-            font-size: 12px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .admin-tab-btn.active {
-            background: var(--primary-red);
-            color: #fff;
-            border-color: var(--primary-red);
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 12px;
-            font-size: 12px;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-card);
-            color: #fff;
-            margin-bottom: 14px;
-            outline: none;
-        }
-
-        .table-wrapper {
-            max-height: 250px;
-            overflow-y: auto;
-            border: 1px solid var(--border-card);
-            border-radius: 14px;
-            margin-bottom: 14px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 11px;
-            text-align: right;
-        }
-
-        th, td {
-            padding: 10px 8px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        th {
-            background: #0d0f17;
-            color: var(--primary-red);
-            position: sticky;
-            top: 0;
-        }
-
-        .ctrl-btns {
-            display: flex;
-            gap: 10px;
-        }
-
-        .ctrl-btns button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 12px;
-            border: none;
-            font-weight: bold;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .btn-back { background: var(--primary-red); color: #fff; }
-        .btn-clear { background: #1a1c28; color: #fff; border: 1px solid #333; }
-
+        /* Inputs & Forms */
         .input-group {
             margin-bottom: 16px;
             text-align: right;
@@ -589,23 +504,42 @@
             display: block;
             margin-bottom: 8px;
             font-size: 12px;
+            font-weight: 600;
             color: var(--text-sub);
         }
 
-        .input-group input {
+        .input-group input, .input-group select {
             width: 100%;
             padding: 14px 16px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
             color: #fff;
             font-size: 13px;
             outline: none;
         }
 
-        .input-group input:focus {
+        .input-group input:focus, .input-group select:focus {
             border-color: var(--primary-red);
             box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        .input-group select option {
+            background: #10121a;
+            color: #fff;
+        }
+
+        .file-upload-box {
+            border: 1px dashed var(--border-card);
+            background: rgba(255, 30, 68, 0.03);
+            border-radius: 14px;
+            padding: 16px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .file-upload-box:hover {
+            border-color: var(--primary-red);
         }
 
         .user-status-card {
@@ -641,39 +575,150 @@
         .status-badge.on-break { background: rgba(255, 145, 0, 0.15); color: #ff9100; border: 1px solid #ff9100; }
         .status-badge.on-mission { background: rgba(255, 214, 0, 0.15); color: #ffd600; border: 1px solid #ffd600; }
         .status-badge.out-service { background: rgba(255, 30, 68, 0.15); color: #ff1e44; border: 1px solid #ff1e44; }
+
+        /* Admin Tabs & Tables */
+        .admin-panel { display: none; }
+
+        .admin-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .admin-tab-btn {
+            padding: 10px 6px;
+            border-radius: 10px;
+            border: 1px solid var(--border-card);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-sub);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .admin-tab-btn.active {
+            background: var(--primary-red);
+            color: #fff;
+            border-color: var(--primary-red);
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            font-size: 12px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-card);
+            color: #fff;
+            margin-bottom: 14px;
+            outline: none;
+        }
+
+        .table-wrapper {
+            max-height: 280px;
+            overflow-y: auto;
+            border: 1px solid var(--border-card);
+            border-radius: 14px;
+            margin-bottom: 14px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            text-align: right;
+        }
+
+        th, td {
+            padding: 10px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        th {
+            background: #0d0f17;
+            color: var(--primary-red);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        .ctrl-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ctrl-btns button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 12px;
+            border: none;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .btn-back { background: var(--primary-red); color: #fff; }
+        .btn-clear { background: #1a1c28; color: #fff; border: 1px solid #333; }
+
+        .mini-btn {
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: none;
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-left: 3px;
+        }
+        .mini-btn.approve { background: #00e676; color: #000; }
+        .mini-btn.reject { background: #ff1e44; color: #fff; }
+        .mini-btn.view { background: #29b6f6; color: #000; }
+        .mini-btn.edit { background: #ff9100; color: #000; }
+
+        /* Proof Media Viewer */
+        .proof-preview {
+            max-width: 100%;
+            max-height: 240px;
+            border-radius: 12px;
+            margin: 10px auto;
+            display: block;
+            border: 1px solid var(--border-card);
+        }
     </style>
 </head>
 <body>
 
+    <!-- Custom Modal -->
     <div class="modal-overlay" id="customModalOverlay">
         <div class="custom-modal">
-            <div class="modal-icon">⚠️</div>
             <div class="modal-title" id="modalTitle">تنبيه بالنظام</div>
-            <div class="modal-message" id="modalMessage">يرجى تسجيل البيانات أولاً للوصول لخيارات القائمة الجانبية!</div>
-            <button class="btn-modal-close" onclick="closeCustomModal()">حسناً، فهمت</button>
+            <div class="modal-message" id="modalMessage"></div>
+            <div id="modalMediaContainer"></div>
+            <button class="btn-modal-close" onclick="closeCustomModal()">إغلاق</button>
         </div>
     </div>
 
+    <!-- Sidebar (بدون إيموجيات) -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <span class="sidebar-title">خيارات المنظومة</span>
-            <button class="close-sidebar" onclick="closeSidebar()">✕</button>
+            <span class="sidebar-title">قائمة المتطوع</span>
+            <button class="close-sidebar" onclick="closeSidebar()">X</button>
         </div>
         <ul class="sidebar-menu">
-            <li><a href="#" onclick="closeSidebar(); showHoursModal(); return false;">السجل الشخصي للساعات</a></li>
-            <li><a href="#">تقديم طلب استلام ميداني</a></li>
-            <li><a href="#">اللوائح والتعليمات الطبية</a></li>
-            <li><a href="#">التواصل مع غرفة العمليات</a></li>
-            <li><a href="#">إعدادات الحساب</a></li>
+            <li><a href="#" onclick="closeSidebar(); showPage('mainPage'); return false;">الرئيسية وتسجيل الحضور</a></li>
+            <li><a href="#" onclick="closeSidebar(); showPage('volunteerRecordPage'); return false;">السجل التطوعي</a></li>
+            <li><a href="#" onclick="closeSidebar(); showPage('ambulanceReportPage'); return false;">الإسعافات</a></li>
+            <li><a href="#" onclick="closeSidebar(); showPage('accountSettingsPage'); return false;">إعدادات الحساب</a></li>
         </ul>
     </aside>
 
+    <!-- Header -->
     <header class="navbar">
         <div class="nav-controls">
             <div class="nav-icon-btn" onclick="handleSidebarClick()">☰</div>
             <div class="nav-icon-btn">AR</div>
-            <a href="#" class="nav-icon-btn active" onclick="showMainPage()">🚑</a>
+            <a href="#" class="nav-icon-btn active" onclick="showPage('mainPage'); return false;">KR</a>
         </div>
         <div class="nav-brand">
             <span>موقع المتطوعين</span>
@@ -683,15 +728,15 @@
 
     <div class="main-wrapper">
 
+        <!-- 1. الصفحة الرئيسية -->
         <div id="mainPage" class="page-view">
-
             <section class="hero-section">
                 <div class="pill-tag">
                     <span class="pill-dot"></span>
                     موقع متطوعين الهلال الأحمر
                 </div>
                 <h1 class="hero-title">بوابة المتطوعين الميدانية</h1>
-                <p class="hero-desc">منظومة متابعة وتسجيل ساعات التطوع لقطاع الإسعاف والهلال الأحمر بسهولة وسرعة.</p>
+                <p class="hero-desc">منظومة متابعة وتسجيل ساعات التطوع والحالات الإسعافية لقطاع الهلال الأحمر.</p>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
@@ -716,21 +761,19 @@
                     <span id="hijriDate">--/--/---- هـ</span>
                 </div>
 
-                <div id="dynamicAuthSection">
-                </div>
+                <div id="dynamicAuthSection"></div>
 
-                <div class="buttons-row" style="margin-top: 15px;">
+                <div style="margin-top: 15px;">
                     <a href="#aboutSection" class="btn-action btn-secondary" style="width:100%;">
                         تعريف التطوع
                     </a>
                 </div>
 
-                <button class="btn-action btn-admin-link" onclick="openAdminPanel()">لوحة الإدارة العامة</button>
+                <button class="btn-action btn-admin-link" style="margin-top: 12px;" onclick="openAdminPanel()">لوحة الإدارة العامة</button>
             </div>
 
             <div class="wzkir-card" style="margin-top: 20px;">
                 <div class="section-title">قيادة القطاع</div>
-                
                 <div class="leader-list">
                     <div class="leader-item">
                         <span class="leader-role">وزير الصحة</span>
@@ -757,60 +800,156 @@
                     التطوع في قطاع الهلال الأحمر هو ركيزة أساسية لتقديم الاستجابة السريعة والدعم الإسعافي الميداني. يهدف البرنامج إلى تمكين المتطوعين وتأهيلهم للمشاركة في إنقاذ الأرواح، وتقديم الخدمات الطبية الطارئة، وتعزيز الوعي الصحي والإنساني داخل المجتمع وفق أعلى معايير الجودة والسلامة.
                 </p>
             </div>
-
         </div>
 
+        <!-- 2. صفحة تسجيل البيانات لأول مرة -->
         <div id="registerPage" class="page-view hidden">
             <div class="wzkir-card">
                 <div class="section-title">تسجيل بيانات المتطوع</div>
-                
-                <form id="volunteerForm" onsubmit="handleSubmit(event)">
+                <form onsubmit="handleFirstRegister(event)">
                     <div class="input-group">
                         <label>البريد الإلكتروني الرسمي</label>
-                        <input type="email" id="email" placeholder="volunteer@redcrescent.sa" required>
+                        <input type="email" id="regEmail" placeholder="volunteer@redcrescent.sa" required>
                     </div>
-
                     <div class="input-group">
                         <label>اسم الحساب (Roblox)</label>
-                        <input type="text" id="roblox" placeholder="Roblox Username" required>
+                        <input type="text" id="regRoblox" placeholder="Roblox Username" required>
                     </div>
-
                     <div class="input-group">
                         <label>معرف الديسكورد (Discord)</label>
-                        <input type="text" id="discord" placeholder="username_kr" required>
+                        <input type="text" id="regDiscord" placeholder="username_kr" required>
                     </div>
-
-                    <button type="submit" class="btn-action btn-green" style="width: 100%; margin-bottom: 12px; color:#000;">
+                    <button type="submit" class="btn-action btn-green" style="margin-bottom: 12px;">
                         تأكيد وحفظ البيانات نهائياً
                     </button>
-                    
-                    <button type="button" class="btn-action btn-secondary" style="width: 100%;" onclick="showMainPage()">
+                    <button type="button" class="btn-action btn-secondary" onclick="showPage('mainPage')">
                         الرجوع للرئيسية
                     </button>
                 </form>
             </div>
         </div>
 
+        <!-- 3. صفحة السجل التطوعي -->
+        <div id="volunteerRecordPage" class="page-view hidden">
+            <div class="wzkir-card">
+                <div class="section-title">السجل التطوعي الشخصي</div>
+                <p style="text-align:center; color:var(--text-sub); font-size:13px; margin-bottom:20px;" id="recordUserHeader"></p>
+                
+                <div class="stats-grid" style="margin-top: 0; margin-bottom: 22px;">
+                    <div class="stat-card">
+                        <div class="stat-num" id="statRescues">0</div>
+                        <div class="stat-lbl">عدد الإسعافات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" id="statHours">0.0</div>
+                        <div class="stat-lbl">عدد الساعات</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num" id="statPoints">0</div>
+                        <div class="stat-lbl">عدد النقاط</div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-action btn-secondary" onclick="showPage('mainPage')">
+                    العودة للصفحة الرئيسية
+                </button>
+            </div>
+        </div>
+
+        <!-- 4. صفحة استبانة الإسعافات -->
+        <div id="ambulanceReportPage" class="page-view hidden">
+            <div class="wzkir-card">
+                <div class="section-title">استبانة توثيق الإسعافات</div>
+                <form id="ambulanceForm" onsubmit="handleAmbulanceSubmit(event)">
+                    <div class="input-group">
+                        <label>اسم حساب المتطوع (Discord)</label>
+                        <input type="text" id="ambDiscord" required>
+                    </div>
+                    <div class="input-group">
+                        <label>اسم حساب المتطوع (Roblox)</label>
+                        <input type="text" id="ambRoblox" required>
+                    </div>
+                    <div class="input-group">
+                        <label>نوع الحالة</label>
+                        <select id="ambCaseType" required>
+                            <option value="إسعاف مصاب طلق ناري">إسعاف مصاب طلق ناري</option>
+                            <option value="حادث مروري">حادث مروري</option>
+                            <option value="إغماء / هبوط حاد">إغماء / هبوط حاد</option>
+                            <option value="إنعاش قلبي رئوي (CPR)">إنعاش قلبي رئوي (CPR)</option>
+                            <option value="حالة حروق أو كسور">حالة حروق أو كسور</option>
+                            <option value="نقل طبي طارئ للمستشفى">نقل طبي طارئ للمستشفى</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>عدد المسقطين / المصابين</label>
+                        <input type="number" id="ambCasualties" min="1" max="50" value="1" required>
+                    </div>
+                    <div class="input-group">
+                        <label>إثبات الحالة (صورة أو فيديو)</label>
+                        <div class="file-upload-box" onclick="document.getElementById('ambProofFile').click()">
+                            <span id="fileNameDisplay" style="font-size:12px; color:var(--text-sub);">اضغط لاختيار صورة أو مقطع فيديو للإثبات</span>
+                            <input type="file" id="ambProofFile" accept="image/*,video/*" style="display:none;" onchange="handleFileSelect(this)" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-action btn-red" style="margin-bottom: 12px;">
+                        إرسال البلاغ للمراجعة
+                    </button>
+                    <button type="button" class="btn-action btn-secondary" onclick="showPage('mainPage')">
+                        الرجوع للرئيسية
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 5. صفحة إعدادات الحساب -->
+        <div id="accountSettingsPage" class="page-view hidden">
+            <div class="wzkir-card">
+                <div class="section-title">إعدادات الحساب الشخصي</div>
+                <form onsubmit="handleUpdateSettings(event)">
+                    <div class="input-group">
+                        <label>البريد الإلكتروني</label>
+                        <input type="email" id="setEmail" required>
+                    </div>
+                    <div class="input-group">
+                        <label>اسم حساب روبلوكس (Roblox)</label>
+                        <input type="text" id="setRoblox" required>
+                    </div>
+                    <div class="input-group">
+                        <label>حساب ديسكورد (Discord)</label>
+                        <input type="text" id="setDiscord" required>
+                    </div>
+                    <button type="submit" class="btn-action btn-green" style="margin-bottom: 12px;">
+                        حفظ التعديلات
+                    </button>
+                    <button type="button" class="btn-action btn-secondary" onclick="showPage('mainPage')">
+                        الرجوع للرئيسية
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 6. لوحة الإدارة العامة -->
         <div id="adminSection" class="wzkir-card admin-panel">
-            <h3 style="color: var(--primary-red); text-align:center; margin-bottom: 14px;">لوحة الإدارة والسجلات</h3>
+            <h3 style="color: var(--primary-red); text-align:center; margin-bottom: 14px;">لوحة الإدارة والتحكم</h3>
             
             <div class="admin-tabs">
-                <button class="admin-tab-btn active" id="tabLogsBtn" onclick="switchAdminTab('logs')">سجلات الحركات</button>
-                <button class="admin-tab-btn" id="tabActiveBtn" onclick="switchAdminTab('active')">المتواجدون ميدانياً حالياً</button>
+                <button class="admin-tab-btn active" id="tabLogsBtn" onclick="switchAdminTab('logs')">سجلات الحضور</button>
+                <button class="admin-tab-btn" id="tabActiveBtn" onclick="switchAdminTab('active')">المتواجدون حالياً</button>
+                <button class="admin-tab-btn" id="tabPointsBtn" onclick="switchAdminTab('points')">إدارة النقاط</button>
             </div>
 
+            <!-- تبويب السجلات -->
             <div id="logsViewContainer">
                 <div class="search-box">
                     <input type="text" id="searchInput" onkeyup="filterLogs()" placeholder="ابحث بالاسم، الديسكورد، أو البريد...">
                 </div>
-
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
-                                <th>التاريخ والوقت</th>
+                                <th>الوقت</th>
                                 <th>الإجراء</th>
-                                <th>البريد</th>
                                 <th>روبلوكس</th>
                                 <th>ديسكورد</th>
                             </tr>
@@ -820,18 +959,52 @@
                 </div>
             </div>
 
+            <!-- تبويب المتواجدون حالياً -->
             <div id="activeViewContainer" style="display: none;">
                 <div class="table-wrapper">
                     <table>
                         <thead>
                             <tr>
                                 <th>وقت الدخول</th>
-                                <th>الاسم</th>
-                                <th>الحالة الحالية</th>
-                                <th>المدة بالحالة</th>
+                                <th>المتطوع</th>
+                                <th>الحالة</th>
+                                <th>المدة</th>
                             </tr>
                         </thead>
                         <tbody id="activeTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- تبويب إدارة النقاط ومراجعة الإسعافات -->
+            <div id="pointsViewContainer" style="display: none;">
+                <h4 style="color:var(--text-main); font-size:13px; margin-bottom:10px;">1. مراجعة بلاغات الإسعافات المعلقة</h4>
+                <div class="table-wrapper" style="max-height: 180px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المتطوع</th>
+                                <th>الحالة (العدد)</th>
+                                <th>الإثبات</th>
+                                <th>الإجراء</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportsTableBody"></tbody>
+                    </table>
+                </div>
+
+                <h4 style="color:var(--text-main); font-size:13px; margin: 14px 0 10px;">2. رصيد نقاط وإسعافات المتطوعين (تعديل / زيادة / خصم)</h4>
+                <div class="table-wrapper" style="max-height: 180px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>المتطوع</th>
+                                <th>الإسعافات</th>
+                                <th>النقاط</th>
+                                <th>تحكم بالنقاط</th>
+                            </tr>
+                        </thead>
+                        <tbody id="pointsTableBody"></tbody>
                     </table>
                 </div>
             </div>
@@ -847,6 +1020,8 @@
     <script>
         const ADMIN_PASS = "kr-2026-8";
         let sessionTimer = null;
+        let currentProofDataUrl = null;
+        let currentProofType = null;
 
         window.onload = function() {
             const now = new Date();
@@ -859,39 +1034,180 @@
             renderAuthSection();
         };
 
+        // --- إدارة بيانات المستخدم والإحصائيات ---
         function getStoredUser() {
             const data = localStorage.getItem('saved_volunteer_profile');
             return data ? JSON.parse(data) : null;
+        }
+
+        function getVolunteersDB() {
+            return JSON.parse(localStorage.getItem('volunteers_stats_db') || '{}');
+        }
+
+        function saveVolunteersDB(db) {
+            localStorage.setItem('volunteers_stats_db', JSON.stringify(db));
+        }
+
+        function ensureVolunteerInDB(user) {
+            let db = getVolunteersDB();
+            const key = user.roblox.toLowerCase();
+            if (!db[key]) {
+                db[key] = {
+                    roblox: user.roblox,
+                    discord: user.discord,
+                    email: user.email,
+                    rescues: 0,
+                    hours: 0,
+                    points: 0
+                };
+                saveVolunteersDB(db);
+            }
+            return db[key];
         }
 
         function getCurrentStatus(email) {
             return localStorage.getItem(`duty_status_${email}`) || 'out_of_service';
         }
 
+        // --- التنقل بين الصفحات ---
+        function showPage(pageId) {
+            const pages = ['mainPage', 'registerPage', 'volunteerRecordPage', 'ambulanceReportPage', 'accountSettingsPage'];
+            pages.forEach(p => document.getElementById(p).classList.add('hidden'));
+            document.getElementById('adminSection').style.display = 'none';
+
+            const user = getStoredUser();
+
+            if (pageId === 'volunteerRecordPage' && user) {
+                const stats = ensureVolunteerInDB(user);
+                document.getElementById('recordUserHeader').textContent = `${user.roblox} | ${user.discord}`;
+                document.getElementById('statRescues').textContent = stats.rescues;
+                document.getElementById('statHours').textContent = Number(stats.hours).toFixed(1);
+                document.getElementById('statPoints').textContent = stats.points;
+            } else if (pageId === 'ambulanceReportPage' && user) {
+                document.getElementById('ambDiscord').value = user.discord;
+                document.getElementById('ambRoblox').value = user.roblox;
+                document.getElementById('fileNameDisplay').textContent = 'اضغط لاختيار صورة أو مقطع فيديو للإثبات';
+                currentProofDataUrl = null;
+            } else if (pageId === 'accountSettingsPage' && user) {
+                document.getElementById('setEmail').value = user.email;
+                document.getElementById('setRoblox').value = user.roblox;
+                document.getElementById('setDiscord').value = user.discord;
+            } else if (pageId === 'mainPage') {
+                renderAuthSection();
+            }
+
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        // --- إعدادات الحساب ---
+        function handleUpdateSettings(event) {
+            event.preventDefault();
+            const oldUser = getStoredUser();
+            const newEmail = document.getElementById('setEmail').value.trim().toLowerCase();
+            const newRoblox = document.getElementById('setRoblox').value.trim();
+            const newDiscord = document.getElementById('setDiscord').value.trim().toLowerCase();
+
+            // نقل الحالة إذا تغير البريد
+            if (oldUser && oldUser.email !== newEmail) {
+                const oldStatus = getCurrentStatus(oldUser.email);
+                localStorage.setItem(`duty_status_${newEmail}`, oldStatus);
+                localStorage.removeItem(`duty_status_${oldUser.email}`);
+            }
+
+            // تحديث قاعدة الإحصائيات
+            let db = getVolunteersDB();
+            const oldKey = oldUser ? oldUser.roblox.toLowerCase() : newRoblox.toLowerCase();
+            const newKey = newRoblox.toLowerCase();
+            const existingStats = db[oldKey] || { rescues: 0, hours: 0, points: 0 };
+            if (oldKey !== newKey) delete db[oldKey];
+            db[newKey] = {
+                ...existingStats,
+                roblox: newRoblox,
+                discord: newDiscord,
+                email: newEmail
+            };
+            saveVolunteersDB(db);
+
+            const updatedProfile = { email: newEmail, roblox: newRoblox, discord: newDiscord };
+            localStorage.setItem('saved_volunteer_profile', JSON.stringify(updatedProfile));
+
+            showAlert('تم التحديث', 'تم حفظ تعديلات حسابك بنجاح.');
+            showPage('mainPage');
+        }
+
+        // --- استبانة الإسعافات ---
+        function handleFileSelect(input) {
+            const file = input.files[0];
+            if (!file) return;
+            document.getElementById('fileNameDisplay').textContent = `تم اختيار: ${file.name}`;
+            currentProofType = file.type.startsWith('video/') ? 'video' : 'image';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentProofDataUrl = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleAmbulanceSubmit(event) {
+            event.preventDefault();
+            if (!currentProofDataUrl) {
+                showAlert('تنبيه', 'يرجى إرفاق صورة أو فيديو كإثبات للحالة.');
+                return;
+            }
+
+            const discord = document.getElementById('ambDiscord').value.trim();
+            const roblox = document.getElementById('ambRoblox').value.trim();
+            const caseType = document.getElementById('ambCaseType').value;
+            const casualties = parseInt(document.getElementById('ambCasualties').value, 10) || 1;
+
+            let reports = JSON.parse(localStorage.getItem('ambulance_reports') || '[]');
+            reports.unshift({
+                id: Date.now(),
+                discord: discord,
+                roblox: roblox,
+                caseType: caseType,
+                casualties: casualties,
+                proofData: currentProofDataUrl,
+                proofType: currentProofType,
+                status: 'pending',
+                date: new Date().toLocaleDateString('en-GB')
+            });
+
+            try {
+                localStorage.setItem('ambulance_reports', JSON.stringify(reports));
+                showAlert('تم الإرسال', 'تم رفع بلاغ الإسعاف بنجاح وهو الآن قيد المراجعة في إدارة النقاط.');
+                document.getElementById('ambulanceForm').reset();
+                showPage('mainPage');
+            } catch (e) {
+                showAlert('حجم الملف كبير', 'يرجى اختيار صورة أو مقطع فيديو بحجم أصغر لحفظه.');
+            }
+        }
+
+        // --- واجهة الحضور والانصراف ---
         function renderAuthSection() {
             const container = document.getElementById('dynamicAuthSection');
             const user = getStoredUser();
 
             if (!user) {
                 container.innerHTML = `
-                    <div class="buttons-row">
-                        <button class="btn-action btn-green" onclick="showRegisterPage()" style="width:100%; color:#000;">
-                            تسجيل البيانات (مرة واحدة)
-                        </button>
-                    </div>
+                    <button class="btn-action btn-green" onclick="showPage('registerPage')" style="width:100%;">
+                        تسجيل البيانات (مرة واحدة)
+                    </button>
                 `;
             } else {
+                ensureVolunteerInDB(user);
                 const status = getCurrentStatus(user.email);
                 let badgeHTML = '';
                 
                 if (status === 'in_service') {
-                    badgeHTML = '<span class="status-badge status-badge in-service">بالخدمة (متاح للبلاغات)</span>';
+                    badgeHTML = '<span class="status-badge in-service">بالخدمة (متاح للبلاغات)</span>';
                 } else if (status === 'on_break') {
-                    badgeHTML = '<span class="status-badge status-badge on-break">متوقف مؤقتاً (استراحة)</span>';
+                    badgeHTML = '<span class="status-badge on-break">متوقف مؤقتاً (استراحة)</span>';
                 } else if (status === 'on_mission') {
-                    badgeHTML = '<span class="status-badge status-badge on-mission">في مهمة طارئة</span>';
+                    badgeHTML = '<span class="status-badge on-mission">في مهمة طارئة</span>';
                 } else {
-                    badgeHTML = '<span class="status-badge status-badge out-service">خارج الخدمة</span>';
+                    badgeHTML = '<span class="status-badge out-service">خارج الخدمة</span>';
                 }
 
                 container.innerHTML = `
@@ -916,23 +1232,21 @@
 
             const currentStatus = getCurrentStatus(user.email);
             if (currentStatus === newStatus) {
-                showAlert('تنبيه الحالات', 'أنت بالفعل في هذه الحالة حالياً!');
+                showAlert('تنبيه', 'أنت بالفعل في هذه الحالة حالياً.');
                 return;
             }
 
             const now = new Date();
             const timeStr = now.toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
             const gregStr = now.toLocaleDateString('en-GB');
-            const optionsHijri = { year: 'numeric', month: 'numeric', day: 'numeric', calendar: 'islamic-umalqura' };
-            const hijriStr = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura', optionsHijri).format(now);
-            const dateTimeFormat = `${gregStr} | ${hijriStr}هـ<br><span style="color:var(--primary-red);">${timeStr}</span>`;
+            const dateTimeFormat = `${gregStr}<br><span style="color:var(--primary-red);">${timeStr}</span>`;
 
             let logs = JSON.parse(localStorage.getItem('attendance_logs') || '[]');
             let activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
             let actionText = '';
 
             if (newStatus === 'in_service') {
-                actionText = 'تسجيل دخول (في الخدمة - متاح)';
+                actionText = 'تسجيل دخول (في الخدمة)';
                 if (currentStatus === 'out_of_service') {
                     activeList.push({
                         startTime: now.getTime(),
@@ -944,44 +1258,40 @@
                         status: 'in_service'
                     });
                 } else {
-                    activeList = activeList.map(item => {
-                        if (item.email === user.email) {
-                            return { ...item, status: 'in_service', statusChangedTime: now.getTime() };
-                        }
-                        return item;
-                    });
+                    activeList = activeList.map(item => item.email === user.email ? { ...item, status: 'in_service', statusChangedTime: now.getTime() } : item);
                 }
-                showAlert('في الخدمة', 'تم تسجيلك في الخدمة الميدانية؛ أنت الآن متاح لاستلام التوجيهات من العمليات.');
+                showAlert('في الخدمة', 'تم تسجيلك في الخدمة الميدانية؛ أنت الآن متاح لاستلام التوجيهات.');
             } else if (newStatus === 'on_break') {
                 if (currentStatus === 'out_of_service') {
                     showAlert('تنبيه', 'يجب تسجيل الدخول بالخدمة أولاً قبل أخذ استراحة.');
                     return;
                 }
-                actionText = 'استراحة مؤقتة عن الخدمة';
-                activeList = activeList.map(item => {
-                    if (item.email === user.email) {
-                        return { ...item, status: 'on_break', statusChangedTime: now.getTime() };
-                    }
-                    return item;
-                });
-                showAlert('استراحة', 'تم التغيير إلى حالة (استراحة)؛ مسموح لك أخذ استراحة بمجموع ساعتين متفرقة، ويظهر لمركز العمليات أنك متوقف مؤقتاً.');
+                actionText = 'استراحة مؤقتة';
+                activeList = activeList.map(item => item.email === user.email ? { ...item, status: 'on_break', statusChangedTime: now.getTime() } : item);
+                showAlert('استراحة', 'مسموح لك بأخذ استراحة بمجموع ساعتين متفرقة؛ يظهر لمركز العمليات أنك متوقف مؤقتاً.');
             } else if (newStatus === 'on_mission') {
                 if (currentStatus === 'out_of_service') {
                     showAlert('تنبيه', 'يجب تسجيل الدخول بالخدمة أولاً قبل البدء بمهمة.');
                     return;
                 }
-                actionText = 'توجه لحالة طبية (في مهمة)';
-                activeList = activeList.map(item => {
-                    if (item.email === user.email) {
-                        return { ...item, status: 'on_mission', statusChangedTime: now.getTime() };
-                    }
-                    return item;
-                });
-                showAlert('في مهمة', 'تم تحديث حالتك إلى (في مهمة)؛ تم توضيح لمركز العمليات أنك متوجه لحالة طبية ولا تستطيع استقبال توجيهات جديدة حالياً.');
+                actionText = 'في مهمة طبية';
+                activeList = activeList.map(item => item.email === user.email ? { ...item, status: 'on_mission', statusChangedTime: now.getTime() } : item);
+                showAlert('في مهمة', 'تم تحديث حالتك إلى (في مهمة)؛ لن تصلك توجيهات جديدة من المركز حالياً.');
             } else if (newStatus === 'out_of_service') {
-                actionText = 'تسجيل خروج (إنهاء الخدمة)';
+                const activeItem = activeList.find(item => item.email === user.email);
+                let diffHrs = 0;
+                if (activeItem) {
+                    diffHrs = (now.getTime() - activeItem.startTime) / (1000 * 60 * 60);
+                    let db = getVolunteersDB();
+                    const key = user.roblox.toLowerCase();
+                    if (db[key]) {
+                        db[key].hours = Number(db[key].hours || 0) + diffHrs;
+                        saveVolunteersDB(db);
+                    }
+                }
+                actionText = `تسجيل خروج (${diffHrs.toFixed(2)} س)`;
                 activeList = activeList.filter(item => item.email !== user.email);
-                showAlert('تسجيل خروج', 'تم إنهاء نوبتك وتسجيل الخروج بنجاح.');
+                showAlert('تسجيل خروج', `تم إنهاء نوبتك بنجاح وإضافة ${diffHrs.toFixed(2)} ساعة إلى سجلك التطوعي.`);
             }
 
             localStorage.setItem(`duty_status_${user.email}`, newStatus);
@@ -995,45 +1305,30 @@
                 discord: user.discord
             });
             localStorage.setItem('attendance_logs', JSON.stringify(logs));
-
             renderAuthSection();
         }
 
-        function showAlert(title, message) {
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalMessage').textContent = message;
-            document.getElementById('customModalOverlay').classList.add('active');
+        function handleFirstRegister(event) {
+            event.preventDefault();
+            const profile = {
+                email: document.getElementById('regEmail').value.trim().toLowerCase(),
+                roblox: document.getElementById('regRoblox').value.trim(),
+                discord: document.getElementById('regDiscord').value.trim().toLowerCase()
+            };
+            localStorage.setItem('saved_volunteer_profile', JSON.stringify(profile));
+            ensureVolunteerInDB(profile);
+            showAlert('تم الحفظ', 'تم حفظ بياناتك بنجاح. يمكنك الآن استخدام القائمة الجانبية وأزرار الخدمة.');
+            showPage('mainPage');
         }
 
-        function closeCustomModal() {
-            document.getElementById('customModalOverlay').classList.remove('active');
-        }
-
-        function showRegisterPage() {
-            document.getElementById('mainPage').classList.add('hidden');
-            document.getElementById('registerPage').classList.remove('hidden');
-            document.getElementById('adminSection').style.display = 'none';
-        }
-
-        function showMainPage() {
-            document.getElementById('registerPage').classList.add('hidden');
-            document.getElementById('mainPage').classList.remove('hidden');
-            document.getElementById('adminSection').style.display = 'none';
-            renderAuthSection();
-        }
-
+        // --- Sidebar & Modals ---
         function handleSidebarClick() {
-            const user = getStoredUser();
-            if (!user) {
-                showAlert('تنبيه بالوصول', 'يرجى تسجيل بياناتك أولاً لفتح القائمة الجانبية!');
+            if (!getStoredUser()) {
+                showAlert('تنبيه بالوصول', 'يرجى تسجيل بياناتك أولاً لفتح القائمة الجانبية.');
             } else {
-                openSidebar();
+                document.getElementById('sidebar').classList.add('active');
+                document.getElementById('sidebarOverlay').classList.add('active');
             }
-        }
-
-        function openSidebar() {
-            document.getElementById('sidebar').classList.add('active');
-            document.getElementById('sidebarOverlay').classList.add('active');
         }
 
         function closeSidebar() {
@@ -1041,85 +1336,50 @@
             document.getElementById('sidebarOverlay').classList.remove('active');
         }
 
-        function showHoursModal() {
-            const user = getStoredUser();
-            if (!user) return;
-            const status = getCurrentStatus(user.email);
-            if (status !== 'out_of_service') {
-                const activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
-                const item = activeList.find(i => i.email === user.email);
-                if (item) {
-                    const diffMs = new Date().getTime() - item.startTime;
-                    const mins = Math.floor(diffMs / 60000);
-                    showAlert('السجل الشخصي', `أنت في النوبة الميدانية حالياً منذ ${mins} دقيقة.`);
-                }
-            } else {
-                showAlert('السجل الشخصي', 'لست مسجل دخول في الخدمة حالياً.');
-            }
+        function showAlert(title, message, mediaHtml = '') {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('modalMediaContainer').innerHTML = mediaHtml;
+            document.getElementById('customModalOverlay').classList.add('active');
         }
 
-        function handleSubmit(event) {
-            event.preventDefault();
-
-            const emailUser = document.getElementById('email').value.trim().toLowerCase();
-            const robloxUser = document.getElementById('roblox').value.trim();
-            const discordUser = document.getElementById('discord').value.trim().toLowerCase();
-
-            const profile = {
-                email: emailUser,
-                roblox: robloxUser,
-                discord: discordUser
-            };
-
-            localStorage.setItem('saved_volunteer_profile', JSON.stringify(profile));
-
-            showAlert('حفظ نهائي', 'تم حفظ بياناتك بنجاح!');
-            document.getElementById('volunteerForm').reset();
-            showMainPage();
+        function closeCustomModal() {
+            document.getElementById('customModalOverlay').classList.remove('active');
+            document.getElementById('modalMediaContainer').innerHTML = '';
         }
 
+        // --- لوحة الإدارة وإدارة النقاط ---
         function openAdminPanel() {
             const password = prompt('أدخل كلمة سر لوحة الإدارة:');
             if (password === ADMIN_PASS) {
-                document.getElementById('searchInput').value = '';
-                renderLogs();
-                renderActiveDuty();
-                document.getElementById('mainPage').classList.add('hidden');
-                document.getElementById('registerPage').classList.add('hidden');
+                const pages = ['mainPage', 'registerPage', 'volunteerRecordPage', 'ambulanceReportPage', 'accountSettingsPage'];
+                pages.forEach(p => document.getElementById(p).classList.add('hidden'));
                 document.getElementById('adminSection').style.display = 'block';
-                
+                switchAdminTab('logs');
                 if (sessionTimer) clearInterval(sessionTimer);
                 sessionTimer = setInterval(renderActiveDuty, 4000);
             } else if (password !== null) {
-                showAlert('خطأ بالوصول', 'كلمة السر غير صحيحة!');
+                showAlert('خطأ بالوصول', 'كلمة السر غير صحيحة.');
             }
         }
 
         function closeAdminPanel() {
             if (sessionTimer) clearInterval(sessionTimer);
             document.getElementById('adminSection').style.display = 'none';
-            showMainPage();
+            showPage('mainPage');
         }
 
         function switchAdminTab(tab) {
-            const logsBtn = document.getElementById('tabLogsBtn');
-            const activeBtn = document.getElementById('tabActiveBtn');
-            const logsCont = document.getElementById('logsViewContainer');
-            const activeCont = document.getElementById('activeViewContainer');
+            ['logs', 'active', 'points'].forEach(t => {
+                document.getElementById(`tab${t.charAt(0).toUpperCase() + t.slice(1)}Btn`).classList.remove('active');
+                document.getElementById(`${t}ViewContainer`).style.display = 'none';
+            });
+            document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}Btn`).classList.add('active');
+            document.getElementById(`${tab}ViewContainer`).style.display = 'block';
 
-            if (tab === 'logs') {
-                logsBtn.classList.add('active');
-                activeBtn.classList.remove('active');
-                logsCont.style.display = 'block';
-                activeCont.style.display = 'none';
-                renderLogs();
-            } else {
-                activeBtn.classList.add('active');
-                logsBtn.classList.remove('active');
-                activeCont.style.display = 'block';
-                logsCont.style.display = 'none';
-                renderActiveDuty();
-            }
+            if (tab === 'logs') renderLogs();
+            if (tab === 'active') renderActiveDuty();
+            if (tab === 'points') renderPointsManagement();
         }
 
         function renderLogs(filterText = '') {
@@ -1127,63 +1387,24 @@
             const tbody = document.getElementById('logsTableBody');
             tbody.innerHTML = '';
 
-            const filteredLogs = logs.filter(log => {
-                const query = filterText.toLowerCase();
-                return log.email.toLowerCase().includes(query) ||
-                       log.roblox.toLowerCase().includes(query) ||
-                       log.discord.toLowerCase().includes(query);
-            });
+            const filtered = logs.filter(l => 
+                l.roblox.toLowerCase().includes(filterText.toLowerCase()) ||
+                l.discord.toLowerCase().includes(filterText.toLowerCase()) ||
+                l.email.toLowerCase().includes(filterText.toLowerCase())
+            );
 
-            if (filteredLogs.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">لا توجد سجلات مطابقة</td></tr>';
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد سجلات</td></tr>';
                 return;
             }
 
-            filteredLogs.forEach(log => {
+            filtered.forEach(log => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${log.dateTime}</td>
                     <td style="color: #ff1e44;">${log.action}</td>
-                    <td>${log.email}</td>
                     <td>${log.roblox}</td>
                     <td>${log.discord}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        }
-
-        function renderActiveDuty() {
-            const activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
-            const tbody = document.getElementById('activeTableBody');
-            tbody.innerHTML = '';
-
-            if (activeList.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا يوجد أي متطوع في الخدمة حالياً</td></tr>';
-                return;
-            }
-
-            const now = new Date().getTime();
-            activeList.forEach(item => {
-                const diffMs = now - (item.statusChangedTime || item.startTime);
-                const hours = Math.floor(diffMs / (1000 * 60 * 60));
-                const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-                const timePassed = `${hours} س و ${mins} د`;
-
-                let statusLabel = '';
-                if (item.status === 'in_service') {
-                    statusLabel = '<span style="color:#00e676; font-weight:bold;">متاح (بالخدمة)</span>';
-                } else if (item.status === 'on_break') {
-                    statusLabel = '<span style="color:#ff9100; font-weight:bold;">استراحة</span>';
-                } else if (item.status === 'on_mission') {
-                    statusLabel = '<span style="color:#ffd600; font-weight:bold;">في مهمة</span>';
-                }
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${item.dateTime}</td>
-                    <td>${item.roblox} (${item.discord})</td>
-                    <td>${statusLabel}</td>
-                    <td style="color:#fff; font-weight:bold;">${timePassed}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1193,8 +1414,151 @@
             renderLogs(document.getElementById('searchInput').value);
         }
 
+        function renderActiveDuty() {
+            const activeList = JSON.parse(localStorage.getItem('active_duty_list') || '[]');
+            const tbody = document.getElementById('activeTableBody');
+            tbody.innerHTML = '';
+
+            if (activeList.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا يوجد متطوعون في الخدمة حالياً</td></tr>';
+                return;
+            }
+
+            const now = new Date().getTime();
+            activeList.forEach(item => {
+                const diffMs = now - (item.statusChangedTime || item.startTime);
+                const mins = Math.floor(diffMs / 60000);
+                let statusLabel = item.status === 'in_service' ? '<span style="color:#00e676;">متاح</span>' :
+                                  item.status === 'on_break' ? '<span style="color:#ff9100;">استراحة</span>' :
+                                  '<span style="color:#ffd600;">في مهمة</span>';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${item.dateTime}</td>
+                    <td>${item.roblox}</td>
+                    <td>${statusLabel}</td>
+                    <td>${mins} د</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderPointsManagement() {
+            // 1. البلاغات المعلقة
+            const reports = JSON.parse(localStorage.getItem('ambulance_reports') || '[]');
+            const repTbody = document.getElementById('reportsTableBody');
+            repTbody.innerHTML = '';
+
+            const pendingReports = reports.filter(r => r.status === 'pending');
+            if (pendingReports.length === 0) {
+                repTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد بلاغات إسعاف معلقة</td></tr>';
+            } else {
+                pendingReports.forEach(rep => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${rep.roblox}<br><span style="color:var(--text-sub);">${rep.discord}</span></td>
+                        <td>${rep.caseType} (${rep.casualties})</td>
+                        <td><button class="mini-btn view" onclick="viewProof(${rep.id})">عرض</button></td>
+                        <td>
+                            <button class="mini-btn approve" onclick="reviewReport(${rep.id}, true)">اعتماد</button>
+                            <button class="mini-btn reject" onclick="reviewReport(${rep.id}, false)">رفض</button>
+                        </td>
+                    `;
+                    repTbody.appendChild(tr);
+                });
+            }
+
+            // 2. جدول النقاط للمتطوعين
+            const db = getVolunteersDB();
+            const ptsTbody = document.getElementById('pointsTableBody');
+            ptsTbody.innerHTML = '';
+
+            const keys = Object.keys(db);
+            if (keys.length === 0) {
+                ptsTbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا يوجد متطوعون مسجلون</td></tr>';
+            } else {
+                keys.forEach(k => {
+                    const v = db[k];
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${v.roblox}<br><span style="color:var(--text-sub);">${v.discord}</span></td>
+                        <td>${v.rescues}</td>
+                        <td style="color:#00e676; font-weight:bold;">${v.points}</td>
+                        <td>
+                            <button class="mini-btn approve" onclick="modifyPoints('${k}', 'add')">+ زيادة</button>
+                            <button class="mini-btn reject" onclick="modifyPoints('${k}', 'sub')">- خصم</button>
+                            <button class="mini-btn edit" onclick="modifyPoints('${k}', 'set')">تعديل</button>
+                        </td>
+                    `;
+                    ptsTbody.appendChild(tr);
+                });
+            }
+        }
+
+        function viewProof(reportId) {
+            const reports = JSON.parse(localStorage.getItem('ambulance_reports') || '[]');
+            const rep = reports.find(r => r.id === reportId);
+            if (!rep) return;
+
+            const mediaHtml = rep.proofType === 'video' 
+                ? `<video src="${rep.proofData}" controls class="proof-preview"></video>`
+                : `<img src="${rep.proofData}" alt="إثبات الحالة" class="proof-preview">`;
+
+            showAlert(`إثبات حالة: ${rep.caseType}`, `المتطوع: ${rep.roblox} | عدد المسقطين: ${rep.casualties}`, mediaHtml);
+        }
+
+        function reviewReport(reportId, isApproved) {
+            let reports = JSON.parse(localStorage.getItem('ambulance_reports') || '[]');
+            const idx = reports.findIndex(r => r.id === reportId);
+            if (idx === -1) return;
+
+            const rep = reports[idx];
+            if (isApproved) {
+                const ptsToAdd = parseInt(prompt(`كم نقطة تريد إضافتها للمتطوع (${rep.roblox}) على هذه الحالة؟`, rep.casualties * 5), 10);
+                if (isNaN(ptsToAdd)) return;
+
+                let db = getVolunteersDB();
+                const key = rep.roblox.toLowerCase();
+                if (!db[key]) {
+                    db[key] = { roblox: rep.roblox, discord: rep.discord, email: '', rescues: 0, hours: 0, points: 0 };
+                }
+                db[key].rescues = Number(db[key].rescues || 0) + Number(rep.casualties || 1);
+                db[key].points = Number(db[key].points || 0) + ptsToAdd;
+                saveVolunteersDB(db);
+
+                reports[idx].status = 'approved';
+                showAlert('تم الاعتماد', `تم اعتماد البلاغ وإضافة ${ptsToAdd} نقطة و ${rep.casualties} إسعاف للمتطوع.`);
+            } else {
+                reports[idx].status = 'rejected';
+                showAlert('تم الرفض', 'تم رفض البلاغ.');
+            }
+
+            localStorage.setItem('ambulance_reports', JSON.stringify(reports));
+            renderPointsManagement();
+        }
+
+        function modifyPoints(userKey, mode) {
+            let db = getVolunteersDB();
+            if (!db[userKey]) return;
+
+            const currentPts = Number(db[userKey].points || 0);
+            let promptMsg = mode === 'add' ? `أدخل عدد النقاط لزيادتها لـ (${db[userKey].roblox}):` :
+                            mode === 'sub' ? `أدخل عدد النقاط لخصمها من (${db[userKey].roblox}):` :
+                            `أدخل الرصيد الجديد للنقاط لـ (${db[userKey].roblox}):`;
+
+            const val = parseInt(prompt(promptMsg), 10);
+            if (isNaN(val)) return;
+
+            if (mode === 'add') db[userKey].points = currentPts + val;
+            if (mode === 'sub') db[userKey].points = Math.max(0, currentPts - val);
+            if (mode === 'set') db[userKey].points = Math.max(0, val);
+
+            saveVolunteersDB(db);
+            renderPointsManagement();
+        }
+
         function clearLogs() {
-            if (confirm('تأكيد مسح جميع سجلات الحضور؟')) {
+            if (confirm('تأكيد مسح سجلات الحضور؟')) {
                 localStorage.removeItem('attendance_logs');
                 localStorage.removeItem('active_duty_list');
                 renderLogs();
